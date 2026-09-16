@@ -1451,7 +1451,7 @@ body, button, input, select, textarea, table {
   <main class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
 
     <!-- LEFT PANEL: USER INPUT FORM (42% Width) -->
-    <section class="w-full md:w-[42%] bg-slate-900 border-r border-slate-800 flex flex-col h-full overflow-y-auto p-4 shrink-0">
+    <section id="userFormPanel" class="w-full md:w-[42%] bg-slate-900 border-r border-slate-800 flex flex-col h-full overflow-y-auto p-4 shrink-0">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
         <div class="flex items-center gap-2">
           <i class="fa-solid fa-pen-to-square text-cyan-400"></i>
@@ -1476,7 +1476,7 @@ body, button, input, select, textarea, table {
     </section>
 
     <!-- RIGHT PANEL: DASHBOARD & JOB LIST TABLE (58% Width) -->
-    <section class="w-full md:w-[58%] bg-slate-950 flex flex-col h-full overflow-hidden p-4">
+    <section id="dashboardPanel" class="w-full md:w-[58%] bg-slate-950 flex flex-col h-full overflow-hidden p-4">
       
       <!-- SUMMARY METRICS CARDS -->
       <div class="grid grid-cols-5 gap-2 mb-3 shrink-0">
@@ -2367,14 +2367,18 @@ body, button, input, select, textarea, table {
       }
     }
 
-    function updateAdminUI() {
+function updateAdminUI() {
   const container = document.getElementById('adminBadgeContainer');
   const adminTopicFilter = document.getElementById('filterTopicAdmin');
 
   if (isAdminLoggedIn) {
 
-    // ซ่อนช่องกรอกข้อมูลเฉพาะตอน Admin
-    document.getElementById('userJobForm').classList.add('hidden');
+    // ซ่อนฝั่งกรอกข้อมูลทั้งหมดตอน Admin
+    document.getElementById('userFormPanel').classList.add('hidden');
+
+    // ขยาย Dashboard เต็มความกว้าง
+    document.getElementById('dashboardPanel').classList.remove('md:w-[58%]');
+    document.getElementById('dashboardPanel').classList.add('md:w-full');
 
     container.innerHTML = `
       <div class="flex items-center gap-2">
@@ -2388,9 +2392,15 @@ body, button, input, select, textarea, table {
     `;
 
     adminTopicFilter.classList.remove('hidden');
+
   } else {
-    // แสดงช่องกรอกข้อมูลกลับมาเมื่อเป็น User
-    document.getElementById('userJobForm').classList.remove('hidden');
+
+    // แสดงฝั่งกรอกข้อมูลกลับมาเมื่อเป็น User
+    document.getElementById('userFormPanel').classList.remove('hidden');
+
+    // คืน Dashboard เป็น 58%
+    document.getElementById('dashboardPanel').classList.remove('md:w-full');
+    document.getElementById('dashboardPanel').classList.add('md:w-[58%]');
 
     container.innerHTML = `
       <button onclick="openAdminLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition">
