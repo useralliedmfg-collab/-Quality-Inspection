@@ -1398,6 +1398,20 @@ button:disabled {
 body, button, input, select, textarea, table {
     letter-spacing: .01em;
 }
+
+    /* ============================================================
+     ADMIN MODE ONLY
+     ============================================================ */
+
+  /* ซ่อนเฉพาะฟอร์มฝั่งซ้ายเมื่อ Admin Login */
+  main.admin-mode > section:first-child {
+    display: none !important;
+  }
+
+  /* ขยาย Dashboard เต็มพื้นที่เมื่อ Admin Login */
+  main.admin-mode > section:last-child {
+    width: 100% !important;
+  }
 </style>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans h-full overflow-hidden flex flex-col">
@@ -2440,7 +2454,7 @@ body, button, input, select, textarea, table {
       }
     }
 
-    function updateAdminUI() {
+function updateAdminUI() {
 
   const container =
     document.getElementById('adminBadgeContainer');
@@ -2450,12 +2464,6 @@ body, button, input, select, textarea, table {
 
   const main =
     document.querySelector('main');
-
-  const leftPanel =
-    main.querySelector('section:first-child');
-
-  const rightPanel =
-    main.querySelector('section:last-child');
 
 
   if (isAdminLoggedIn) {
@@ -2477,17 +2485,8 @@ body, button, input, select, textarea, table {
 
     adminTopicFilter.classList.remove('hidden');
 
-
-    // ==========================================
-    // ADMIN MODE
-    // ซ่อนช่องกรอกข้อมูลฝั่งซ้าย
-    // และขยาย Dashboard เต็มพื้นที่
-    // ==========================================
-
-    leftPanel.style.display = 'none';
-
-    rightPanel.style.width = '100%';
-
+    // เปิด Admin Mode เฉพาะตอน Admin Login
+    main.classList.add('admin-mode');
 
   } else {
 
@@ -2506,16 +2505,8 @@ body, button, input, select, textarea, table {
     adminTopicFilter.classList.add('hidden');
     adminTopicFilter.value = "CURRENT";
 
-
-    // ==========================================
-    // USER MODE
-    // เอาฟอร์มกลับมาเหมือนเดิม
-    // ==========================================
-
-    leftPanel.style.display = '';
-    rightPanel.style.width = '';
-
-
+    // กลับเป็น User Mode
+    main.classList.remove('admin-mode');
   }
 
   applyFilters();
