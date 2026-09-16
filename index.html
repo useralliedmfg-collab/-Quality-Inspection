@@ -30,6 +30,7 @@
       }
     }
   </script>
+
   <style>
 /* =========================================================
    AMS FA QUALITY INSPECTION
@@ -842,7 +843,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal,
 #viewDetailModal,
 #adminLoginModal,
-#adminInspectionModal {
+#inspectionModal {
     background: rgba(15, 23, 42, 0.38) !important;
     backdrop-filter: blur(7px) !important;
     -webkit-backdrop-filter: blur(7px) !important;
@@ -853,7 +854,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal > div,
 #viewDetailModal > div,
 #adminLoginModal > div,
-#adminInspectionModal > div {
+#inspectionModal > div {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 16px !important;
@@ -868,7 +869,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal .border-b,
 #viewDetailModal .border-b,
 #adminLoginModal .border-b,
-#adminInspectionModal .border-b {
+#inspectionModal .border-b {
     border-color: #e2e8f0 !important;
 }
 
@@ -877,7 +878,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal h3,
 #viewDetailModal h3,
 #adminLoginModal h3,
-#adminInspectionModal h3 {
+#inspectionModal h3 {
     color: #0f172a !important;
     font-weight: 700 !important;
 }
@@ -887,7 +888,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal button[onclick*="closeModal"],
 #viewDetailModal button[onclick*="closeModal"],
 #adminLoginModal button[onclick*="closeModal"],
-#adminInspectionModal button[onclick*="closeModal"] {
+#inspectionModal button[onclick*="closeModal"] {
     color: #64748b !important;
     transition: all .15s ease;
 }
@@ -895,7 +896,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal button[onclick*="closeModal"]:hover,
 #viewDetailModal button[onclick*="closeModal"]:hover,
 #adminLoginModal button[onclick*="closeModal"]:hover,
-#adminInspectionModal button[onclick*="closeModal"]:hover {
+#inspectionModal button[onclick*="closeModal"]:hover {
     color: #0f172a !important;
     background: #f1f5f9 !important;
     border-radius: 7px;
@@ -942,7 +943,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal label,
 #viewDetailModal label,
 #adminLoginModal label,
-#adminInspectionModal label {
+#inspectionModal label {
     color: #475569 !important;
     font-weight: 600 !important;
 }
@@ -952,9 +953,9 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal input,
 #viewDetailModal input,
 #adminLoginModal input,
-#adminInspectionModal input,
-#adminInspectionModal select,
-#adminInspectionModal textarea {
+#inspectionModal input,
+#inspectionModal select,
+#inspectionModal textarea {
     background: #ffffff !important;
     color: #1e293b !important;
     border-color: #cbd5e1 !important;
@@ -962,16 +963,16 @@ main > section:last-child table tbody td[colspan] {
 
 #addCustomerModal input::placeholder,
 #adminLoginModal input::placeholder,
-#adminInspectionModal input::placeholder,
-#adminInspectionModal textarea::placeholder {
+#inspectionModal input::placeholder,
+#inspectionModal textarea::placeholder {
     color: #94a3b8 !important;
 }
 
 #addCustomerModal input:focus,
 #adminLoginModal input:focus,
-#adminInspectionModal input:focus,
-#adminInspectionModal select:focus,
-#adminInspectionModal textarea:focus {
+#inspectionModal input:focus,
+#inspectionModal select:focus,
+#inspectionModal textarea:focus {
     border-color: #0284c7 !important;
     box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.10) !important;
     outline: none !important;
@@ -982,7 +983,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal button,
 #viewDetailModal button,
 #adminLoginModal button,
-#adminInspectionModal button {
+#inspectionModal button {
     transition: all .15s ease !important;
 }
 
@@ -991,7 +992,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal button.bg-slate-800,
 #viewDetailModal button.bg-slate-800,
 #adminLoginModal button.bg-slate-800,
-#adminInspectionModal button.bg-slate-800 {
+#inspectionModal button.bg-slate-800 {
     background: #f1f5f9 !important;
     color: #475569 !important;
     border: 1px solid #e2e8f0 !important;
@@ -1000,7 +1001,7 @@ main > section:last-child table tbody td[colspan] {
 #addCustomerModal button.bg-slate-800:hover,
 #viewDetailModal button.bg-slate-800:hover,
 #adminLoginModal button.bg-slate-800:hover,
-#adminInspectionModal button.bg-slate-800:hover {
+#inspectionModal button.bg-slate-800:hover {
     background: #e2e8f0 !important;
     color: #0f172a !important;
 }
@@ -1030,66 +1031,66 @@ main > section:last-child table tbody td[colspan] {
 
 /* ---------- ADMIN INSPECTION ---------- */
 
-#adminInspectionModal .bg-slate-900,
-#adminInspectionModal .bg-slate-950 {
+#inspectionModal .bg-slate-900,
+#inspectionModal .bg-slate-950 {
     background: #ffffff !important;
 }
 
-#adminInspectionModal .border-slate-700,
-#adminInspectionModal .border-slate-800 {
+#inspectionModal .border-slate-700,
+#inspectionModal .border-slate-800 {
     border-color: #e2e8f0 !important;
 }
 
-#adminInspectionModal .text-white {
+#inspectionModal .text-white {
     color: #0f172a !important;
 }
 
-#adminInspectionModal .text-slate-300 {
+#inspectionModal .text-slate-300 {
     color: #475569 !important;
 }
 
-#adminInspectionModal .text-slate-400 {
+#inspectionModal .text-slate-400 {
     color: #64748b !important;
 }
 
 /* ---------- STATUS COLORS ---------- */
 
-#adminInspectionModal .text-emerald-400 {
+#inspectionModal .text-emerald-400 {
     color: #059669 !important;
 }
 
-#adminInspectionModal .text-rose-400 {
+#inspectionModal .text-rose-400 {
     color: #e11d48 !important;
 }
 
-#adminInspectionModal .text-amber-400 {
+#inspectionModal .text-amber-400 {
     color: #d97706 !important;
 }
 
-#adminInspectionModal .text-cyan-400 {
+#inspectionModal .text-cyan-400 {
     color: #0284c7 !important;
 }
 
 /* ---------- MODAL SCROLLBAR ---------- */
 
 #viewDetailModal > div::-webkit-scrollbar,
-#adminInspectionModal > div::-webkit-scrollbar {
+#inspectionModal > div::-webkit-scrollbar {
     width: 6px;
 }
 
 #viewDetailModal > div::-webkit-scrollbar-track,
-#adminInspectionModal > div::-webkit-scrollbar-track {
+#inspectionModal > div::-webkit-scrollbar-track {
     background: #f1f5f9;
 }
 
 #viewDetailModal > div::-webkit-scrollbar-thumb,
-#adminInspectionModal > div::-webkit-scrollbar-thumb {
+#inspectionModal > div::-webkit-scrollbar-thumb {
     background: #cbd5e1;
     border-radius: 10px;
 }
 
 #viewDetailModal > div::-webkit-scrollbar-thumb:hover,
-#adminInspectionModal > div::-webkit-scrollbar-thumb:hover {
+#inspectionModal > div::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
 }
 
@@ -1100,21 +1101,21 @@ main > section:last-child table tbody td[colspan] {
     #addCustomerModal,
     #viewDetailModal,
     #adminLoginModal,
-    #adminInspectionModal {
+    #inspectionModal {
         padding: 10px !important;
     }
 
     #addCustomerModal > div,
     #viewDetailModal > div,
     #adminLoginModal > div,
-    #adminInspectionModal > div {
+    #inspectionModal > div {
         border-radius: 13px !important;
         padding: 14px !important;
         max-height: 94vh;
     }
 
     #viewDetailModal > div,
-    #adminInspectionModal > div {
+    #inspectionModal > div {
         width: 100% !important;
     }
 
@@ -1367,6 +1368,35 @@ main > section:last-child table tbody td[colspan] {
     #viewUserForm textarea {
         font-size: 13px !important;
     }
+}
+
+
+/* =========================================================
+   FINAL COLOR PASS — preserve layout and functionality
+   ========================================================= */
+/* Replace remaining dark Tailwind surfaces with a soft light palette */
+[class~="bg-slate-950"], [class~="bg-slate-900"], [class~="bg-slate-800"], [class~="bg-slate-700"] {
+    background-color: #ffffff !important;
+}
+[class~="border-slate-800"], [class~="border-slate-700"] {
+    border-color: #dbe5ef !important;
+}
+[class~="text-slate-100"], [class~="text-slate-200"], [class~="text-slate-300"] {
+    color: #243447 !important;
+}
+[class~="text-slate-400"], [class~="text-slate-500"] {
+    color: #64748b !important;
+}
+/* Readable controls and tables */
+input, select, textarea {
+    color-scheme: light;
+}
+button:disabled {
+    opacity: .6;
+}
+/* Consistent readable text */
+body, button, input, select, textarea, table {
+    letter-spacing: .01em;
 }
 </style>
 </head>
@@ -2532,3 +2562,4 @@ main > section:last-child table tbody td[colspan] {
   </script>
 </body>
 </html>
+
