@@ -2368,34 +2368,43 @@ body, button, input, select, textarea, table {
     }
 
     function updateAdminUI() {
-      const container = document.getElementById('adminBadgeContainer');
-      const adminTopicFilter = document.getElementById('filterTopicAdmin');
+  const container = document.getElementById('adminBadgeContainer');
+  const adminTopicFilter = document.getElementById('filterTopicAdmin');
 
-      if (isAdminLoggedIn) {
-        container.innerHTML = `
-          <div class="flex items-center gap-2">
-            <span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-semibold px-2.5 py-1 rounded-lg flex items-center gap-1">
-              <i class="fa-solid fa-user-gear"></i> Admin Mode
-            </span>
-            <button onclick="openAdminLoginModal()" class="bg-rose-900/40 hover:bg-rose-800 text-rose-300 border border-rose-700/50 text-xs px-2 py-1 rounded-lg" title="Logout">
-              <i class="fa-solid fa-right-from-bracket"></i>
-            </button>
-          </div>
-        `;
-        adminTopicFilter.classList.remove('hidden');
-      } else {
-        container.innerHTML = `
-          <button onclick="openAdminLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition">
-            <i class="fa-solid fa-user-shield text-slate-400"></i>
-            <span>Admin Login</span>
-          </button>
-        `;
-        adminTopicFilter.classList.add('hidden');
-        adminTopicFilter.value = "CURRENT";
-      }
-      applyFilters();
-    }
+  if (isAdminLoggedIn) {
 
+    // ซ่อนช่องกรอกข้อมูลเฉพาะตอน Admin
+    document.getElementById('userJobForm').classList.add('hidden');
+
+    container.innerHTML = `
+      <div class="flex items-center gap-2">
+        <span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-semibold px-2.5 py-1 rounded-lg flex items-center gap-1">
+          <i class="fa-solid fa-user-gear"></i> Admin Mode
+        </span>
+        <button onclick="openAdminLoginModal()" class="bg-rose-900/40 hover:bg-rose-800 text-rose-300 border border-rose-700/50 text-xs px-2 py-1 rounded-lg" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    `;
+
+    adminTopicFilter.classList.remove('hidden');
+  } else {
+    // แสดงช่องกรอกข้อมูลกลับมาเมื่อเป็น User
+    document.getElementById('userJobForm').classList.remove('hidden');
+
+    container.innerHTML = `
+      <button onclick="openAdminLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition">
+        <i class="fa-solid fa-user-shield text-slate-400"></i>
+        <span>Admin Login</span>
+      </button>
+    `;
+
+    adminTopicFilter.classList.add('hidden');
+    adminTopicFilter.value = "CURRENT";
+  }
+
+  applyFilters();
+}
     // Admin Inspection Modal
     function openInspectionModal(topicKey, recordId) {
       const item = (records[topicKey] || []).find(r => r.recordId === recordId);
@@ -2562,4 +2571,3 @@ body, button, input, select, textarea, table {
   </script>
 </body>
 </html>
-
