@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS - FA Quality Inspection System</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Kanit -->
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Kanit', 'sans-serif'] },
+          colors: {
+            ams: {
+              navy: '#0f172a',
+              dark: '#1e293b',
+              blue: '#0284c7',
+              accent: '#38bdf8',
+              ok: '#10b981',
+              ng: '#f43f5e',
+              pending: '#f59e0b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #1e293b; }
+    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans h-full overflow-hidden flex flex-col">
+
+  <!-- TOP HEADER -->
+  <header class="bg-slate-950 border-b border-slate-800 px-4 py-2 flex flex-wrap items-center justify-between shrink-0 h-16">
+    <div class="flex items-center gap-3">
+      <img src="https://www.alliedmfg.co.th/wp-content/uploads/2026/07/AMS-LOGO-V1.png" alt="AMS Logo" class="h-10 object-contain bg-white/90 p-1 rounded">
+      <div>
+        <h1 class="text-lg font-bold tracking-wide text-white leading-tight">AMS - FA Quality Inspection System</h1>
+        <p class="text-xs text-slate-400">ฝ่ายประกันคุณภาพ (QA/QC Dept) | Allied Manufacturing Co., Ltd.</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <!-- Live Clock -->
+      <div class="hidden sm:flex flex-col items-end text-xs text-slate-300">
+        <span id="liveDate" class="font-medium text-slate-400">---</span>
+        <span id="liveTime" class="font-mono text-cyan-400 font-semibold text-sm">--:--:--</span>
+      </div>
+
+      <!-- Admin Status / Login Button -->
+      <div id="adminBadgeContainer">
+        <button onclick="openAdminLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition">
+          <i class="fa-solid fa-user-shield text-slate-400"></i>
+          <span>Admin Login</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOP MODULE TABS SELECTOR -->
+  <nav class="bg-slate-900 border-b border-slate-800 px-4 py-2 shrink-0">
+    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+      <button onclick="switchTopic('DIECUT')" id="tab-DIECUT" class="tab-btn active border-b-2 border-cyan-400 text-cyan-400 bg-slate-800/80 px-4 py-2 rounded-t-md font-medium text-sm flex items-center gap-2 whitespace-nowrap transition">
+        <i class="fa-solid fa-shapes"></i> DIECUT INSPECTION
+      </button>
+      <button onclick="switchTopic('JIG_FA')" id="tab-JIG_FA" class="tab-btn text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 px-4 py-2 rounded-t-md font-medium text-sm flex items-center gap-2 whitespace-nowrap transition">
+        <i class="fa-solid fa-screwdriver-wrench"></i> JIG FA
+      </button>
+      <button onclick="switchTopic('FIRST_SHOT_FA')" id="tab-FIRST_SHOT_FA" class="tab-btn text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 px-4 py-2 rounded-t-md font-medium text-sm flex items-center gap-2 whitespace-nowrap transition">
+        <i class="fa-solid fa-bolt"></i> FIRST SHOT FA
+      </button>
+      <button onclick="switchTopic('FA_FG')" id="tab-FA_FG" class="tab-btn text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 px-4 py-2 rounded-t-md font-medium text-sm flex items-center gap-2 whitespace-nowrap transition">
+        <i class="fa-solid fa-box-check"></i> FA FG
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN DESKTOP SPLIT CONTAINER -->
+  <main class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
+
+    <!-- LEFT PANEL: USER INPUT FORM (42% Width) -->
+    <section class="w-full md:w-[42%] bg-slate-900 border-r border-slate-800 flex flex-col h-full overflow-y-auto p-4 shrink-0">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square text-cyan-400"></i>
+          <h2 id="formTitle" class="text-base font-semibold text-white">บันทึกส่งงาน DIECUT INSPECTION</h2>
+        </div>
+        <span class="text-[11px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded border border-slate-700">Auto Save & Lock</span>
+      </div>
+
+      <!-- DYNAMIC FORM CONTENT CONTAINER -->
+      <form id="userJobForm" onsubmit="handleFormSubmit(event)" class="space-y-3 flex-1">
+        <!-- Fields injected by JS -->
+      </form>
+
+      <div class="pt-3 border-t border-slate-800 mt-4 flex gap-2">
+        <button type="button" onclick="resetCurrentForm()" class="w-1/3 bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 rounded-lg font-medium text-sm transition">
+          <i class="fa-solid fa-rotate-left mr-1"></i> ล้างข้อมูล
+        </button>
+        <button type="submit" form="userJobForm" id="btnSubmitForm" class="w-2/3 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2 rounded-lg text-sm shadow-lg shadow-cyan-900/40 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i> บันทึกส่งงาน (Save)
+        </button>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: DASHBOARD & JOB LIST TABLE (58% Width) -->
+    <section class="w-full md:w-[58%] bg-slate-950 flex flex-col h-full overflow-hidden p-4">
+      
+      <!-- SUMMARY METRICS CARDS -->
+      <div class="grid grid-cols-5 gap-2 mb-3 shrink-0">
+        <div class="bg-slate-900 border border-slate-800 rounded-lg p-2 text-center">
+          <p class="text-[11px] text-slate-400">Total Jobs</p>
+          <p id="metricTotal" class="text-xl font-bold text-white">0</p>
+        </div>
+        <div class="bg-slate-900 border border-amber-500/30 bg-amber-500/5 rounded-lg p-2 text-center">
+          <p class="text-[11px] text-amber-400">Pending</p>
+          <p id="metricPending" class="text-xl font-bold text-amber-400">0</p>
+        </div>
+        <div class="bg-slate-900 border border-cyan-500/30 bg-cyan-500/5 rounded-lg p-2 text-center">
+          <p class="text-[11px] text-cyan-400">Inspected</p>
+          <p id="metricInspected" class="text-xl font-bold text-cyan-400">0</p>
+        </div>
+        <div class="bg-slate-900 border border-emerald-500/30 bg-emerald-500/5 rounded-lg p-2 text-center">
+          <p class="text-[11px] text-emerald-400">OK</p>
+          <p id="metricOk" class="text-xl font-bold text-emerald-400">0</p>
+        </div>
+        <div class="bg-slate-900 border border-rose-500/30 bg-rose-500/5 rounded-lg p-2 text-center">
+          <p class="text-[11px] text-rose-400">NG</p>
+          <p id="metricNg" class="text-xl font-bold text-rose-400">0</p>
+        </div>
+      </div>
+
+      <!-- SEARCH & FILTER TOOLBAR -->
+      <div class="bg-slate-900 border border-slate-800 rounded-lg p-2.5 mb-3 shrink-0 flex flex-wrap gap-2 items-center">
+        <!-- Search Input -->
+        <div class="relative flex-1 min-w-[160px]">
+          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-xs text-slate-400"></i>
+          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="ค้นหา Job, Part No, FA NO, Diecut..." class="w-full bg-slate-950 border border-slate-700 rounded-md pl-8 pr-2 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
+        </div>
+
+        <!-- Filter Status -->
+        <select id="filterStatus" onchange="applyFilters()" class="bg-slate-950 border border-slate-700 rounded-md px-2 py-1.5 text-xs text-slate-200 focus:outline-none">
+          <option value="ALL">สถานะ: ทั้งหมด</option>
+          <option value="Pending">Pending</option>
+          <option value="Inspected">Inspected</option>
+        </select>
+
+        <!-- Filter Result -->
+        <select id="filterResult" onchange="applyFilters()" class="bg-slate-950 border border-slate-700 rounded-md px-2 py-1.5 text-xs text-slate-200 focus:outline-none">
+          <option value="ALL">ผลตรวจ: ทั้งหมด</option>
+          <option value="OK">OK</option>
+          <option value="NG">NG</option>
+          <option value="-">- (Pending)</option>
+        </select>
+
+        <!-- Customer Filter -->
+        <select id="filterCustomer" onchange="applyFilters()" class="bg-slate-950 border border-slate-700 rounded-md px-2 py-1.5 text-xs text-slate-200 focus:outline-none max-w-[130px] truncate">
+          <option value="ALL">ลูกค้า: ทั้งหมด</option>
+        </select>
+
+        <!-- Admin Global Topic Filter (Visible only in Admin Mode) -->
+        <select id="filterTopicAdmin" onchange="applyFilters()" class="hidden bg-cyan-950 border border-cyan-700 rounded-md px-2 py-1.5 text-xs text-cyan-200 focus:outline-none">
+          <option value="CURRENT">หัวข้อปัจจุบัน</option>
+          <option value="ALL">ทุกหัวข้อ (Global)</option>
+        </select>
+
+        <button onclick="loadSystemData()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-md border border-slate-700" title="รีเฟรชข้อมูล">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </div>
+
+      <!-- JOB LIST TABLE -->
+      <div class="flex-1 bg-slate-900 border border-slate-800 rounded-lg overflow-hidden flex flex-col">
+        <div class="overflow-x-auto flex-1">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-950 border-b border-slate-800 text-slate-400 sticky top-0 uppercase tracking-wider">
+              <tr>
+                <th class="p-2.5">Job No</th>
+                <th class="p-2.5">Part No / Rev</th>
+                <th class="p-2.5">Customer</th>
+                <th class="p-2.5">ส่งงานโดย / เวลา</th>
+                <th class="p-2.5 text-center">Status</th>
+                <th class="p-2.5 text-center">Result</th>
+                <th class="p-2.5 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="jobTableBody" class="divide-y divide-slate-800/60">
+              <!-- Dynamic Rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Footer / Row Count -->
+        <div class="bg-slate-950 border-t border-slate-800 px-3 py-1.5 flex justify-between items-center text-[11px] text-slate-400">
+          <span id="tableCountText">แสดง 0 รายการ</span>
+          <span id="topicIndicatorText" class="text-cyan-400 font-medium">Topic: DIECUT INSPECTION</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL 1: ADD CUSTOMER MODAL -->
+  <div id="addCustomerModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-xl max-w-sm w-full p-5 shadow-2xl">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-building-circle-plus text-cyan-400 mr-2"></i>เพิ่มชื่อลูกค้ารายใหม่</h3>
+        <button onclick="closeModal('addCustomerModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">ชื่อลูกค้า (Customer Name)</label>
+          <input type="text" id="newCustomerInput" placeholder="เช่น ALLIED MANUFACTURING CO., LTD." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button onclick="closeModal('addCustomerModal')" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 rounded-lg text-xs font-medium">ยกเลิก</button>
+          <button onclick="submitAddCustomer()" class="w-1/2 bg-cyan-600 hover:bg-cyan-500 text-white py-2 rounded-lg text-xs font-semibold">บันทึกเพิ่มลูกค้า</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: VIEW DETAIL MODAL (READ ONLY) -->
+  <div id="viewDetailModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-xl max-w-lg w-full p-5 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-3">
+        <div>
+          <span id="detailTopicBadge" class="text-[10px] bg-slate-800 text-cyan-400 px-2 py-0.5 rounded font-mono">DIECUT</span>
+          <h3 id="detailJobNo" class="text-lg font-bold text-white">Job No: --</h3>
+        </div>
+        <button onclick="closeModal('viewDetailModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div id="detailContent" class="space-y-2 text-xs text-slate-300">
+        <!-- Content Injected -->
+      </div>
+      <div class="mt-4 pt-3 border-t border-slate-800 text-right">
+        <button onclick="closeModal('viewDetailModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-1.5 rounded-lg text-xs">ปิด</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: ADMIN LOGIN MODAL -->
+  <div id="adminLoginModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-xl max-w-sm w-full p-5 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-lock text-amber-400"></i> Admin Access Login
+        </h3>
+        <button onclick="closeModal('adminLoginModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form onsubmit="handleAdminLoginSubmit(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Username</label>
+          <input type="text" id="adminUser" required placeholder="admin" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Password</label>
+          <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
+        </div>
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold py-2 rounded-lg text-sm transition">
+            เข้าสู่ระบบ Admin
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 4: ADMIN INSPECTION MODAL -->
+  <div id="inspectionModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-cyan-500/40 rounded-xl max-w-lg w-full p-5 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-3">
+        <div>
+          <span class="text-[10px] bg-cyan-950 text-cyan-300 border border-cyan-700/50 px-2 py-0.5 rounded font-mono">ADMIN INSPECTION MODE</span>
+          <h3 id="inspJobNo" class="text-lg font-bold text-white">Job No: --</h3>
+        </div>
+        <button onclick="closeModal('inspectionModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <!-- READONLY SUMMARY -->
+      <div id="inspJobSummary" class="bg-slate-950 p-3 rounded-lg border border-slate-800 mb-4 text-xs space-y-1">
+        <!-- Injected Summary -->
+      </div>
+
+      <!-- INSPECTION FORM -->
+      <form id="inspectionForm" onsubmit="handleInspectionSubmit(event)" class="space-y-3">
+        <input type="hidden" id="inspRecordId">
+        <input type="hidden" id="inspTopicKey">
+
+        <!-- RESULT SELECTOR -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-200 mb-1.5">ผลการตรวจ (Result) <span class="text-rose-400">*</span></label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center justify-center gap-2 bg-slate-950 border-2 border-slate-700 rounded-lg p-2.5 cursor-pointer hover:border-emerald-500 transition has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-950/40">
+              <input type="radio" name="inspResult" value="OK" required class="text-emerald-500 focus:ring-0">
+              <span class="font-bold text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i> OK</span>
+            </label>
+            <label class="flex items-center justify-center gap-2 bg-slate-950 border-2 border-slate-700 rounded-lg p-2.5 cursor-pointer hover:border-rose-500 transition has-[:checked]:border-rose-500 has-[:checked]:bg-rose-950/40">
+              <input type="radio" name="inspResult" value="NG" required class="text-rose-500 focus:ring-0">
+              <span class="font-bold text-rose-400"><i class="fa-solid fa-circle-xmark mr-1"></i> NG</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- INSPECTOR DROPDOWN -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-200 mb-1">ผู้ตรวจงาน (Inspector) <span class="text-rose-400">*</span></label>
+          <select id="inspInspector" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+            <option value="">-- เลือกผู้ตรวจงาน --</option>
+          </select>
+        </div>
+
+        <!-- REMARK -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-200 mb-1">หมายเหตุ (Remark)</label>
+          <textarea id="inspRemark" rows="2" placeholder="ระบุรายละเอียดเพิ่มเติม หรือสาเหตุ NG..." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"></textarea>
+        </div>
+
+        <div id="inspLockNotice" class="hidden bg-amber-950/40 border border-amber-600/40 p-2.5 rounded-lg text-amber-300 text-xs flex items-center gap-2">
+          <i class="fa-solid fa-lock text-base"></i>
+          <span>รายการนี้บันทึกผลและ Lock แล้ว ไม่สามารถแก้ไขได้อีก</span>
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeModal('inspectionModal')" class="w-1/3 bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 rounded-lg text-xs font-medium">ยกเลิก</button>
+          <button type="submit" id="btnSaveInspection" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2 rounded-lg text-xs shadow-lg transition">
+            <i class="fa-solid fa-lock mr-1"></i> บันทึกผลตรวจ & Lock Row
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- CLIENT-SIDE APPLICATION LOGIC -->
+  <script>
+    // System Config Constants
+    const API_URL = "https://script.google.com/macros/s/AKfycbwOrHr7vUKDhgkj5tenhHPj7DWtY2iC_yyzgWKDX-y2JxFe_6OerLl1iPBS5LsDYpjpXg/exec";
+
+    // Application State
+    let activeTopic = "DIECUT"; // DIECUT | JIG_FA | FIRST_SHOT_FA | FA_FG
+    let isAdminLoggedIn = false;
+    let adminToken = "";
+    
+    let masterData = {
+      customers: [],
+      inspectors: [],
+      senders: [],
+      machines: {}
+    };
+
+    let records = {
+      DIECUT: [],
+      JIG_FA: [],
+      FIRST_SHOT_FA: [],
+      FA_FG: []
+    };
+
+    // Initialize System on DOM Ready
+    document.addEventListener("DOMContentLoaded", () => {
+      startClock();
+      loadSystemData();
+      renderFormForTopic(activeTopic);
+    });
+
+    // Real-time Clock in Bangkok Timezone
+    function startClock() {
+      const update = () => {
+        const now = new Date();
+        const optionsDate = { timeZone: 'Asia/Bangkok', year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' };
+        const optionsTime = { timeZone: 'Asia/Bangkok', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        
+        document.getElementById('liveDate').textContent = now.toLocaleDateString('th-TH', optionsDate);
+        document.getElementById('liveTime').textContent = now.toLocaleTimeString('en-US', optionsTime);
+      };
+      update();
+      setInterval(update, 1000);
+    }
+
+    // Backend HTTP API Fetcher
+    async function apiCall(action, payload = {}) {
+      showLoadingToast("กำลังประมวลผล...");
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action, ...payload })
+        });
+        const result = await response.json();
+        hideLoadingToast();
+        return result;
+      } catch (err) {
+        hideLoadingToast();
+        showToast("Error", "ไม่สามารถเชื่อมต่อ Server ได้: " + err.message, "danger");
+        return { success: false, message: err.message };
+      }
+    }
+
+    // Load initial system data
+    async function loadSystemData() {
+      const res = await apiCall("getInitialData");
+      if (res.success) {
+        masterData = res.master || masterData;
+        records = res.records || records;
+        populateCustomerFilter();
+        populateInspectorDropdown();
+        renderFormForTopic(activeTopic);
+        applyFilters();
+      } else {
+        showToast("ข้อผิดพลาด", res.message || "ไม่สามารถโหลดข้อมูลได้", "danger");
+      }
+    }
+
+    // Module Switcher
+    function switchTopic(topicKey) {
+      activeTopic = topicKey;
+      
+      // Update Tab Styles
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'border-b-2', 'border-cyan-400', 'text-cyan-400', 'bg-slate-800/80');
+        btn.classList.add('text-slate-400');
+      });
+      const activeBtn = document.getElementById(`tab-${topicKey}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'border-b-2', 'border-cyan-400', 'text-cyan-400', 'bg-slate-800/80');
+        activeBtn.classList.remove('text-slate-400');
+      }
+
+      // Update Form Title & Render Form
+      renderFormForTopic(topicKey);
+      applyFilters();
+    }
+
+    // Render Forms Dynamically per Topic
+    function renderFormForTopic(topicKey) {
+      const form = document.getElementById('userJobForm');
+      const formTitle = document.getElementById('formTitle');
+      form.innerHTML = "";
+
+      const custOptions = masterData.customers.map(c => `<option value="${c}">${c}</option>`).join("");
+      const senderOptions = masterData.senders.map(s => `<option value="${s}">${s}</option>`).join("");
+
+      const customerFieldHTML = `
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">CUSTOMER <span class="text-rose-400">*</span></label>
+          <div class="flex gap-1.5">
+            <select name="customer" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+              <option value="">-- เลือกลูกค้า --</option>
+              ${custOptions}
+            </select>
+            <button type="button" onclick="openModal('addCustomerModal')" class="bg-cyan-900/60 hover:bg-cyan-800 text-cyan-300 border border-cyan-700 px-2 py-1 rounded-lg text-xs shrink-0" title="เพิ่มชื่อลูกค้า">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+      `;
+
+      if (topicKey === "DIECUT") {
+        formTitle.textContent = "บันทึกส่งงาน DIECUT INSPECTION";
+        form.innerHTML = `
+          <input type="hidden" name="topicKey" value="DIECUT">
+          ${customerFieldHTML}
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">DIECUT NO <span class="text-rose-400">*</span></label>
+              <input type="text" name="diecutNo" required oninput="this.value = this.value.toUpperCase()" placeholder="เช่น DC-001" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">REFER NO DIECUT</label>
+              <input type="text" name="referNoDiecut" oninput="this.value = this.value.toUpperCase()" placeholder="เช่น REF-99" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-2">
+              <label class="block text-xs font-semibold text-slate-300 mb-1">PART NO <span class="text-rose-400">*</span></label>
+              <input type="text" name="partNo" required oninput="this.value = this.value.toUpperCase()" placeholder="เช่น PT-8821" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">REV <span class="text-rose-400">*</span></label>
+              <input type="text" name="rev" required oninput="this.value = this.value.toUpperCase()" placeholder="01" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">CAVITY <span class="text-rose-400">*</span></label>
+              <input type="number" name="cavity" required min="1" placeholder="1" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">ผู้ส่ง MOULD <span class="text-rose-400">*</span></label>
+              <select name="senderMould" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <option value="">-- เลือกผู้ส่ง MOULD --</option>
+                ${senderOptions}
+              </select>
+            </div>
+          </div>
+        `;
+      } else if (topicKey === "JIG_FA") {
+        formTitle.textContent = "บันทึกส่งงาน JIG FA";
+        form.innerHTML = `
+          <input type="hidden" name="topicKey" value="JIG_FA">
+          ${customerFieldHTML}
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-2">
+              <label class="block text-xs font-semibold text-slate-300 mb-1">PART NO <span class="text-rose-400">*</span></label>
+              <input type="text" name="partNo" required oninput="this.value = this.value.toUpperCase()" placeholder="เช่น JIG-PART-01" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">REV <span class="text-rose-400">*</span></label>
+              <input type="text" name="rev" required oninput="this.value = this.value.toUpperCase()" placeholder="A" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">JIG TYPE <span class="text-rose-400">*</span></label>
+            <select name="jigType" id="jigTypeSelect" onchange="toggleJigOtherField(this.value)" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+              <option value="">-- เลือกประเภท JIG --</option>
+              <option value="วัด Dimension">วัด Dimension</option>
+              <option value="ติดกาว">ติดกาว</option>
+              <option value="อื่นๆ">อื่นๆ</option>
+            </select>
+          </div>
+          <div id="jigOtherContainer" class="hidden">
+            <label class="block text-xs font-semibold text-amber-400 mb-1">ระบุรายละเอียดกรณีเลือก อื่นๆ</label>
+            <input type="text" name="jigTypeDetail" id="jigTypeDetail" placeholder="ระบุประเภท JIG..." class="w-full bg-slate-950 border border-amber-600/50 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none">
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">JIG Quantity <span class="text-rose-400">*</span></label>
+              <input type="number" name="jigQty" required min="1" placeholder="1" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">ผู้ส่ง JIG <span class="text-rose-400">*</span></label>
+              <select name="senderJig" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <option value="">-- เลือกผู้ส่ง JIG --</option>
+                ${senderOptions}
+              </select>
+            </div>
+          </div>
+        `;
+      } else if (topicKey === "FIRST_SHOT_FA") {
+        formTitle.textContent = "บันทึกส่งงาน FIRST SHOT FA";
+
+        // Generate Machine Categories Dropdown
+        const machineCatOptions = Object.keys(masterData.machines).map(cat => `<option value="${cat}">${cat}</option>`).join("");
+
+        form.innerHTML = `
+          <input type="hidden" name="topicKey" value="FIRST_SHOT_FA">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">FA NO <span class="text-rose-400">*</span></label>
+              <input type="text" name="faNo" required placeholder="เช่น FA-01/2026" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              ${customerFieldHTML}
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-2">
+              <label class="block text-xs font-semibold text-slate-300 mb-1">PART NO <span class="text-rose-400">*</span></label>
+              <input type="text" name="partNo" required oninput="this.value = this.value.toUpperCase()" placeholder="เช่น FS-991" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">REV <span class="text-rose-400">*</span></label>
+              <input type="text" name="rev" required oninput="this.value = this.value.toUpperCase()" placeholder="01" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+          
+          <!-- TOOLING REQUIRE MULTI SELECT -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">TOOLING REQUIREMENT</label>
+            <div class="grid grid-cols-3 gap-1.5 bg-slate-950 border border-slate-800 p-2 rounded-lg text-[11px]">
+              <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="toolingReq" value="TOOLING" class="rounded text-cyan-500"> TOOLING</label>
+              <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="toolingReq" value="LASER" class="rounded text-cyan-500"> LASER</label>
+              <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="toolingReq" value="CDC" class="rounded text-cyan-500"> CDC</label>
+              <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="toolingReq" value="V-CUT" class="rounded text-cyan-500"> V-CUT</label>
+              <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="toolingReq" value="อื่นๆ" onchange="toggleToolingOtherField(this.checked)" class="rounded text-cyan-500"> อื่นๆ</label>
+            </div>
+          </div>
+          <div id="toolingOtherContainer" class="hidden">
+            <input type="text" name="toolingReqOther" id="toolingReqOther" placeholder="ระบุ Tooling Requirement อื่นๆ..." class="w-full bg-slate-950 border border-amber-600/50 rounded-lg px-2.5 py-1 text-xs text-white focus:outline-none">
+          </div>
+
+          <!-- MACHINE SELECTION (2 LEVELS) -->
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">หมวดเครื่องจักร <span class="text-rose-400">*</span></label>
+              <select name="machineCategory" id="machineCatSelect" onchange="updateMachineNoDropdown(this.value)" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <option value="">-- หมวดเครื่อง --</option>
+                ${machineCatOptions}
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">หมายเลขเครื่อง <span class="text-rose-400">*</span></label>
+              <select name="machineNo" id="machineNoSelect" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <option value="">-- เลือกเครื่อง --</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- PACK CHECKBOX & QUANTITIES -->
+          <div class="grid grid-cols-3 gap-2 items-end">
+            <div class="bg-slate-950 border border-slate-800 p-2 rounded-lg flex items-center justify-center">
+              <label class="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer">
+                <input type="checkbox" name="isPack" class="w-4 h-4 text-cyan-500 rounded-full focus:ring-0">
+                <span>PACK (แพ็ค)</span>
+              </label>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">จำนวนหลัก <span class="text-rose-400">*</span></label>
+              <input type="number" name="mainQty" required min="1" placeholder="0" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">จำนวนเพิ่ม</label>
+              <input type="number" name="extraQty" min="0" value="0" placeholder="0" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">ผู้ส่งงาน <span class="text-rose-400">*</span></label>
+            <select name="sender" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+              <option value="">-- เลือกผู้ส่งงาน --</option>
+              ${senderOptions}
+            </select>
+          </div>
+        `;
+      } else if (topicKey === "FA_FG") {
+        formTitle.textContent = "บันทึกส่งงาน FA FG";
+        form.innerHTML = `
+          <input type="hidden" name="topicKey" value="FA_FG">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">FA NO <span class="text-rose-400">*</span></label>
+              <input type="text" name="faNo" required placeholder="เช่น FA-99/01" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              ${customerFieldHTML}
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-2">
+              <label class="block text-xs font-semibold text-slate-300 mb-1">PART NO <span class="text-rose-400">*</span></label>
+              <input type="text" name="partNo" required oninput="this.value = this.value.toUpperCase()" placeholder="เช่น FG-4001" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">REV <span class="text-rose-400">*</span></label>
+              <input type="text" name="rev" required oninput="this.value = this.value.toUpperCase()" placeholder="01" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">จำนวนหลัก <span class="text-rose-400">*</span></label>
+              <input type="number" name="mainQty" required min="1" placeholder="0" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">จำนวนเพิ่มเติม</label>
+              <input type="number" name="extraQty" min="0" value="0" placeholder="0" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Sender (ผู้ส่งงาน) <span class="text-rose-400">*</span></label>
+            <select name="sender" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+              <option value="">-- เลือกผู้ส่งงาน --</option>
+              ${senderOptions}
+            </select>
+          </div>
+        `;
+      }
+    }
+
+    // Helper Functions for Dynamic Form Inputs
+    function toggleJigOtherField(val) {
+      const container = document.getElementById('jigOtherContainer');
+      const input = document.getElementById('jigTypeDetail');
+      if (val === 'อื่นๆ') {
+        container.classList.remove('hidden');
+        input.required = true;
+      } else {
+        container.classList.add('hidden');
+        input.required = false;
+        input.value = "";
+      }
+    }
+
+    function toggleToolingOtherField(isChecked) {
+      const container = document.getElementById('toolingOtherContainer');
+      const input = document.getElementById('toolingReqOther');
+      if (isChecked) {
+        container.classList.remove('hidden');
+        input.required = true;
+      } else {
+        container.classList.add('hidden');
+        input.required = false;
+        input.value = "";
+      }
+    }
+
+    function updateMachineNoDropdown(category) {
+      const select = document.getElementById('machineNoSelect');
+      select.innerHTML = '<option value="">-- เลือกเครื่อง --</option>';
+      if (category && masterData.machines[category]) {
+        masterData.machines[category].forEach(m => {
+          select.innerHTML += `<option value="${m}">${m}</option>`;
+        });
+      }
+    }
+
+    function resetCurrentForm() {
+      document.getElementById('userJobForm').reset();
+    }
+
+    // Handle User Job Submission
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formDataObj = new FormData(form);
+      const data = {};
+
+      formDataObj.forEach((val, key) => {
+        if (key === "toolingReq") {
+          if (!data[key]) data[key] = [];
+          data[key].push(val);
+        } else {
+          data[key] = val;
+        }
+      });
+
+      const btn = document.getElementById('btnSubmitForm');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังบันทึก...`;
+
+      const res = await apiCall("submitUserJob", { data });
+
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> บันทึกส่งงาน (Save)`;
+
+      if (res.success) {
+        showToast("สำเร็จ!", res.message, "success");
+        form.reset();
+        await loadSystemData(); // Refresh list immediately
+      } else {
+        showToast("ข้อผิดพลาด", res.message || "ไม่สามารถบันทึกข้อมูลได้", "danger");
+      }
+    }
+
+    // Filter Logic & Table Rendering
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.trim().toLowerCase();
+      const statusF = document.getElementById('filterStatus').value;
+      const resultF = document.getElementById('filterResult').value;
+      const customerF = document.getElementById('filterCustomer').value;
+      const topicAdminF = document.getElementById('filterTopicAdmin').value;
+
+      let dataset = [];
+
+      if (isAdminLoggedIn && topicAdminF === "ALL") {
+        dataset = [
+          ...records.DIECUT,
+          ...records.JIG_FA,
+          ...records.FIRST_SHOT_FA,
+          ...records.FA_FG
+        ];
+        document.getElementById('topicIndicatorText').textContent = "Topic: ทุกหัวข้อ (Admin Global View)";
+      } else {
+        dataset = records[activeTopic] || [];
+        const topicNames = {
+          DIECUT: "DIECUT INSPECTION",
+          JIG_FA: "JIG FA",
+          FIRST_SHOT_FA: "FIRST SHOT FA",
+          FA_FG: "FA FG"
+        };
+        document.getElementById('topicIndicatorText').textContent = `Topic: ${topicNames[activeTopic]}`;
+      }
+
+      // Calculate Metrics for Current Active Dataset
+      let total = dataset.length;
+      let pending = 0;
+      let inspected = 0;
+      let ok = 0;
+      let ng = 0;
+
+      dataset.forEach(r => {
+        if (r.status === "Pending") pending++;
+        if (r.status === "Inspected") inspected++;
+        if (r.result === "OK") ok++;
+        if (r.result === "NG") ng++;
+      });
+
+      document.getElementById('metricTotal').textContent = total;
+      document.getElementById('metricPending').textContent = pending;
+      document.getElementById('metricInspected').textContent = inspected;
+      document.getElementById('metricOk').textContent = ok;
+      document.getElementById('metricNg').textContent = ng;
+
+      // Filter Dataset
+      const filtered = dataset.filter(r => {
+        // Status Filter
+        if (statusF !== "ALL" && r.status !== statusF) return false;
+        // Result Filter
+        if (resultF !== "ALL" && r.result !== resultF) return false;
+        // Customer Filter
+        if (customerF !== "ALL" && r.customer !== customerF) return false;
+        // Search Filter
+        if (search) {
+          const matchStr = `${r.jobNo} ${r.partNo} ${r.customer} ${r.diecutNo||''} ${r.faNo||''} ${r.senderMould||''} ${r.senderJig||''} ${r.sender||''}`.toLowerCase();
+          if (!matchStr.includes(search)) return false;
+        }
+        return true;
+      });
+
+      renderTableRows(filtered);
+    }
+
+    function renderTableRows(items) {
+      const tbody = document.getElementById('jobTableBody');
+      const countText = document.getElementById('tableCountText');
+
+      countText.textContent = `แสดง ${items.length} รายการ`;
+
+      if (items.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="p-8 text-center text-slate-500">
+              <i class="fa-solid fa-folder-open text-2xl mb-2 block"></i>
+              ไม่พบข้อมูล Job ในระบบ
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = items.map(item => {
+        const sender = item.senderMould || item.senderJig || item.sender || "-";
+        
+        // Status Badge
+        let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">Pending</span>`;
+        if (item.status === "Inspected") {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30"><i class="fa-solid fa-lock text-[9px] mr-1"></i>Inspected</span>`;
+        }
+
+        // Result Badge
+        let resultBadge = `<span class="text-slate-500">-</span>`;
+        if (item.result === "OK") {
+          resultBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">OK</span>`;
+        } else if (item.result === "NG") {
+          resultBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40">NG</span>`;
+        }
+
+        let actionBtn = "";
+        if (isAdminLoggedIn) {
+          if (item.isLocked) {
+            actionBtn = `<button onclick="openInspectionModal('${item.topicKey}', '${item.recordId}')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] px-2.5 py-1 rounded border border-slate-700 flex items-center gap-1"><i class="fa-solid fa-eye"></i> ดูผลตรวจ</button>`;
+          } else {
+            actionBtn = `<button onclick="openInspectionModal('${item.topicKey}', '${item.recordId}')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-semibold px-2.5 py-1 rounded shadow flex items-center gap-1"><i class="fa-solid fa-clipboard-check"></i> ตรวจงาน</button>`;
+          }
+        } else {
+          actionBtn = `<button onclick="openViewDetailModal('${item.topicKey}', '${item.recordId}')" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[11px] px-2.5 py-1 rounded border border-slate-700 flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-plus"></i> รายละเอียด</button>`;
+        }
+
+        return `
+          <tr class="hover:bg-slate-800/40 transition">
+            <td class="p-2.5 font-mono font-bold text-cyan-300">${item.jobNo}</td>
+            <td class="p-2.5">
+              <div class="font-semibold text-slate-200">${item.partNo || '-'}</div>
+              <div class="text-[10px] text-slate-400">Rev: ${item.rev || '-'}</div>
+            </td>
+            <td class="p-2.5 text-slate-300 max-w-[120px] truncate" title="${item.customer}">${item.customer || '-'}</td>
+            <td class="p-2.5">
+              <div class="text-slate-300">${sender}</div>
+              <div class="text-[10px] text-slate-400">${item.userDate} ${item.userTime}</div>
+            </td>
+            <td class="p-2.5 text-center">${statusBadge}</td>
+            <td class="p-2.5 text-center">${resultBadge}</td>
+            <td class="p-2.5 text-right">${actionBtn}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    // Modal Operations
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    // Add Customer Submit
+    async function submitAddCustomer() {
+      const input = document.getElementById('newCustomerInput');
+      const val = input.value.trim();
+      if (!val) {
+        showToast("แจ้งเตือน", "กรุณากรอกชื่อลูกค้า", "warning");
+        return;
+      }
+
+      const res = await apiCall("addCustomer", { customerName: val });
+      if (res.success) {
+        showToast("สำเร็จ", res.message, "success");
+        input.value = "";
+        closeModal('addCustomerModal');
+        await loadSystemData();
+      } else {
+        showToast("ข้อผิดพลาด", res.message, "danger");
+      }
+    }
+
+    // View Detail Modal (User Read-only)
+    function openViewDetailModal(topicKey, recordId) {
+      const item = (records[topicKey] || []).find(r => r.recordId === recordId);
+      if (!item) return;
+
+      document.getElementById('detailTopicBadge').textContent = topicKey;
+      document.getElementById('detailJobNo').textContent = `Job No: ${item.jobNo}`;
+
+      let rowsHTML = `
+        <div class="grid grid-cols-2 gap-2 bg-slate-950 p-3 rounded-lg border border-slate-800 mb-2">
+          <div><span class="text-slate-400">วันที่ส่งงาน:</span> ${item.userDate}</div>
+          <div><span class="text-slate-400">เวลาส่งงาน:</span> ${item.userTime}</div>
+          <div><span class="text-slate-400">ลูกค้า:</span> ${item.customer}</div>
+          <div><span class="text-slate-400">Part No / Rev:</span> ${item.partNo} (Rev: ${item.rev})</div>
+        </div>
+      `;
+
+      if (topicKey === "DIECUT") {
+        rowsHTML += `
+          <p><strong class="text-slate-400">DIECUT NO:</strong> ${item.diecutNo}</p>
+          <p><strong class="text-slate-400">REFER NO DIECUT:</strong> ${item.referNoDiecut || '-'}</p>
+          <p><strong class="text-slate-400">CAVITY:</strong> ${item.cavity}</p>
+          <p><strong class="text-slate-400">ผู้ส่ง MOULD:</strong> ${item.senderMould}</p>
+        `;
+      } else if (topicKey === "JIG_FA") {
+        rowsHTML += `
+          <p><strong class="text-slate-400">JIG TYPE:</strong> ${item.jigType} ${item.jigTypeDetail ? '('+item.jigTypeDetail+')' : ''}</p>
+          <p><strong class="text-slate-400">JIG Quantity:</strong> ${item.jigQty}</p>
+          <p><strong class="text-slate-400">ผู้ส่ง JIG:</strong> ${item.senderJig}</p>
+        `;
+      } else if (topicKey === "FIRST_SHOT_FA") {
+        rowsHTML += `
+          <p><strong class="text-slate-400">FA NO:</strong> ${item.faNo}</p>
+          <p><strong class="text-slate-400">Tooling Req:</strong> ${item.toolingReq} ${item.toolingReqOther ? '('+item.toolingReqOther+')' : ''}</p>
+          <p><strong class="text-slate-400">เครื่องผลิต:</strong> ${item.machineCategory} - ${item.machineNo}</p>
+          <p><strong class="text-slate-400">สถานะ PACK:</strong> ${item.isPack ? 'PACK' : 'NO PACK'}</p>
+          <p><strong class="text-slate-400">จำนวนที่ส่ง:</strong> หลัก ${item.mainQty} + เพิ่มเติม ${item.extraQty}</p>
+          <p><strong class="text-slate-400">ผู้ส่งงาน:</strong> ${item.sender}</p>
+        `;
+      } else if (topicKey === "FA_FG") {
+        rowsHTML += `
+          <p><strong class="text-slate-400">FA NO:</strong> ${item.faNo}</p>
+          <p><strong class="text-slate-400">จำนวนที่ส่ง:</strong> หลัก ${item.mainQty} + เพิ่มเติม ${item.extraQty}</p>
+          <p><strong class="text-slate-400">ผู้ส่งงาน:</strong> ${item.sender}</p>
+        `;
+      }
+
+      rowsHTML += `
+        <div class="mt-3 pt-3 border-t border-slate-800 bg-slate-950/60 p-3 rounded-lg">
+          <p class="font-bold text-cyan-400 mb-1">ผลการตรวจงาน QA/QC:</p>
+          <p><strong class="text-slate-400">Status:</strong> ${item.status}</p>
+          <p><strong class="text-slate-400">Result:</strong> ${item.result}</p>
+          <p><strong class="text-slate-400">Inspector:</strong> ${item.inspectorMould || item.inspectorJig || item.inspector || '-'}</p>
+          <p><strong class="text-slate-400">วันที่ตรวจ:</strong> ${item.inspectionDate} ${item.inspectionTime}</p>
+          <p><strong class="text-slate-400">Remark:</strong> ${item.remark || '-'}</p>
+        </div>
+      `;
+
+      document.getElementById('detailContent').innerHTML = rowsHTML;
+      openModal('viewDetailModal');
+    }
+
+    // Admin Authentication Handlers
+    function openAdminLoginModal() {
+      if (isAdminLoggedIn) {
+        if (confirm("คุณต้องการออกจากระบบ Admin หรือไม่?")) {
+          isAdminLoggedIn = false;
+          adminToken = "";
+          updateAdminUI();
+          showToast("แจ้งเตือน", "ออกจากระบบ Admin เรียบร้อยแล้ว", "info");
+        }
+      } else {
+        openModal('adminLoginModal');
+      }
+    }
+
+    async function handleAdminLoginSubmit(e) {
+      e.preventDefault();
+      const u = document.getElementById('adminUser').value.trim();
+      const p = document.getElementById('adminPass').value.trim();
+
+      const res = await apiCall("adminLogin", { username: u, password: p });
+      if (res.success) {
+        isAdminLoggedIn = true;
+        adminToken = res.token;
+        updateAdminUI();
+        closeModal('adminLoginModal');
+        document.getElementById('adminUser').value = "";
+        document.getElementById('adminPass').value = "";
+        showToast("สำเร็จ", res.message, "success");
+      } else {
+        showToast("เข้าสู่ระบบไม่สำเร็จ", res.message, "danger");
+      }
+    }
+
+    function updateAdminUI() {
+      const container = document.getElementById('adminBadgeContainer');
+      const adminTopicFilter = document.getElementById('filterTopicAdmin');
+
+      if (isAdminLoggedIn) {
+        container.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-semibold px-2.5 py-1 rounded-lg flex items-center gap-1">
+              <i class="fa-solid fa-user-gear"></i> Admin Mode
+            </span>
+            <button onclick="openAdminLoginModal()" class="bg-rose-900/40 hover:bg-rose-800 text-rose-300 border border-rose-700/50 text-xs px-2 py-1 rounded-lg" title="Logout">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </div>
+        `;
+        adminTopicFilter.classList.remove('hidden');
+      } else {
+        container.innerHTML = `
+          <button onclick="openAdminLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition">
+            <i class="fa-solid fa-user-shield text-slate-400"></i>
+            <span>Admin Login</span>
+          </button>
+        `;
+        adminTopicFilter.classList.add('hidden');
+        adminTopicFilter.value = "CURRENT";
+      }
+      applyFilters();
+    }
+
+    // Admin Inspection Modal
+    function openInspectionModal(topicKey, recordId) {
+      const item = (records[topicKey] || []).find(r => r.recordId === recordId);
+      if (!item) return;
+
+      document.getElementById('inspRecordId').value = recordId;
+      document.getElementById('inspTopicKey').value = topicKey;
+      document.getElementById('inspJobNo').textContent = `Job No: ${item.jobNo}`;
+
+      const sender = item.senderMould || item.senderJig || item.sender || "-";
+      document.getElementById('inspJobSummary').innerHTML = `
+        <div class="grid grid-cols-2 gap-x-2 gap-y-1">
+          <div><span class="text-slate-400">ลูกค้า:</span> ${item.customer}</div>
+          <div><span class="text-slate-400">Part No:</span> ${item.partNo} (Rev: ${item.rev})</div>
+          <div><span class="text-slate-400">ผู้ส่งงาน:</span> ${sender}</div>
+          <div><span class="text-slate-400">เวลาส่งงาน:</span> ${item.userDate} ${item.userTime}</div>
+        </div>
+      `;
+
+      // Fill Inspector options
+      populateInspectorDropdown();
+
+      // Reset form controls
+      const form = document.getElementById('inspectionForm');
+      form.reset();
+      document.getElementById('inspRecordId').value = recordId;
+      document.getElementById('inspTopicKey').value = topicKey;
+
+      const lockNotice = document.getElementById('inspLockNotice');
+      const btnSave = document.getElementById('btnSaveInspection');
+
+      if (item.isLocked) {
+        // Populate existing result read-only
+        if (item.result === "OK" || item.result === "NG") {
+          const radio = form.querySelector(`input[name="inspResult"][value="${item.result}"]`);
+          if (radio) radio.checked = true;
+        }
+        document.getElementById('inspInspector').value = item.inspectorMould || item.inspectorJig || item.inspector || "";
+        document.getElementById('inspRemark').value = item.remark || "";
+
+        // Disable controls
+        form.querySelectorAll('input, select, textarea').forEach(el => el.disabled = true);
+        lockNotice.classList.remove('hidden');
+        btnSave.classList.add('hidden');
+      } else {
+        form.querySelectorAll('input, select, textarea').forEach(el => el.disabled = false);
+        lockNotice.classList.add('hidden');
+        btnSave.classList.remove('hidden');
+      }
+
+      openModal('inspectionModal');
+    }
+
+    async function handleInspectionSubmit(e) {
+      e.preventDefault();
+      const recordId = document.getElementById('inspRecordId').value;
+      const topicKey = document.getElementById('inspTopicKey').value;
+      const result = document.querySelector('input[name="inspResult"]:checked')?.value;
+      const inspector = document.getElementById('inspInspector').value;
+      const remark = document.getElementById('inspRemark').value;
+
+      if (!result || !inspector) {
+        showToast("แจ้งเตือน", "กรุณาระบุผลการตรวจ และ ผู้ตรวจงาน", "warning");
+        return;
+      }
+
+      const btn = document.getElementById('btnSaveInspection');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลัง Lock และบันทึก...`;
+
+      const res = await apiCall("submitInspection", {
+        token: adminToken,
+        data: { topicKey, recordId, result, inspector, remark }
+      });
+
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> บันทึกผลตรวจ & Lock Row`;
+
+      if (res.success) {
+        showToast("สำเร็จ!", res.message, "success");
+        closeModal('inspectionModal');
+        await loadSystemData();
+      } else {
+        showToast("ข้อผิดพลาด", res.message, "danger");
+      }
+    }
+
+    // Dropdown Helpers
+    function populateCustomerFilter() {
+      const select = document.getElementById('filterCustomer');
+      select.innerHTML = '<option value="ALL">ลูกค้า: ทั้งหมด</option>';
+      masterData.customers.forEach(c => {
+        select.innerHTML += `<option value="${c}">${c}</option>`;
+      });
+    }
+
+    function populateInspectorDropdown() {
+      const select = document.getElementById('inspInspector');
+      if (!select) return;
+      select.innerHTML = '<option value="">-- เลือกผู้ตรวจงาน --</option>';
+      masterData.inspectors.forEach(insp => {
+        select.innerHTML += `<option value="${insp}">${insp}</option>`;
+      });
+    }
+
+    // Toast Notification System
+    function showToast(title, message, type = "info") {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      const colors = {
+        success: "bg-emerald-950/90 border-emerald-500/80 text-emerald-200",
+        danger: "bg-rose-950/90 border-rose-500/80 text-rose-200",
+        warning: "bg-amber-950/90 border-amber-500/80 text-amber-200",
+        info: "bg-slate-900/90 border-cyan-500/80 text-cyan-200"
+      };
+
+      const icons = {
+        success: "fa-circle-check text-emerald-400",
+        danger: "fa-circle-xmark text-rose-400",
+        warning: "fa-triangle-exclamation text-amber-400",
+        info: "fa-circle-info text-cyan-400"
+      };
+
+      toast.className = `pointer-events-auto border ${colors[type]} p-3 rounded-xl shadow-2xl backdrop-blur-md flex items-start gap-3 transform transition duration-300 ease-out translate-y-2 opacity-0`;
+      
+      toast.innerHTML = `
+        <i class="fa-solid ${icons[type]} text-lg mt-0.5"></i>
+        <div class="flex-1 text-xs">
+          <p class="font-bold mb-0.5">${title}</p>
+          <p class="opacity-90 leading-relaxed">${message}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      `;
+
+      container.appendChild(toast);
+      
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function showLoadingToast(msg) {
+      let loadingToast = document.getElementById('globalLoadingToast');
+      if (!loadingToast) {
+        loadingToast = document.createElement('div');
+        loadingToast.id = 'globalLoadingToast';
+        loadingToast.className = 'fixed bottom-4 right-4 z-50 bg-slate-900 border border-cyan-500/50 text-cyan-300 px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-3 text-xs';
+        document.body.appendChild(loadingToast);
+      }
+      loadingToast.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-base text-cyan-400"></i> <span>${msg}</span>`;
+      loadingToast.classList.remove('hidden');
+    }
+
+    function hideLoadingToast() {
+      const loadingToast = document.getElementById('globalLoadingToast');
+      if (loadingToast) loadingToast.classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
