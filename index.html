@@ -2100,18 +2100,35 @@ body, button, input, select, textarea, table {
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังบันทึก...`;
 
-      const res = await apiCall("submitUserJob", { data });
+      try {
+  const res = await apiCall("submitUserJob", { data });
 
-      btn.disabled = false;
-      btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> บันทึกส่งงาน (Save)`;
+  if (res.success) {
+    showToast("สำเร็จ!", res.message, "success");
+    form.reset();
 
-      if (res.success) {
-        showToast("สำเร็จ!", res.message, "success");
-        form.reset();
-        await loadSystemData(); // Refresh list immediately
-      } else {
-        showToast("ข้อผิดพลาด", res.message || "ไม่สามารถบันทึกข้อมูลได้", "danger");
-      }
+    // ไม่รอโหลดข้อมูลทั้งระบบใหม่
+    // ข้อมูลถูกบันทึกลง Google Sheet เรียบร้อยแล้ว
+  } else {
+    showToast(
+      "ข้อผิดพลาด",
+      res.message || "ไม่สามารถบันทึกข้อมูลได้",
+      "danger"
+    );
+  }
+
+} catch (err) {
+  console.error("submitUserJob error:", err);
+  showToast(
+    "ข้อผิดพลาด",
+    err.message || "ไม่สามารถบันทึกข้อมูลได้",
+    "danger"
+  );
+
+} finally {
+  btn.disabled = false;
+  btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> บันทึกส่งงาน (Save)`;
+}
     }
 
     // Filter Logic & Table Rendering
