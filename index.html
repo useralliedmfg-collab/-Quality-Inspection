@@ -2416,57 +2416,186 @@ function updateAdminUI() {
   applyFilters();
 }
     // Admin Inspection Modal
-    function openInspectionModal(topicKey, recordId) {
-      const item = (records[topicKey] || []).find(r => r.recordId === recordId);
-      if (!item) return;
+    
+function openInspectionModal(topicKey, recordId) {
+  const item = (records[topicKey] || []).find(r => r.recordId === recordId);
+  if (!item) return;
 
-      document.getElementById('inspRecordId').value = recordId;
-      document.getElementById('inspTopicKey').value = topicKey;
-      document.getElementById('inspJobNo').textContent = `Job No: ${item.jobNo}`;
+  document.getElementById('inspRecordId').value = recordId;
+  document.getElementById('inspTopicKey').value = topicKey;
+  document.getElementById('inspJobNo').textContent = `Job No: ${item.jobNo}`;
 
-      const sender = item.senderMould || item.senderJig || item.sender || "-";
-      document.getElementById('inspJobSummary').innerHTML = `
-        <div class="grid grid-cols-2 gap-x-2 gap-y-1">
-          <div><span class="text-slate-400">ลูกค้า:</span> ${item.customer}</div>
-          <div><span class="text-slate-400">Part No:</span> ${item.partNo} (Rev: ${item.rev})</div>
-          <div><span class="text-slate-400">ผู้ส่งงาน:</span> ${sender}</div>
-          <div><span class="text-slate-400">เวลาส่งงาน:</span> ${item.userDate} ${item.userTime}</div>
-        </div>
-      `;
+  const sender = item.senderMould || item.senderJig || item.sender || "-";
 
-      // Fill Inspector options
-      populateInspectorDropdown();
+  // ข้อมูลพื้นฐาน
+  let detailHTML = `
+    <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
+      <div><span class="text-slate-400">วันที่ส่งงาน:</span> ${item.userDate || '-'}</div>
+      <div><span class="text-slate-400">เวลาส่งงาน:</span> ${item.userTime || '-'}</div>
+      <div><span class="text-slate-400">ลูกค้า:</span> ${item.customer || '-'}</div>
+      <div><span class="text-slate-400">Part No:</span> ${item.partNo || '-'}</div>
+      <div><span class="text-slate-400">Rev:</span> ${item.rev || '-'}</div>
+      <div><span class="text-slate-400">ผู้ส่งงาน:</span> ${sender}</div>
+  `;
 
-      // Reset form controls
-      const form = document.getElementById('inspectionForm');
-      form.reset();
-      document.getElementById('inspRecordId').value = recordId;
-      document.getElementById('inspTopicKey').value = topicKey;
+  // =========================
+  // DIECUT
+  // =========================
+  if (topicKey === "DIECUT") {
+    detailHTML += `
+      <div><span class="text-slate-400">DIECUT NO:</span> ${item.diecutNo || '-'}</div>
+      <div><span class="text-slate-400">REFER NO DIECUT:</span> ${item.referNoDiecut || '-'}</div>
+      <div><span class="text-slate-400">CAVITY:</span> ${item.cavity || '-'}</div>
+      <div><span class="text-slate-400">ผู้ส่ง MOULD:</span> ${item.senderMould || '-'}</div>
+    `;
+  }
 
-      const lockNotice = document.getElementById('inspLockNotice');
-      const btnSave = document.getElementById('btnSaveInspection');
+  // =========================
+  // JIG FA
+  // =========================
+  else if (topicKey === "JIG_FA") {
+    detailHTML += `
+      <div><span class="text-slate-400">JIG TYPE:</span> ${item.jigType || '-'}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}</div>
+      <div><span class="text-slate-400">JIG Quantity:</span> ${item.jigQty || '-'}</div>
+      <div><span class="text-slate-400">ผู้ส่ง JIG:</span> ${item.senderJig || '-'}</div>
+    `;
+  }
 
-      if (item.isLocked) {
-        // Populate existing result read-only
-        if (item.result === "OK" || item.result === "NG") {
-          const radio = form.querySelector(`input[name="inspResult"][value="${item.result}"]`);
-          if (radio) radio.checked = true;
-        }
-        document.getElementById('inspInspector').value = item.inspectorMould || item.inspectorJig || item.inspector || "";
-        document.getElementById('inspRemark').value = item.remark || "";
+  // =========================
+  // FIRST SHOT FA
+  // =========================
+  else if (topicKey === "FIRST_SHOT_FA") {
 
-        // Disable controls
-        form.querySelectorAll('input, select, textarea').forEach(el => el.disabled = true);
-        lockNotice.classList.remove('hidden');
-        btnSave.classList.add('hidden');
-      } else {
-        form.querySelectorAll('input, select, textarea').forEach(el => el.disabled = false);
-        lockNotice.classList.add('hidden');
-        btnSave.classList.remove('hidden');
-      }
+  // รองรับ toolingReq ที่เป็น Array หรือ String
+  let toolingReqDisplay = "-";
 
-      openModal('inspectionModal');
+  if (Array.isArray(item.toolingReq)) {
+    toolingReqDisplay = item.toolingReq.join(", ");
+  } else if (item.toolingReq) {
+    toolingReqDisplay = item.toolingReq;
+  }
+
+  if (item.toolingReqOther) {
+    toolingReqDisplay += `, อื่นๆ: ${item.toolingReqOther}`;
+  }
+
+  detailHTML += `
+    <div><span class="text-slate-400">FA NO:</span> ${item.faNo || '-'}</div>
+
+    <div>
+      <span class="text-slate-400">TOOLING REQUIREMENT:</span>
+      ${toolingReqDisplay}
+    </div>
+
+    <div>
+      <span class="text-slate-400">หมวดเครื่องจักร:</span>
+      ${item.machineCategory || '-'}
+    </div>
+
+    <div>
+      <span class="text-slate-400">หมายเลขเครื่อง:</span>
+      ${item.machineNo || '-'}
+    </div>
+
+    <div>
+      <span class="text-slate-400">สถานะ PACK:</span>
+      ${item.isPack ? 'PACK' : 'NO PACK'}
+    </div>
+
+    <div>
+      <span class="text-slate-400">จำนวนที่ส่ง (หลัก):</span>
+      ${item.mainQty || '-'}
+    </div>
+
+    <div>
+      <span class="text-slate-400">จำนวนเพิ่มเติม:</span>
+      ${item.extraQty || '-'}
+    </div>
+
+    <div>
+      <span class="text-slate-400">ผู้ส่งงาน:</span>
+      ${item.sender || '-'}
+    </div>
+  `;
+}
+    
+  // =========================
+  // FA FG
+  // =========================
+  else if (topicKey === "FA_FG") {
+    detailHTML += `
+      <div><span class="text-slate-400">FA NO:</span> ${item.faNo || '-'}</div>
+      <div><span class="text-slate-400">จำนวนที่ส่ง (หลัก):</span> ${item.mainQty || '-'}</div>
+      <div><span class="text-slate-400">จำนวนเพิ่มเติม:</span> ${item.extraQty || '-'}</div>
+      <div><span class="text-slate-400">ผู้ส่งงาน:</span> ${item.sender || '-'}</div>
+    `;
+  }
+
+  detailHTML += `</div>`;
+
+  // แสดงข้อมูลทั้งหมดในส่วน Summary
+  document.getElementById('inspJobSummary').innerHTML = `
+    <div class="bg-slate-950 border border-slate-800 rounded-lg p-3">
+      <div class="text-cyan-400 font-bold text-xs mb-2">
+        <i class="fa-solid fa-clipboard-list mr-1"></i>
+        ข้อมูลที่ User ส่งมา
+      </div>
+      ${detailHTML}
+    </div>
+  `;
+
+  // Fill Inspector options
+  populateInspectorDropdown();
+
+  // Reset form controls
+  const form = document.getElementById('inspectionForm');
+  form.reset();
+
+  document.getElementById('inspRecordId').value = recordId;
+  document.getElementById('inspTopicKey').value = topicKey;
+
+  const lockNotice = document.getElementById('inspLockNotice');
+  const btnSave = document.getElementById('btnSaveInspection');
+
+  if (item.isLocked) {
+
+    // แสดงผลตรวจเดิม
+    if (item.result === "OK" || item.result === "NG") {
+      const radio = form.querySelector(
+        `input[name="inspResult"][value="${item.result}"]`
+      );
+      if (radio) radio.checked = true;
     }
+
+    document.getElementById('inspInspector').value =
+      item.inspectorMould ||
+      item.inspectorJig ||
+      item.inspector ||
+      "";
+
+    document.getElementById('inspRemark').value =
+      item.remark || "";
+
+    // Disable controls
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      el.disabled = true;
+    });
+
+    lockNotice.classList.remove('hidden');
+    btnSave.classList.add('hidden');
+
+  } else {
+
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      el.disabled = false;
+    });
+
+    lockNotice.classList.add('hidden');
+    btnSave.classList.remove('hidden');
+  }
+
+  openModal('inspectionModal');
+}
 
     async function handleInspectionSubmit(e) {
       e.preventDefault();
