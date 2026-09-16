@@ -30,6 +30,205 @@
       }
     }
   </script>
+
+  /* =========================================================
+   STEP 1 — AMS UNIFIED UI
+   ปรับหน้าตาทั้งระบบให้เป็น Theme เดียวกัน
+   ไม่แตะ JS / GAS / ID / Function
+   ========================================================= */
+
+/* ---------- GLOBAL ---------- */
+html,
+body {
+    background: #f4f7fb !important;
+    color: #1e293b !important;
+    font-family: 'Kanit', sans-serif !important;
+}
+
+/* ---------- MAIN ---------- */
+main {
+    background: #f4f7fb !important;
+}
+
+/* ---------- ALL CARDS ---------- */
+main section,
+#viewUserForm > div,
+#viewUserDeptSelect button.group {
+    border-radius: 16px !important;
+}
+
+/* ---------- HEADER ---------- */
+header {
+    background: #ffffff !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, .06) !important;
+}
+
+header h1 {
+    color: #0f172a !important;
+}
+
+header p,
+header #liveDate {
+    color: #64748b !important;
+}
+
+header #liveTime {
+    color: #0284c7 !important;
+    font-weight: 600;
+}
+
+/* ---------- NAVIGATION ---------- */
+nav {
+    background: #ffffff !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+nav .tab-btn {
+    color: #64748b !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    transition: all .2s ease !important;
+}
+
+nav .tab-btn:hover {
+    color: #0369a1 !important;
+    background: #f0f9ff !important;
+}
+
+nav .tab-btn.active {
+    color: #0284c7 !important;
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+    font-weight: 600 !important;
+}
+
+/* ---------- FORM ---------- */
+#userJobForm label,
+#viewUserForm label {
+    color: #334155 !important;
+    font-weight: 500 !important;
+}
+
+#userJobForm input,
+#userJobForm select,
+#userJobForm textarea,
+#viewUserForm input,
+#viewUserForm select,
+#viewUserForm textarea {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 9px !important;
+    transition: all .2s ease !important;
+}
+
+#userJobForm input:focus,
+#userJobForm select:focus,
+#userJobForm textarea:focus,
+#viewUserForm input:focus,
+#viewUserForm select:focus,
+#viewUserForm textarea:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, .12) !important;
+    outline: none !important;
+}
+
+/* ---------- TOPIC CARDS ---------- */
+#viewUserDeptSelect button.group {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, .05) !important;
+    transition: all .2s ease !important;
+}
+
+#viewUserDeptSelect button.group:hover {
+    transform: translateY(-3px) !important;
+    border-color: #7dd3fc !important;
+    box-shadow: 0 10px 24px rgba(2, 132, 199, .10) !important;
+}
+
+/* ---------- DASHBOARD KPI ---------- */
+main .grid.grid-cols-5 > div {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, .04) !important;
+}
+
+/* ---------- SEARCH / FILTER ---------- */
+main input#searchInput,
+main select {
+    border-radius: 8px !important;
+}
+
+/* ---------- TABLE ---------- */
+main table {
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+main table thead {
+    background: #f8fafc !important;
+    color: #475569 !important;
+}
+
+main table tbody tr {
+    background: #ffffff !important;
+    transition: background .15s ease !important;
+}
+
+main table tbody tr:nth-child(even) {
+    background: #fbfdff !important;
+}
+
+main table tbody tr:hover {
+    background: #f0f9ff !important;
+}
+
+main table tbody td {
+    color: #334155 !important;
+    border-color: #eef2f7 !important;
+}
+
+/* ---------- BUTTON ---------- */
+button {
+    transition: all .18s ease !important;
+}
+
+button:not(:disabled):hover {
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+/* ---------- MODAL ---------- */
+.fixed.inset-0 {
+    backdrop-filter: blur(4px);
+}
+
+.fixed.inset-0 > div {
+    border-radius: 16px !important;
+}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
   <style>
 /* =========================================================
    AMS FA QUALITY INSPECTION
