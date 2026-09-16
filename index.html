@@ -1731,10 +1731,14 @@ body, button, input, select, textarea, table {
 
     // Initialize System on DOM Ready
     document.addEventListener("DOMContentLoaded", () => {
-      startClock();
-      loadSystemData();
-      renderFormForTopic(activeTopic);
-    });
+  startClock();
+  renderFormForTopic(activeTopic);
+
+  // โหลดข้อมูลระบบหลังจากหน้า UI แสดงผลแล้ว
+  setTimeout(() => {
+    loadSystemData();
+  }, 100);
+});
 
     // Real-time Clock in Bangkok Timezone
     function startClock() {
@@ -1752,22 +1756,72 @@ body, button, input, select, textarea, table {
 
     // Backend HTTP API Fetcher
     async function apiCall(action, payload = {}) {
-      showLoadingToast("กำลังประมวลผล...");
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action, ...payload })
-        });
-        const result = await response.json();
-        hideLoadingToast();
-        return result;
-      } catch (err) {
-        hideLoadingToast();
-        showToast("Error", "ไม่สามารถเชื่อมต่อ Server ได้: " + err.message, "danger");
-        return { success: false, message: err.message };
-      }
+  showLoadingToast("กำลังประมวลผล...");
+
+  const controller = new AbortController();
+
+  // ถ้าเกิน 30 วินาที ให้ยกเลิก request
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, 30000);
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action,
+        ...payload
+      }),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(`Server Error (${response.status})`);
     }
+
+    const result = await response.json();
+
+    hideLoadingToast();
+
+    return result;
+
+  } catch (err) {
+
+    clearTimeout(timeoutId);
+    hideLoadingToast();
+
+    if (err.name === "AbortError") {
+      showToast(
+        "หมดเวลาการเชื่อมต่อ",
+        "Server ใช้เวลานานเกิน 30 วินาที กรุณาลองใหม่อีกครั้ง",
+        "danger"
+      );
+
+      return {
+        success: false,
+        message: "Request timeout"
+      };
+    }
+
+    console.error("apiCall error:", err);
+
+    showToast(
+      "Error",
+      "ไม่สามารถเชื่อมต่อ Server ได้: " + err.message,
+      "danger"
+    );
+
+    return {
+      success: false,
+      message: err.message
+    };
+  }
+}
 
     // Load initial system data
     async function loadSystemData() {
@@ -2104,18 +2158,20 @@ body, button, input, select, textarea, table {
   const res = await apiCall("submitUserJob", { data });
 
   if (res.success) {
-    showToast("สำเร็จ!", res.message, "success");
-    form.reset();
+  showToast("สำเร็จ!", res.message, "success");
+  form.reset();
 
-    // ไม่รอโหลดข้อมูลทั้งระบบใหม่
-    // ข้อมูลถูกบันทึกลง Google Sheet เรียบร้อยแล้ว
-  } else {
-    showToast(
-      "ข้อผิดพลาด",
-      res.message || "ไม่สามารถบันทึกข้อมูลได้",
-      "danger"
-    );
-  }
+  // โหลดข้อมูล Dashboard ใหม่
+  setTimeout(() => {
+    loadSystemData();
+  }, 300);
+} else {
+  showToast(
+    "ข้อผิดพลาด",
+    res.message || "ไม่สามารถบันทึกข้อมูลได้",
+    "danger"
+  );
+}
 
 } catch (err) {
   console.error("submitUserJob error:", err);
@@ -2492,10 +2548,9 @@ body, button, input, select, textarea, table {
       btn.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> บันทึกผลตรวจ & Lock Row`;
 
       if (res.success) {
-        showToast("สำเร็จ!", res.message, "success");
-        closeModal('inspectionModal');
-        await loadSystemData();
-      } else {
+  showToast("สำเร็จ!", res.message, "success");
+  form.reset();
+} else {
         showToast("ข้อผิดพลาด", res.message, "danger");
       }
     }
