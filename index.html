@@ -31,12 +31,1344 @@
     }
   </script>
   <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #1e293b; }
-    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
-  </style>
+/* =========================================================
+   AMS FA QUALITY INSPECTION
+   LIGHT UI ENHANCEMENT
+   ไม่กระทบ Logic / GAS / ID / Function
+   ========================================================= */
+
+/* ---------- GLOBAL ---------- */
+
+html,
+body {
+    background: #f4f7fb !important;
+    color: #1e293b !important;
+}
+
+body {
+    font-family: 'Kanit', sans-serif !important;
+}
+
+/* ---------- SCROLLBAR ---------- */
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #eef2f7;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ---------- HEADER ---------- */
+
+header.bg-slate-950 {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+}
+
+header h1 {
+    color: #0f172a !important;
+}
+
+header p {
+    color: #64748b !important;
+}
+
+header #liveDate {
+    color: #64748b !important;
+}
+
+header #liveTime {
+    color: #0284c7 !important;
+}
+
+/* ---------- ADMIN LOGIN ---------- */
+
+#adminBadgeContainer button {
+    background: #ffffff !important;
+    color: #334155 !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+#adminBadgeContainer button:hover {
+    background: #f8fafc !important;
+    border-color: #0284c7 !important;
+    color: #0284c7 !important;
+}
+
+/* ---------- TOP TABS ---------- */
+
+nav.bg-slate-900 {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 1px 5px rgba(15, 23, 42, 0.04);
+}
+
+nav .tab-btn {
+    color: #64748b !important;
+    background: transparent !important;
+    border-color: transparent !important;
+}
+
+nav .tab-btn:hover {
+    color: #0369a1 !important;
+    background: #f0f9ff !important;
+}
+
+nav .tab-btn.active {
+    color: #0284c7 !important;
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+    font-weight: 600;
+}
+
+/* ---------- MAIN AREA ---------- */
+
+main {
+    background: #f4f7fb !important;
+}
+
+/* LEFT USER FORM */
+
+main > section:first-child {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+/* RIGHT DASHBOARD */
+
+main > section:last-child {
+    background: #f4f7fb !important;
+}
+
+/* ---------- FORM HEADER ---------- */
+
+#formTitle {
+    color: #0f172a !important;
+}
+
+main > section:first-child .border-b {
+    border-color: #e2e8f0 !important;
+}
+
+main > section:first-child .text-cyan-400 {
+    color: #0284c7 !important;
+}
+
+/* Auto Save & Lock */
+
+main > section:first-child span {
+    background: #f8fafc !important;
+    color: #64748b !important;
+    border-color: #e2e8f0 !important;
+}
+
+/* ---------- FORM CONTENT ---------- */
+
+#userJobForm label {
+    color: #334155 !important;
+}
+
+#userJobForm input,
+#userJobForm select,
+#userJobForm textarea {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #cbd5e1 !important;
+}
+
+#userJobForm input::placeholder,
+#userJobForm textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+#userJobForm input:focus,
+#userJobForm select:focus,
+#userJobForm textarea:focus {
+    border-color: #0284c7 !important;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.10) !important;
+    outline: none !important;
+}
+
+/* ---------- BUTTONS ---------- */
+
+button {
+    transition:
+        background-color .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        box-shadow .18s ease,
+        transform .18s ease;
+}
+
+/* Reset */
+
+main > section:first-child button[type="button"] {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+main > section:first-child button[type="button"]:hover {
+    background: #e2e8f0 !important;
+    color: #1e293b !important;
+}
+
+/* Submit */
+
+#btnSubmitForm {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 5px 14px rgba(2, 132, 199, 0.20) !important;
+}
+
+#btnSubmitForm:hover {
+    background: #0369a1 !important;
+    box-shadow: 0 7px 18px rgba(2, 132, 199, 0.25) !important;
+    transform: translateY(-1px);
+}
+
+/* ---------- KPI CARDS ---------- */
+
+main > section:last-child .grid > div {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.045);
+}
+
+main > section:last-child .grid > div:first-child {
+    border-left: 3px solid #0284c7 !important;
+}
+
+main > section:last-child .grid > div p:first-child {
+    color: #64748b !important;
+}
+
+#metricTotal {
+    color: #0f172a !important;
+}
+
+#metricPending {
+    color: #d97706 !important;
+}
+
+#metricInspected {
+    color: #0284c7 !important;
+}
+
+#metricOk {
+    color: #059669 !important;
+}
+
+#metricNg {
+    color: #e11d48 !important;
+}
+
+/* ---------- SEARCH / FILTER TOOLBAR ---------- */
+
+main > section:last-child > div:nth-child(2) {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.045);
+}
+
+#searchInput,
+#filterStatus,
+#filterResult,
+#filterCustomer,
+#filterTopicAdmin {
+    background: #ffffff !important;
+    color: #334155 !important;
+    border-color: #cbd5e1 !important;
+}
+
+#searchInput::placeholder {
+    color: #94a3b8 !important;
+}
+
+#searchInput:focus,
+#filterStatus:focus,
+#filterResult:focus,
+#filterCustomer:focus,
+#filterTopicAdmin:focus {
+    border-color: #0284c7 !important;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.08) !important;
+    outline: none !important;
+}
+
+/* Search icon */
+
+#searchInput + i,
+.relative .fa-magnifying-glass {
+    color: #94a3b8 !important;
+}
+
+/* Refresh */
+
+main > section:last-child button[title="รีเฟรชข้อมูล"] {
+    background: #ffffff !important;
+    color: #475569 !important;
+    border-color: #cbd5e1 !important;
+}
+
+main > section:last-child button[title="รีเฟรชข้อมูล"]:hover {
+    background: #f0f9ff !important;
+    color: #0284c7 !important;
+    border-color: #7dd3fc !important;
+}
+
+/* ---------- JOB TABLE ---------- */
+
+main > section:last-child table {
+    background: #ffffff !important;
+    color: #334155 !important;
+}
+
+main > section:last-child table thead {
+    background: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+    color: #475569 !important;
+}
+
+main > section:last-child table tbody {
+    background: #ffffff !important;
+}
+
+main > section:last-child table tbody tr {
+    border-color: #eef2f7 !important;
+}
+
+main > section:last-child table tbody tr:hover {
+    background: #f8fbff !important;
+}
+
+/* Table text */
+
+main > section:last-child table td {
+    color: #475569 !important;
+}
+
+main > section:last-child table td:first-child {
+    color: #0f172a !important;
+    font-weight: 600;
+}
+
+main > section:last-child table th {
+    color: #475569 !important;
+    font-weight: 600;
+}
+
+/* ---------- TABLE FOOTER ---------- */
+
+main > section:last-child table + div,
+#tableCountText {
+    color: #64748b !important;
+}
+
+main > section:last-child table + div {
+    background: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+}
+
+#topicIndicatorText {
+    color: #0284c7 !important;
+}
+
+/* ---------- COMMON LIGHT CARDS ---------- */
+
+.bg-slate-900,
+.bg-slate-950 {
+    color: #334155;
+}
+
+/* Override common text colors */
+
+.text-white {
+    color: #0f172a !important;
+}
+
+.text-slate-100 {
+    color: #1e293b !important;
+}
+
+.text-slate-200 {
+    color: #334155 !important;
+}
+
+.text-slate-300 {
+    color: #475569 !important;
+}
+
+.text-slate-400 {
+    color: #64748b !important;
+}
+
+.text-slate-500 {
+    color: #64748b !important;
+}
+
+/* Borders */
+
+.border-slate-800,
+.border-slate-700 {
+    border-color: #e2e8f0 !important;
+}
+
+/* ---------- MODALS ---------- */
+
+.fixed.inset-0.bg-slate-950\/80 {
+    background: rgba(15, 23, 42, 0.35) !important;
+    backdrop-filter: blur(5px);
+}
+
+.fixed.inset-0 > div {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #334155 !important;
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.18),
+        0 5px 15px rgba(15, 23, 42, 0.08);
+}
+
+.fixed.inset-0 h3 {
+    color: #0f172a !important;
+}
+
+.fixed.inset-0 input,
+.fixed.inset-0 select,
+.fixed.inset-0 textarea {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #cbd5e1 !important;
+}
+
+.fixed.inset-0 input:focus,
+.fixed.inset-0 select:focus,
+.fixed.inset-0 textarea:focus {
+    border-color: #0284c7 !important;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.10) !important;
+}
+
+/* ---------- STATUS COLORS ---------- */
+
+.text-amber-400,
+.text-amber-300 {
+    color: #d97706 !important;
+}
+
+.text-cyan-400,
+.text-cyan-300 {
+    color: #0284c7 !important;
+}
+
+.text-emerald-400,
+.text-emerald-300 {
+    color: #059669 !important;
+}
+
+.text-rose-400,
+.text-rose-300 {
+    color: #e11d48 !important;
+}
+
+/* ---------- ADMIN MODE ---------- */
+
+#adminBadgeContainer .text-amber-300 {
+    color: #b45309 !important;
+}
+
+#adminBadgeContainer .bg-amber-500\/20 {
+    background: #fff7ed !important;
+}
+
+#adminBadgeContainer .border-amber-500\/40 {
+    border-color: #fed7aa !important;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 768px) {
+
+    header {
+        min-height: 64px;
+        height: auto !important;
+    }
+
+    header h1 {
+        font-size: 0.95rem !important;
+    }
+
+    header p {
+        font-size: 0.65rem !important;
+    }
+
+    main > section {
+        border-right: none !important;
+    }
+
+    main > section:last-child {
+        background: #f4f7fb !important;
+    }
+
+    main > section:last-child .grid {
+        gap: 5px !important;
+    }
+
+    main > section:last-child .grid > div {
+        padding: 7px 4px !important;
+    }
+
+    main > section:last-child .grid > div p:first-child {
+        font-size: 9px !important;
+    }
+
+    main > section:last-child .grid > div p:last-child {
+        font-size: 17px !important;
+    }
+
+    table {
+        min-width: 760px;
+    }
+}
+
+/* ---------- SMOOTH UI ---------- */
+
+section,
+nav,
+header,
+table,
+input,
+select,
+textarea,
+button {
+    transition:
+        background-color .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease,
+        color .18s ease;
+}
+
+    /* =========================================================
+   STEP 2 — DASHBOARD / KPI / JOB TABLE
+   ========================================================= */
+
+/* ---------- KPI CARD ---------- */
+
+main > section:last-child .grid.grid-cols-5 {
+    gap: 10px !important;
+}
+
+main > section:last-child .grid.grid-cols-5 > div {
+    position: relative;
+    overflow: hidden;
+    min-height: 68px;
+    border-radius: 12px !important;
+    padding: 10px 8px !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05) !important;
+}
+
+main > section:last-child .grid.grid-cols-5 > div::after {
+    content: "";
+    position: absolute;
+    right: -18px;
+    top: -18px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: rgba(2, 132, 199, 0.04);
+}
+
+main > section:last-child .grid.grid-cols-5 > div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* KPI labels */
+
+main > section:last-child .grid.grid-cols-5 > div p:first-child {
+    position: relative;
+    z-index: 1;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: .2px;
+}
+
+/* KPI numbers */
+
+main > section:last-child .grid.grid-cols-5 > div p:last-child {
+    position: relative;
+    z-index: 1;
+    margin-top: 2px;
+    font-size: 21px !important;
+    line-height: 1.1;
+}
+
+/* ---------- KPI LEFT ACCENTS ---------- */
+
+#metricTotal {
+    border-left: 4px solid #0284c7 !important;
+}
+
+#metricPending {
+    border-left: 4px solid #f59e0b !important;
+}
+
+#metricInspected {
+    border-left: 4px solid #0ea5e9 !important;
+}
+
+#metricOk {
+    border-left: 4px solid #10b981 !important;
+}
+
+#metricNg {
+    border-left: 4px solid #f43f5e !important;
+}
+
+/* ---------- SEARCH BAR ---------- */
+
+main > section:last-child > div:nth-child(2) {
+    border-radius: 12px !important;
+    padding: 10px !important;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.045) !important;
+}
+
+#searchInput,
+#filterStatus,
+#filterResult,
+#filterCustomer,
+#filterTopicAdmin {
+    min-height: 34px;
+    border-radius: 8px !important;
+    font-size: 12px !important;
+}
+
+#searchInput {
+    padding-left: 34px !important;
+    font-weight: 400;
+}
+
+#searchInput:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.10) !important;
+}
+
+.relative .fa-magnifying-glass {
+    left: 12px !important;
+    top: 10px !important;
+}
+
+/* ---------- FILTER SELECT ---------- */
+
+#filterStatus:hover,
+#filterResult:hover,
+#filterCustomer:hover,
+#filterTopicAdmin:hover {
+    border-color: #94a3b8 !important;
+}
+
+/* ---------- JOB TABLE CONTAINER ---------- */
+
+main > section:last-child .overflow-auto,
+main > section:last-child .overflow-x-auto {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    background: #ffffff !important;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.045);
+}
+
+/* ---------- TABLE ---------- */
+
+main > section:last-child table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    overflow: hidden;
+}
+
+/* Header */
+
+main > section:last-child table thead tr {
+    background: #f8fafc !important;
+}
+
+main > section:last-child table thead th {
+    padding: 10px 12px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    white-space: nowrap;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* Body */
+
+main > section:last-child table tbody tr {
+    background: #ffffff !important;
+    transition: all .15s ease !important;
+}
+
+main > section:last-child table tbody tr:nth-child(even) {
+    background: #fbfdff !important;
+}
+
+main > section:last-child table tbody tr:hover {
+    background: #f0f9ff !important;
+    box-shadow: inset 3px 0 0 #0284c7;
+}
+
+/* Cells */
+
+main > section:last-child table tbody td {
+    padding: 10px 12px !important;
+    font-size: 12px !important;
+    border-bottom: 1px solid #eef2f7 !important;
+    vertical-align: middle !important;
+}
+
+/* Last row */
+
+main > section:last-child table tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* ---------- JOB NUMBER ---------- */
+
+main > section:last-child table tbody td:first-child {
+    color: #0369a1 !important;
+    font-weight: 700 !important;
+}
+
+/* ---------- TABLE BADGES ---------- */
+
+main > section:last-child table .rounded-full {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    padding: 4px 9px !important;
+    white-space: nowrap;
+}
+
+/* ---------- ACTION BUTTONS ---------- */
+
+main > section:last-child table button {
+    border-radius: 7px !important;
+    min-width: 32px;
+    min-height: 30px;
+}
+
+main > section:last-child table button:hover {
+    transform: translateY(-1px);
+}
+
+/* ---------- EMPTY STATE ---------- */
+
+main > section:last-child table tbody td[colspan] {
+    padding: 35px 15px !important;
+    color: #94a3b8 !important;
+    font-size: 13px !important;
+}
+
+/* ---------- DASHBOARD FOOTER ---------- */
+
+#tableCountText {
+    font-size: 11px !important;
+    color: #64748b !important;
+}
+
+/* ---------- RESPONSIVE KPI ---------- */
+
+@media (max-width: 1100px) {
+
+    main > section:last-child .grid.grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(70px, 1fr)) !important;
+        gap: 6px !important;
+    }
+
+    main > section:last-child .grid.grid-cols-5 > div {
+        min-height: 62px;
+        padding: 8px 5px !important;
+    }
+
+    main > section:last-child .grid.grid-cols-5 > div p:first-child {
+        font-size: 9px !important;
+    }
+
+    main > section:last-child .grid.grid-cols-5 > div p:last-child {
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 640px) {
+
+    main > section:last-child .grid.grid-cols-5 {
+        gap: 4px !important;
+    }
+
+    main > section:last-child .grid.grid-cols-5 > div {
+        border-radius: 8px !important;
+        min-height: 55px;
+        padding: 6px 3px !important;
+    }
+
+    main > section:last-child .grid.grid-cols-5 > div p:first-child {
+        font-size: 8px !important;
+    }
+
+    main > section:last-child .grid.grid-cols-5 > div p:last-child {
+        font-size: 16px !important;
+    }
+}
+
+    /* =========================================================
+   STEP 3 — MODAL WHITE PREMIUM
+   ไม่กระทบ JS / GAS / Logic / ID
+   ========================================================= */
+
+/* ---------- MODAL BACKDROP ---------- */
+
+#addCustomerModal,
+#viewDetailModal,
+#adminLoginModal,
+#adminInspectionModal {
+    background: rgba(15, 23, 42, 0.38) !important;
+    backdrop-filter: blur(7px) !important;
+    -webkit-backdrop-filter: blur(7px) !important;
+}
+
+/* ---------- MODAL BOX ---------- */
+
+#addCustomerModal > div,
+#viewDetailModal > div,
+#adminLoginModal > div,
+#adminInspectionModal > div {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.18),
+        0 5px 15px rgba(15, 23, 42, 0.06) !important;
+    color: #334155 !important;
+}
+
+/* ---------- MODAL HEADERS ---------- */
+
+#addCustomerModal .border-b,
+#viewDetailModal .border-b,
+#adminLoginModal .border-b,
+#adminInspectionModal .border-b {
+    border-color: #e2e8f0 !important;
+}
+
+/* ---------- MODAL TITLE ---------- */
+
+#addCustomerModal h3,
+#viewDetailModal h3,
+#adminLoginModal h3,
+#adminInspectionModal h3 {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+
+/* ---------- CLOSE BUTTON ---------- */
+
+#addCustomerModal button[onclick*="closeModal"],
+#viewDetailModal button[onclick*="closeModal"],
+#adminLoginModal button[onclick*="closeModal"],
+#adminInspectionModal button[onclick*="closeModal"] {
+    color: #64748b !important;
+    transition: all .15s ease;
+}
+
+#addCustomerModal button[onclick*="closeModal"]:hover,
+#viewDetailModal button[onclick*="closeModal"]:hover,
+#adminLoginModal button[onclick*="closeModal"]:hover,
+#adminInspectionModal button[onclick*="closeModal"]:hover {
+    color: #0f172a !important;
+    background: #f1f5f9 !important;
+    border-radius: 7px;
+}
+
+/* ---------- DETAIL TOPIC BADGE ---------- */
+
+#detailTopicBadge {
+    background: #eff6ff !important;
+    color: #0369a1 !important;
+    border: 1px solid #bae6fd !important;
+    font-weight: 700 !important;
+}
+
+/* ---------- DETAIL JOB NUMBER ---------- */
+
+#detailJobNo {
+    color: #0f172a !important;
+    margin-top: 4px;
+}
+
+/* ---------- DETAIL CONTENT ---------- */
+
+#detailContent {
+    color: #475569 !important;
+}
+
+/* Injected detail rows */
+
+#detailContent > div {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 9px !important;
+    padding: 9px 11px !important;
+}
+
+#detailContent > div:hover {
+    background: #f0f9ff !important;
+    border-color: #bae6fd !important;
+}
+
+/* ---------- LABELS INSIDE MODAL ---------- */
+
+#addCustomerModal label,
+#viewDetailModal label,
+#adminLoginModal label,
+#adminInspectionModal label {
+    color: #475569 !important;
+    font-weight: 600 !important;
+}
+
+/* ---------- MODAL INPUTS ---------- */
+
+#addCustomerModal input,
+#viewDetailModal input,
+#adminLoginModal input,
+#adminInspectionModal input,
+#adminInspectionModal select,
+#adminInspectionModal textarea {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #cbd5e1 !important;
+}
+
+#addCustomerModal input::placeholder,
+#adminLoginModal input::placeholder,
+#adminInspectionModal input::placeholder,
+#adminInspectionModal textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+#addCustomerModal input:focus,
+#adminLoginModal input:focus,
+#adminInspectionModal input:focus,
+#adminInspectionModal select:focus,
+#adminInspectionModal textarea:focus {
+    border-color: #0284c7 !important;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.10) !important;
+    outline: none !important;
+}
+
+/* ---------- BUTTONS ---------- */
+
+#addCustomerModal button,
+#viewDetailModal button,
+#adminLoginModal button,
+#adminInspectionModal button {
+    transition: all .15s ease !important;
+}
+
+/* Cancel / Close */
+
+#addCustomerModal button.bg-slate-800,
+#viewDetailModal button.bg-slate-800,
+#adminLoginModal button.bg-slate-800,
+#adminInspectionModal button.bg-slate-800 {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+#addCustomerModal button.bg-slate-800:hover,
+#viewDetailModal button.bg-slate-800:hover,
+#adminLoginModal button.bg-slate-800:hover,
+#adminInspectionModal button.bg-slate-800:hover {
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+/* ---------- ADMIN LOGIN ---------- */
+
+#adminLoginModal .fa-lock {
+    color: #f59e0b !important;
+}
+
+#adminLoginModal input {
+    min-height: 40px;
+    border-radius: 9px !important;
+}
+
+#adminLoginModal button[type="submit"],
+#adminLoginModal button.bg-cyan-600 {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+}
+
+#adminLoginModal button[type="submit"]:hover,
+#adminLoginModal button.bg-cyan-600:hover {
+    background: #0369a1 !important;
+    transform: translateY(-1px);
+}
+
+/* ---------- ADMIN INSPECTION ---------- */
+
+#adminInspectionModal .bg-slate-900,
+#adminInspectionModal .bg-slate-950 {
+    background: #ffffff !important;
+}
+
+#adminInspectionModal .border-slate-700,
+#adminInspectionModal .border-slate-800 {
+    border-color: #e2e8f0 !important;
+}
+
+#adminInspectionModal .text-white {
+    color: #0f172a !important;
+}
+
+#adminInspectionModal .text-slate-300 {
+    color: #475569 !important;
+}
+
+#adminInspectionModal .text-slate-400 {
+    color: #64748b !important;
+}
+
+/* ---------- STATUS COLORS ---------- */
+
+#adminInspectionModal .text-emerald-400 {
+    color: #059669 !important;
+}
+
+#adminInspectionModal .text-rose-400 {
+    color: #e11d48 !important;
+}
+
+#adminInspectionModal .text-amber-400 {
+    color: #d97706 !important;
+}
+
+#adminInspectionModal .text-cyan-400 {
+    color: #0284c7 !important;
+}
+
+/* ---------- MODAL SCROLLBAR ---------- */
+
+#viewDetailModal > div::-webkit-scrollbar,
+#adminInspectionModal > div::-webkit-scrollbar {
+    width: 6px;
+}
+
+#viewDetailModal > div::-webkit-scrollbar-track,
+#adminInspectionModal > div::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+#viewDetailModal > div::-webkit-scrollbar-thumb,
+#adminInspectionModal > div::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+#viewDetailModal > div::-webkit-scrollbar-thumb:hover,
+#adminInspectionModal > div::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 640px) {
+
+    #addCustomerModal,
+    #viewDetailModal,
+    #adminLoginModal,
+    #adminInspectionModal {
+        padding: 10px !important;
+    }
+
+    #addCustomerModal > div,
+    #viewDetailModal > div,
+    #adminLoginModal > div,
+    #adminInspectionModal > div {
+        border-radius: 13px !important;
+        padding: 14px !important;
+        max-height: 94vh;
+    }
+
+    #viewDetailModal > div,
+    #adminInspectionModal > div {
+        width: 100% !important;
+    }
+
+    #detailJobNo {
+        font-size: 17px !important;
+    }
+}
+
+    /* =========================================================
+   STEP 4 — USER FORM + TOPIC CARDS
+   ไม่กระทบ JS / GAS / Form Data / ID
+   ========================================================= */
+
+/* ---------- USER TOPIC AREA ---------- */
+
+#viewUserDeptSelect {
+    color: #334155 !important;
+}
+
+#viewUserDeptSelect h2,
+#viewUserDeptSelect h3 {
+    color: #0f172a !important;
+}
+
+/* ---------- TOPIC CARDS ---------- */
+
+#viewUserDeptSelect button.group {
+    position: relative;
+    overflow: hidden;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.055) !important;
+    transition: all .2s ease !important;
+}
+
+#viewUserDeptSelect button.group:hover {
+    transform: translateY(-4px) !important;
+    border-color: #7dd3fc !important;
+    box-shadow:
+        0 10px 25px rgba(2, 132, 199, 0.10),
+        0 3px 8px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* แสงด้านบนของ Card */
+
+#viewUserDeptSelect button.group::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        #0284c7,
+        #38bdf8,
+        #0ea5e9
+    );
+    opacity: .85;
+}
+
+/* ---------- TOPIC ICON ---------- */
+
+#viewUserDeptSelect button.group .rounded-xl,
+#viewUserDeptSelect button.group .rounded-2xl {
+    background: #eff6ff !important;
+    border: 1px solid #dbeafe !important;
+    color: #0284c7 !important;
+    transition: all .2s ease;
+}
+
+#viewUserDeptSelect button.group:hover .rounded-xl,
+#viewUserDeptSelect button.group:hover .rounded-2xl {
+    background: #e0f2fe !important;
+    border-color: #bae6fd !important;
+    transform: scale(1.05);
+}
+
+/* ---------- TOPIC TEXT ---------- */
+
+#viewUserDeptSelect button.group .font-bold,
+#viewUserDeptSelect button.group .font-extrabold {
+    color: #0f172a !important;
+}
+
+#viewUserDeptSelect button.group .text-slate-400,
+#viewUserDeptSelect button.group .text-slate-500 {
+    color: #64748b !important;
+}
+
+/* ---------- USER FORM CARD ---------- */
+
+#viewUserForm {
+    color: #334155 !important;
+}
+
+#viewUserForm > div {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.055) !important;
+}
+
+/* ---------- FORM HEADER ---------- */
+
+#viewUserForm .bg-slate-900,
+#viewUserForm .bg-slate-950 {
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #0369a1
+    ) !important;
+}
+
+#viewUserForm h1,
+#viewUserForm h2,
+#viewUserForm h3 {
+    color: #ffffff !important;
+}
+
+/* ---------- FORM LABEL ---------- */
+
+#viewUserForm label {
+    color: #334155 !important;
+    font-weight: 600 !important;
+}
+
+/* ---------- FORM INPUT ---------- */
+
+#viewUserForm input:not([type="radio"]):not([type="checkbox"]),
+#viewUserForm select,
+#viewUserForm textarea {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 9px !important;
+}
+
+#viewUserForm input:not([type="radio"]):not([type="checkbox"]):focus,
+#viewUserForm select:focus,
+#viewUserForm textarea:focus {
+    border-color: #0284c7 !important;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, .10) !important;
+    outline: none !important;
+}
+
+#viewUserForm input::placeholder,
+#viewUserForm textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* ---------- RADIO / CHECKBOX ---------- */
+
+#viewUserForm input[type="radio"],
+#viewUserForm input[type="checkbox"] {
+    accent-color: #0284c7 !important;
+}
+
+/* ---------- RADIO / CHECKBOX OPTION ---------- */
+
+#viewUserForm label:has(input[type="radio"]),
+#viewUserForm label:has(input[type="checkbox"]) {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    transition: all .15s ease;
+}
+
+#viewUserForm label:has(input[type="radio"]):hover,
+#viewUserForm label:has(input[type="checkbox"]):hover {
+    background: #f0f9ff;
+    border-color: #bae6fd;
+}
+
+/* ---------- REQUIRED STAR ---------- */
+
+#viewUserForm .text-red-500,
+#viewUserForm .text-rose-500 {
+    color: #e11d48 !important;
+}
+
+/* ---------- FORM SECTION ---------- */
+
+#viewUserForm .border-b,
+#viewUserForm .border-t {
+    border-color: #e2e8f0 !important;
+}
+
+/* ---------- HELPER TEXT ---------- */
+
+#viewUserForm .text-slate-400 {
+    color: #64748b !important;
+}
+
+#viewUserForm .text-slate-500 {
+    color: #64748b !important;
+}
+
+/* ---------- SUBMIT BUTTON ---------- */
+
+#viewUserForm button[type="submit"] {
+    background: linear-gradient(
+        135deg,
+        #0284c7,
+        #0369a1
+    ) !important;
+    border: none !important;
+    box-shadow: 0 5px 14px rgba(2, 132, 199, .20) !important;
+}
+
+#viewUserForm button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(2, 132, 199, .25) !important;
+}
+
+/* ---------- BACK BUTTON ---------- */
+
+#viewUserForm button[onclick*="viewUserDeptSelect"],
+#viewUserForm button[onclick*="goBack"] {
+    color: #475569 !important;
+    background: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+}
+
+#viewUserForm button[onclick*="viewUserDeptSelect"]:hover,
+#viewUserForm button[onclick*="goBack"]:hover {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 640px) {
+
+    #viewUserDeptSelect button.group {
+        border-radius: 13px !important;
+        box-shadow: 0 3px 10px rgba(15, 23, 42, .05) !important;
+    }
+
+    #viewUserDeptSelect button.group:hover {
+        transform: translateY(-2px) !important;
+    }
+
+    #viewUserForm > div {
+        border-radius: 13px !important;
+    }
+
+    #viewUserForm input:not([type="radio"]):not([type="checkbox"]),
+    #viewUserForm select,
+    #viewUserForm textarea {
+        font-size: 13px !important;
+    }
+}
+</style>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans h-full overflow-hidden flex flex-col">
 
