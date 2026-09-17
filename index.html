@@ -1830,6 +1830,11 @@ if (topicKey === "ALL") {
   applyFilters();
   return;
 }
+
+      // ถ้าเลือกหัวข้อปกติ ให้กลับมาใช้หัวข้อปัจจุบัน
+if (isAdminLoggedIn) {
+  document.getElementById('filterTopicAdmin').value = "CURRENT";
+}
       
       // Update Tab Styles
       document.querySelectorAll('.tab-btn').forEach(btn => {
