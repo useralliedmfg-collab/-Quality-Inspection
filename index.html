@@ -2745,6 +2745,8 @@ if (isAdminLoggedIn) {
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังบันทึก...`;
 
       const res = await apiCall("submitUserJob", { data });
+      console.log("ได้รับผลบันทึกงานแล้ว:", res);
+console.log("กำลังประมวลผลหลังบันทึก...");
 
       btn.disabled = false;
       btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> บันทึกส่งงาน (Save)`;
@@ -3251,6 +3253,7 @@ document.getElementById('tab-ALL').classList.add('hidden');
   }
 
   applyFilters();
+  console.log("applyFilters ทำงานเสร็จแล้ว");
 }
     // Admin Inspection Modal
     
