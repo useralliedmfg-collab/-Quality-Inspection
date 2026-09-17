@@ -2564,6 +2564,14 @@ if (isAdminLoggedIn) {
 
     </div>
   `;
+      } else {
+        formTitle.textContent = "บันทึกส่งงาน";
+        form.innerHTML = `
+          <div class="p-4 text-center text-slate-400 text-sm">
+            กรุณาเลือกหัวข้องาน
+          </div>
+        `;
+      }
 }
       
     // Helper Functions for Dynamic Form Inputs
