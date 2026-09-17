@@ -3057,16 +3057,22 @@ function openViewDetailModal(topicKey, recordId) {
 
       const res = await apiCall("adminLogin", { username: u, password: p });
       if (res.success) {
-        isAdminLoggedIn = true;
-        adminToken = res.token;
-        updateAdminUI();
-        closeModal('adminLoginModal');
-        document.getElementById('adminUser').value = "";
-        document.getElementById('adminPass').value = "";
-        showToast("สำเร็จ", res.message, "success");
-      } else {
-        showToast("เข้าสู่ระบบไม่สำเร็จ", res.message, "danger");
-      }
+  isAdminLoggedIn = true;
+  adminToken = res.token;
+
+  updateAdminUI();
+
+  // เข้า Admin ทุกครั้ง ให้เปิดหน้า "ทั้งหมด" เป็นหน้าแรก
+  activeTopic = "ALL";
+  switchTopic("ALL");
+
+  closeModal('adminLoginModal');
+  document.getElementById('adminUser').value = "";
+  document.getElementById('adminPass').value = "";
+  showToast("สำเร็จ", res.message, "success");
+} else {
+  showToast("เข้าสู่ระบบไม่สำเร็จ", res.message, "danger");
+}
     }
 
 function updateAdminUI() {
