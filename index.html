@@ -2764,21 +2764,31 @@ if (isAdminLoggedIn) {
         }
 
         return `
-          <tr class="hover:bg-slate-800/40 transition">
-            <td class="p-2.5 font-mono font-bold text-cyan-300">${item.jobNo}</td>
-            <td class="p-2.5">
-              <div class="font-semibold text-slate-200">${item.partNo || '-'}</div>
-              <div class="text-[10px] text-slate-400">Rev: ${item.rev || '-'}</div>
-            </td>
-            <td class="p-2.5 text-slate-300 max-w-[120px] truncate" title="${item.customer}">${item.customer || '-'}</td>
-            <td class="p-2.5">
-              <div class="text-slate-300">${sender}</div>
-              <div class="text-[10px] text-slate-400">${item.userDate} ${item.userTime}</div>
-            </td>
-            <td class="p-2.5 text-center">${statusBadge}</td>
-            <td class="p-2.5 text-center">${resultBadge}</td>
-            <td class="p-2.5 text-center align-middle w-[120px]">
-  <div class="flex justify-center items-center">
+         
+              <tr class="hover:bg-slate-800/40 transition">
+      <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300">
+        ${item.jobNo}
+      </td>
+
+      <td class="p-2.5 text-center align-middle">
+        <div class="font-semibold text-slate-200">${item.partNo || '-'}</div>
+        <div class="text-[10px] text-slate-400">Rev: ${item.rev || '-'}</div>
+      </td>
+
+      <td class="p-2.5 text-center align-middle text-slate-300 max-w-[120px] truncate" title="${item.customer}">
+        ${item.customer || '-'}
+      </td>
+
+      <td class="p-2.5 text-center align-middle">
+        <div class="text-slate-300">${sender}</div>
+        <div class="text-[10px] text-slate-400">${item.userDate} ${item.userTime}</div>
+      </td>
+
+      <td class="p-2.5 text-center">${statusBadge}</td>
+      <td class="p-2.5 text-center">${resultBadge}</td>
+
+      <td class="p-2.5 text-center align-middle w-[120px]">
+        <div class="flex justify-center items-center">
     ${actionBtn}
   </div>
 </td>
