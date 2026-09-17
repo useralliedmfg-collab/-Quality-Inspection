@@ -2721,7 +2721,6 @@ if (isAdminLoggedIn) {
       if (res.success) {
         showToast("สำเร็จ!", res.message, "success");
         form.reset();
-        await loadSystemData(); // Refresh list immediately
       } else {
         showToast("ข้อผิดพลาด", res.message || "ไม่สามารถบันทึกข้อมูลได้", "danger");
       }
