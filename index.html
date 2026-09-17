@@ -1772,77 +1772,22 @@ async function apiCall(action, payload = {}) {
 
     const response = await fetch(API_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify({
-        action,
-        ...payload
-      })
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action, ...payload })
     });
 
     console.log("ได้รับ Response แล้ว");
     console.log("HTTP Status:", response.status);
-    console.log("Response URL:", response.url);
 
-    // อ่านเป็น text ก่อน
-    const responseText = await response.text();
+    console.log("กำลังอ่าน JSON...");
 
-    console.log("Response Body:", responseText);
-
-    // ถ้า HTTP ไม่ใช่ 2xx
-    if (!response.ok) {
-      console.error("API HTTP ERROR:", response.status);
-
-      hideLoadingToast();
-
-      showToast(
-        "Error",
-        `Server ตอบกลับ HTTP ${response.status}`,
-        "danger"
-      );
-
-      console.log("========== API END ==========");
-
-      return {
-        success: false,
-        message: `HTTP ${response.status}`,
-        status: response.status
-      };
-    }
-
-    // พยายามแปลง Text → JSON
-    let result;
-
-    try {
-      result = JSON.parse(responseText);
-    } catch (jsonError) {
-      console.error("JSON PARSE ERROR:", jsonError);
-      console.error("RAW RESPONSE:", responseText);
-
-      hideLoadingToast();
-
-      showToast(
-        "Error",
-        "Server ส่งข้อมูลกลับมาไม่ใช่ JSON",
-        "danger"
-      );
-
-      console.log("========== API END ==========");
-
-      return {
-        success: false,
-        message: "Invalid JSON response",
-        rawResponse: responseText
-      };
-    }
+    const result = await response.json();
 
     console.log("อ่าน JSON สำเร็จ");
     console.log("Result:", result);
     console.log("========== API END ==========");
 
     hideLoadingToast();
-
     return result;
 
   } catch (err) {
@@ -1856,8 +1801,6 @@ async function apiCall(action, payload = {}) {
       "ไม่สามารถเชื่อมต่อ Server ได้: " + err.message,
       "danger"
     );
-
-    console.log("========== API END ==========");
 
     return {
       success: false,
@@ -2802,8 +2745,6 @@ if (isAdminLoggedIn) {
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังบันทึก...`;
 
       const res = await apiCall("submitUserJob", { data });
-      console.log("ได้รับผลบันทึกงานแล้ว:", res);
-console.log("กำลังประมวลผลหลังบันทึก...");
 
       btn.disabled = false;
       btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> บันทึกส่งงาน (Save)`;
@@ -3310,7 +3251,6 @@ document.getElementById('tab-ALL').classList.add('hidden');
   }
 
   applyFilters();
-  console.log("applyFilters ทำงานเสร็จแล้ว");
 }
     // Admin Inspection Modal
     
@@ -3846,12 +3786,13 @@ detailHTML += `</div>`;
       btn.disabled = false;
       btn.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> บันทึกผลตรวจ & Lock Row`;
 
-    if (res.success) {
-  showToast("สำเร็จ!", res.message, "success");
-  closeModal('inspectionModal');
-} else {
-  showToast("ข้อผิดพลาด", res.message, "danger");
-}
+      if (res.success) {
+        showToast("สำเร็จ!", res.message, "success");
+        closeModal('inspectionModal');
+        await loadSystemData();
+      } else {
+        showToast("ข้อผิดพลาด", res.message, "danger");
+      }
     }
 
     // Dropdown Helpers
