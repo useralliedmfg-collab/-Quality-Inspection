@@ -2250,76 +2250,92 @@ if (isAdminLoggedIn) {
 
 
     <!-- ============================= -->
-    <!-- TOOLING REQUIREMENT -->
-    <!-- ============================= -->
-    <div class="mb-3">
+<!-- TOOLING REQUIREMENT -->
+<!-- ============================= -->
+<div class="mb-3">
 
-      <div class="flex items-center gap-2 mb-2">
-        <div class="w-1 h-4 bg-cyan-500 rounded-full"></div>
-        <div class="text-sm font-bold text-slate-200">
-          TOOLING REQUIREMENT
-        </div>
-      </div>
-
-      <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-lg">
-
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs">
-
-          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300">
-            <input
-              type="checkbox"
-              name="toolingReq"
-              value="TOOLING"
-              class="rounded text-cyan-500"
-            >
-            TOOLING
-          </label>
-
-          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300">
-            <input
-              type="checkbox"
-              name="toolingReq"
-              value="LASER"
-              class="rounded text-cyan-500"
-            >
-            LASER
-          </label>
-
-          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300">
-            <input
-              type="checkbox"
-              name="toolingReq"
-              value="CDC"
-              class="rounded text-cyan-500"
-            >
-            CDC
-          </label>
-
-          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300">
-            <input
-              type="checkbox"
-              name="toolingReq"
-              value="V-CUT"
-              class="rounded text-cyan-500"
-            >
-            V-CUT
-          </label>
-
-          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300">
-            <input
-              type="checkbox"
-              name="toolingReq"
-              value="อื่นๆ"
-              onchange="toggleToolingOtherField(this.checked)"
-              class="rounded text-cyan-500"
-            >
-            อื่นๆ
-          </label>
-
-        </div>
-
-      </div>
+  <div class="flex items-center gap-2 mb-2">
+    <div class="w-1 h-4 bg-cyan-500 rounded-full"></div>
+    <div class="text-sm font-bold text-slate-200">
+      TOOLING REQUIREMENT
     </div>
+  </div>
+
+  <div class="w-full flex flex-wrap justify-center gap-2 bg-slate-950 border border-slate-700 rounded-lg p-2">
+
+    <!-- TOOLING -->
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-cyan-500/50">
+      <input
+        type="radio"
+        name="toolingReq"
+        value="TOOLING"
+        class="accent-cyan-500"
+        onchange="toggleToolingOtherField(false)"
+        required
+      >
+      <span class="text-xs text-slate-200">
+        TOOLING
+      </span>
+    </label>
+
+    <!-- LASER -->
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-cyan-500/50">
+      <input
+        type="radio"
+        name="toolingReq"
+        value="LASER"
+        class="accent-cyan-500"
+        onchange="toggleToolingOtherField(false)"
+      >
+      <span class="text-xs text-slate-200">
+        LASER
+      </span>
+    </label>
+
+    <!-- CDC -->
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-cyan-500/50">
+      <input
+        type="radio"
+        name="toolingReq"
+        value="CDC"
+        class="accent-cyan-500"
+        onchange="toggleToolingOtherField(false)"
+      >
+      <span class="text-xs text-slate-200">
+        CDC
+      </span>
+    </label>
+
+    <!-- V-CUT -->
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-cyan-500/50">
+      <input
+        type="radio"
+        name="toolingReq"
+        value="V-CUT"
+        class="accent-cyan-500"
+        onchange="toggleToolingOtherField(false)"
+      >
+      <span class="text-xs text-slate-200">
+        V-CUT
+      </span>
+    </label>
+
+    <!-- อื่นๆ -->
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-cyan-500/50">
+      <input
+        type="radio"
+        name="toolingReq"
+        value="อื่นๆ"
+        class="accent-cyan-500"
+        onchange="toggleToolingOtherField(true)"
+      >
+      <span class="text-xs text-slate-200">
+        อื่นๆ
+      </span>
+    </label>
+
+  </div>
+</div>
 
 
     <!-- TOOLING OTHER -->
