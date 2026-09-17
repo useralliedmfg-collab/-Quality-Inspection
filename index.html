@@ -1760,23 +1760,54 @@ body, button, input, select, textarea, table {
     }
 
     // Backend HTTP API Fetcher
-    async function apiCall(action, payload = {}) {
-      showLoadingToast("กำลังประมวลผล...");
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action, ...payload })
-        });
-        const result = await response.json();
-        hideLoadingToast();
-        return result;
-      } catch (err) {
-        hideLoadingToast();
-        showToast("Error", "ไม่สามารถเชื่อมต่อ Server ได้: " + err.message, "danger");
-        return { success: false, message: err.message };
-      }
-    }
+async function apiCall(action, payload = {}) {
+  showLoadingToast("กำลังประมวลผล...");
+
+  console.log("========== API START ==========");
+  console.log("Action:", action);
+  console.log("Time:", new Date().toLocaleTimeString());
+
+  try {
+    console.log("กำลังส่ง Request...");
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action, ...payload })
+    });
+
+    console.log("ได้รับ Response แล้ว");
+    console.log("HTTP Status:", response.status);
+
+    console.log("กำลังอ่าน JSON...");
+
+    const result = await response.json();
+
+    console.log("อ่าน JSON สำเร็จ");
+    console.log("Result:", result);
+    console.log("========== API END ==========");
+
+    hideLoadingToast();
+    return result;
+
+  } catch (err) {
+
+    console.error("API ERROR:", err);
+
+    hideLoadingToast();
+
+    showToast(
+      "Error",
+      "ไม่สามารถเชื่อมต่อ Server ได้: " + err.message,
+      "danger"
+    );
+
+    return {
+      success: false,
+      message: err.message
+    };
+  }
+}
 
     // Load initial system data
     async function loadSystemData() {
