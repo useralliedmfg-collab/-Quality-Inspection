@@ -3141,7 +3141,7 @@ function openInspectionModal(topicKey, recordId) {
 
 // ========================================================
 // ข้อมูลรายละเอียดสำหรับ Admin Inspection
-// Compact Clean Inspection UI
+// Compact Clean Inspection UI - 2 Columns
 // ========================================================
 
 let detailHTML = `
@@ -3221,17 +3221,6 @@ let detailHTML = `
           </div>
         </div>
 
-        <!-- ผู้ส่ง -->
-        <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            ผู้ส่งงาน
-          </div>
-
-          <div class="text-sm font-semibold text-cyan-300 break-words">
-            ${sender}
-          </div>
-        </div>
-
       </div>
     </div>
 `;
@@ -3262,26 +3251,29 @@ if (topicKey === "DIECUT") {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
+        <!-- DIECUT NO -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             DIECUT NO.
           </div>
 
-          <div class="text-sm font-semibold text-slate-100">
+          <div class="text-sm font-semibold text-slate-100 break-words">
             ${item.diecutNo || '-'}
           </div>
         </div>
 
+        <!-- REFER NO -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             REFER NO DIECUT
           </div>
 
-          <div class="text-sm font-semibold text-slate-100">
+          <div class="text-sm font-semibold text-slate-100 break-words">
             ${item.referNoDiecut || '-'}
           </div>
         </div>
 
+        <!-- CAVITY -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             CAVITY
@@ -3292,12 +3284,13 @@ if (topicKey === "DIECUT") {
           </div>
         </div>
 
+        <!-- ผู้ส่ง MOULD -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             ผู้ส่ง MOULD
           </div>
 
-          <div class="text-sm font-semibold text-cyan-300">
+          <div class="text-sm font-semibold text-cyan-300 break-words">
             ${item.senderMould || '-'}
           </div>
         </div>
@@ -3333,6 +3326,7 @@ else if (topicKey === "JIG_FA") {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
+        <!-- JIG TYPE -->
         <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             JIG TYPE
@@ -3343,6 +3337,7 @@ else if (topicKey === "JIG_FA") {
           </div>
         </div>
 
+        <!-- JIG QUANTITY -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             JIG QUANTITY
@@ -3353,12 +3348,13 @@ else if (topicKey === "JIG_FA") {
           </div>
         </div>
 
+        <!-- ผู้ส่ง JIG -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             ผู้ส่ง JIG
           </div>
 
-          <div class="text-sm font-semibold text-cyan-300">
+          <div class="text-sm font-semibold text-cyan-300 break-words">
             ${item.senderJig || '-'}
           </div>
         </div>
@@ -3406,16 +3402,18 @@ else if (topicKey === "FIRST_SHOT_FA") {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
+        <!-- FA NO -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             FA NO.
           </div>
 
-          <div class="text-sm font-semibold text-slate-100">
+          <div class="text-sm font-semibold text-slate-100 break-words">
             ${item.faNo || '-'}
           </div>
         </div>
 
+        <!-- PACK -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             สถานะ PACK
@@ -3426,6 +3424,7 @@ else if (topicKey === "FIRST_SHOT_FA") {
           </div>
         </div>
 
+        <!-- TOOLING REQUIREMENT -->
         <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             TOOLING REQUIREMENT
@@ -3436,16 +3435,18 @@ else if (topicKey === "FIRST_SHOT_FA") {
           </div>
         </div>
 
+        <!-- หมวดเครื่องจักร -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             หมวดเครื่องจักร
           </div>
 
-          <div class="text-sm font-semibold text-slate-100">
+          <div class="text-sm font-semibold text-slate-100 break-words">
             ${item.machineCategory || '-'}
           </div>
         </div>
 
+        <!-- หมายเลขเครื่อง -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             หมายเลขเครื่อง
@@ -3456,6 +3457,7 @@ else if (topicKey === "FIRST_SHOT_FA") {
           </div>
         </div>
 
+        <!-- จำนวนหลัก -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             จำนวนที่ส่ง (หลัก)
@@ -3466,6 +3468,7 @@ else if (topicKey === "FIRST_SHOT_FA") {
           </div>
         </div>
 
+        <!-- จำนวนเพิ่มเติม -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             จำนวนเพิ่มเติม
@@ -3476,12 +3479,13 @@ else if (topicKey === "FIRST_SHOT_FA") {
           </div>
         </div>
 
+        <!-- ผู้ส่งงาน -->
         <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             ผู้ส่งงาน
           </div>
 
-          <div class="text-sm font-semibold text-cyan-300">
+          <div class="text-sm font-semibold text-cyan-300 break-words">
             ${item.sender || '-'}
           </div>
         </div>
@@ -3517,16 +3521,18 @@ else if (topicKey === "FA_FG") {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
+        <!-- FA NO -->
         <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             FA NO.
           </div>
 
-          <div class="text-sm font-semibold text-slate-100">
+          <div class="text-sm font-semibold text-slate-100 break-words">
             ${item.faNo || '-'}
           </div>
         </div>
 
+        <!-- จำนวนหลัก -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             จำนวนที่ส่ง (หลัก)
@@ -3537,6 +3543,7 @@ else if (topicKey === "FA_FG") {
           </div>
         </div>
 
+        <!-- จำนวนเพิ่มเติม -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             จำนวนเพิ่มเติม
@@ -3547,12 +3554,13 @@ else if (topicKey === "FA_FG") {
           </div>
         </div>
 
+        <!-- ผู้ส่งงาน -->
         <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             ผู้ส่งงาน
           </div>
 
-          <div class="text-sm font-semibold text-cyan-300">
+          <div class="text-sm font-semibold text-cyan-300 break-words">
             ${item.sender || '-'}
           </div>
         </div>
@@ -3561,6 +3569,7 @@ else if (topicKey === "FA_FG") {
     </div>
   `;
 }
+
 detailHTML += `</div>`;
   
   // แสดงข้อมูลทั้งหมดในส่วน Summary
