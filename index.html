@@ -2719,11 +2719,28 @@ if (isAdminLoggedIn) {
       btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> บันทึกส่งงาน (Save)`;
 
       if (res.success) {
-        showToast("สำเร็จ!", res.message, "success");
-        form.reset();
-      } else {
-        showToast("ข้อผิดพลาด", res.message || "ไม่สามารถบันทึกข้อมูลได้", "danger");
-      }
+  showToast("สำเร็จ!", res.message, "success");
+  form.reset();
+
+  // เพิ่มงานใหม่เข้า Dashboard ทันที
+  if (res.record && res.record.topicKey) {
+
+    if (!records[res.record.topicKey]) {
+      records[res.record.topicKey] = [];
+    }
+
+    records[res.record.topicKey].unshift(res.record);
+
+    applyFilters();
+  }
+
+} else {
+  showToast(
+    "ข้อผิดพลาด",
+    res.message || "ไม่สามารถบันทึกข้อมูลได้",
+    "danger"
+  );
+}
     }
 
     // Filter Logic & Table Rendering
