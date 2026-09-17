@@ -1836,13 +1836,8 @@ if (topicKey === "ALL") {
   const allTab = document.getElementById('tab-ALL');
 
   if (allTab) {
-    allTab.classList.add(
-      'active',
-      'border-b-2',
-      'border-cyan-400',
-      'text-cyan-400',
-      'bg-slate-800/80'
-    );
+  allTab.classList.add('active');
+}
     allTab.classList.remove('text-slate-400');
   }
 
@@ -1856,10 +1851,17 @@ if (isAdminLoggedIn) {
 }
       
       // Update Tab Styles
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active', 'border-b-2', 'border-cyan-400', 'text-cyan-400', 'bg-slate-800/80');
-        btn.classList.add('text-slate-400');
-      });
+     document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.classList.remove(
+    'active',
+    'border-b-2',
+    'border-cyan-400',
+    'text-cyan-400',
+    'bg-slate-800/80',
+    'text-slate-400'
+  );
+});
+    
       const activeBtn = document.getElementById(`tab-${topicKey}`);
       if (activeBtn) {
   activeBtn.classList.add('active');
