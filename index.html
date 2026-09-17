@@ -2060,35 +2060,41 @@ if (isAdminLoggedIn) {
     JIG TYPE <span class="text-rose-400">*</span>
   </label>
 
-  <div class="flex flex-wrap gap-2">
+  <div class="w-full flex flex-wrap justify-center gap-2 bg-slate-950 border border-slate-700 rounded-lg p-2">
 
-    <label class="flex items-center gap-2 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 cursor-pointer hover:border-amber-500/50">
+    <!-- วัด Dimension -->
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-amber-500/50">
       <input
-        type="checkbox"
+        type="radio"
         name="jigType"
         value="วัด Dimension"
         class="accent-amber-500"
+        onchange="toggleJigOtherField(false)"
+        required
       >
       <span class="text-xs text-slate-200">วัด Dimension</span>
     </label>
 
-    <label class="flex items-center gap-2 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 cursor-pointer hover:border-amber-500/50">
+    <!-- ติดกาว -->
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-amber-500/50">
       <input
-        type="checkbox"
+        type="radio"
         name="jigType"
         value="ติดกาว"
         class="accent-amber-500"
+        onchange="toggleJigOtherField(false)"
       >
       <span class="text-xs text-slate-200">ติดกาว</span>
     </label>
 
-    <label class="flex items-center gap-2 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 cursor-pointer hover:border-amber-500/50">
+    <!-- อื่นๆ -->
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-amber-500/50">
       <input
-        type="checkbox"
+        type="radio"
         name="jigType"
         value="อื่นๆ"
-        onchange="toggleJigOtherField(this.checked)"
         class="accent-amber-500"
+        onchange="toggleJigOtherField(true)"
       >
       <span class="text-xs text-slate-200">อื่นๆ</span>
     </label>
