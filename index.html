@@ -2324,7 +2324,7 @@ if (isAdminLoggedIn) {
       }
     }
 
-    // View Detail Modal (User Read-only)
+// View Detail Modal (User Read-only)
 function openViewDetailModal(topicKey, recordId) {
   const item = (records[topicKey] || []).find(r => r.recordId === recordId);
   if (!item) return;
@@ -2345,11 +2345,11 @@ function openViewDetailModal(topicKey, recordId) {
 
   // Helper สำหรับสร้างช่องข้อมูล
   const infoBox = (label, value, fullWidth = false) => `
-    <div class="${fullWidth ? 'col-span-1 md:col-span-2' : ''} bg-slate-900/70 border border-slate-800 rounded-xl p-3">
-      <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1">
+    <div class="${fullWidth ? 'col-span-1 md:col-span-2' : ''} bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+      <div class="text-[11px] font-semibold text-slate-500 mb-1">
         ${label}
       </div>
-      <div class="text-sm text-slate-100 break-words">
+      <div class="text-sm font-medium text-slate-800 break-words">
         ${value !== undefined && value !== null && value !== '' ? value : '-'}
       </div>
     </div>
@@ -2357,12 +2357,15 @@ function openViewDetailModal(topicKey, recordId) {
 
   // ข้อมูลพื้นฐาน
   let rowsHTML = `
-    <div class="mb-4">
-      <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
-        ข้อมูลการส่งงาน
+    <div class="mb-5">
+      <div class="flex items-center gap-2 mb-3">
+        <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
+        <div class="text-sm font-bold text-slate-700">
+          ข้อมูลการส่งงาน
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         ${infoBox('วันที่ส่งงาน', item.userDate)}
         ${infoBox('เวลาส่งงาน', item.userTime)}
         ${infoBox('ลูกค้า', item.customer)}
@@ -2376,12 +2379,15 @@ function openViewDetailModal(topicKey, recordId) {
   if (topicKey === "DIECUT") {
 
     rowsHTML += `
-      <div class="mb-4">
-        <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
-          รายละเอียด DIECUT
+      <div class="mb-5">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
+          <div class="text-sm font-bold text-slate-700">
+            รายละเอียด DIECUT
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           ${infoBox('DIECUT NO', item.diecutNo)}
           ${infoBox('REFER NO DIECUT', item.referNoDiecut)}
           ${infoBox('CAVITY', item.cavity)}
@@ -2393,12 +2399,15 @@ function openViewDetailModal(topicKey, recordId) {
   } else if (topicKey === "JIG_FA") {
 
     rowsHTML += `
-      <div class="mb-4">
-        <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
-          รายละเอียด JIG FA
+      <div class="mb-5">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
+          <div class="text-sm font-bold text-slate-700">
+            รายละเอียด JIG FA
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           ${infoBox(
             'JIG TYPE',
             item.jigType
@@ -2415,12 +2424,15 @@ function openViewDetailModal(topicKey, recordId) {
   } else if (topicKey === "FIRST_SHOT_FA") {
 
     rowsHTML += `
-      <div class="mb-4">
-        <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
-          รายละเอียด FIRST SHOT FA
+      <div class="mb-5">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
+          <div class="text-sm font-bold text-slate-700">
+            รายละเอียด FIRST SHOT FA
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           ${infoBox('FA NO', item.faNo)}
           ${infoBox(
             'Tooling Req',
@@ -2443,12 +2455,15 @@ function openViewDetailModal(topicKey, recordId) {
   } else if (topicKey === "FA_FG") {
 
     rowsHTML += `
-      <div class="mb-4">
-        <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
-          รายละเอียด FA FG
+      <div class="mb-5">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
+          <div class="text-sm font-bold text-slate-700">
+            รายละเอียด FA FG
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           ${infoBox('FA NO', item.faNo)}
           ${infoBox(
             'จำนวนที่ส่ง',
@@ -2464,12 +2479,15 @@ function openViewDetailModal(topicKey, recordId) {
   // ผลการตรวจ QA/QC
   rowsHTML += `
     <div class="mt-2">
-      <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
-        ผลการตรวจงาน QA/QC
+      <div class="flex items-center gap-2 mb-3">
+        <div class="w-1.5 h-5 bg-emerald-500 rounded-full"></div>
+        <div class="text-sm font-bold text-slate-700">
+          ผลการตรวจงาน QA/QC
+        </div>
       </div>
 
-      <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
           ${infoBox('Status', item.status)}
           ${infoBox('Result', item.result)}
