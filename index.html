@@ -2343,29 +2343,36 @@ function openViewDetailModal(topicKey, recordId) {
     item.inspector ||
     '-';
 
-  // Helper สำหรับสร้างช่องข้อมูล
+  // Helper สำหรับข้อมูลแต่ละช่อง
   const infoBox = (label, value, fullWidth = false) => `
-    <div class="${fullWidth ? 'col-span-1 md:col-span-2' : ''} bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+    <div class="${fullWidth ? 'col-span-1 md:col-span-2' : ''} bg-white border border-slate-200 rounded-lg px-4 py-3 shadow-sm">
       <div class="text-[11px] font-semibold text-slate-500 mb-1">
         ${label}
       </div>
-      <div class="text-sm font-medium text-slate-800 break-words">
+      <div class="text-sm font-medium text-slate-800 break-words leading-5">
         ${value !== undefined && value !== null && value !== '' ? value : '-'}
       </div>
     </div>
   `;
 
-  // ข้อมูลพื้นฐาน
-  let rowsHTML = `
-    <div class="mb-5">
-      <div class="flex items-center gap-2 mb-3">
-        <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
-        <div class="text-sm font-bold text-slate-700">
-          ข้อมูลการส่งงาน
-        </div>
+  // Helper สำหรับหัวข้อแต่ละ Section
+  const sectionTitle = (title, color = 'cyan') => `
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-1 h-4 bg-${color}-500 rounded-full"></div>
+      <div class="text-sm font-bold text-slate-700">
+        ${title}
       </div>
+    </div>
+  `;
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+  // ==========================================
+  // ข้อมูลการส่งงาน
+  // ==========================================
+  let rowsHTML = `
+    <div class="mb-4">
+      ${sectionTitle('ข้อมูลการส่งงาน')}
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
         ${infoBox('วันที่ส่งงาน', item.userDate)}
         ${infoBox('เวลาส่งงาน', item.userTime)}
         ${infoBox('ลูกค้า', item.customer)}
@@ -2375,19 +2382,16 @@ function openViewDetailModal(topicKey, recordId) {
     </div>
   `;
 
-  // รายละเอียดตามประเภทงาน
+  // ==========================================
+  // รายละเอียด DIECUT
+  // ==========================================
   if (topicKey === "DIECUT") {
 
     rowsHTML += `
-      <div class="mb-5">
-        <div class="flex items-center gap-2 mb-3">
-          <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
-          <div class="text-sm font-bold text-slate-700">
-            รายละเอียด DIECUT
-          </div>
-        </div>
+      <div class="mb-4">
+        ${sectionTitle('รายละเอียด DIECUT')}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
           ${infoBox('DIECUT NO', item.diecutNo)}
           ${infoBox('REFER NO DIECUT', item.referNoDiecut)}
           ${infoBox('CAVITY', item.cavity)}
@@ -2396,18 +2400,16 @@ function openViewDetailModal(topicKey, recordId) {
       </div>
     `;
 
+  // ==========================================
+  // รายละเอียด JIG FA
+  // ==========================================
   } else if (topicKey === "JIG_FA") {
 
     rowsHTML += `
-      <div class="mb-5">
-        <div class="flex items-center gap-2 mb-3">
-          <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
-          <div class="text-sm font-bold text-slate-700">
-            รายละเอียด JIG FA
-          </div>
-        </div>
+      <div class="mb-4">
+        ${sectionTitle('รายละเอียด JIG FA')}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
           ${infoBox(
             'JIG TYPE',
             item.jigType
@@ -2421,73 +2423,81 @@ function openViewDetailModal(topicKey, recordId) {
       </div>
     `;
 
+  // ==========================================
+  // รายละเอียด FIRST SHOT FA
+  // ==========================================
   } else if (topicKey === "FIRST_SHOT_FA") {
 
     rowsHTML += `
-      <div class="mb-5">
-        <div class="flex items-center gap-2 mb-3">
-          <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
-          <div class="text-sm font-bold text-slate-700">
-            รายละเอียด FIRST SHOT FA
-          </div>
-        </div>
+      <div class="mb-4">
+        ${sectionTitle('รายละเอียด FIRST SHOT FA')}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+
           ${infoBox('FA NO', item.faNo)}
+
           ${infoBox(
             'Tooling Req',
             `${toolingReqText}${item.toolingReqOther ? ` (${item.toolingReqOther})` : ''}`,
             true
           )}
+
           ${infoBox('เครื่องผลิต', item.machineCategory)}
           ${infoBox('Machine No', item.machineNo)}
-          ${infoBox('สถานะ PACK', item.isPack ? 'PACK' : 'NO PACK')}
+
+          ${infoBox(
+            'สถานะ PACK',
+            item.isPack ? 'PACK' : 'NO PACK'
+          )}
+
           ${infoBox(
             'จำนวนที่ส่ง',
             `หลัก ${item.mainQty || 0} + เพิ่มเติม ${item.extraQty || 0}`,
             true
           )}
+
           ${infoBox('ผู้ส่งงาน', item.sender)}
+
         </div>
       </div>
     `;
 
+  // ==========================================
+  // รายละเอียด FA FG
+  // ==========================================
   } else if (topicKey === "FA_FG") {
 
     rowsHTML += `
-      <div class="mb-5">
-        <div class="flex items-center gap-2 mb-3">
-          <div class="w-1.5 h-5 bg-cyan-500 rounded-full"></div>
-          <div class="text-sm font-bold text-slate-700">
-            รายละเอียด FA FG
-          </div>
-        </div>
+      <div class="mb-4">
+        ${sectionTitle('รายละเอียด FA FG')}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+
           ${infoBox('FA NO', item.faNo)}
+
           ${infoBox(
             'จำนวนที่ส่ง',
             `หลัก ${item.mainQty || 0} + เพิ่มเติม ${item.extraQty || 0}`,
             true
           )}
+
           ${infoBox('ผู้ส่งงาน', item.sender)}
+
         </div>
       </div>
     `;
   }
 
+  // ==========================================
   // ผลการตรวจ QA/QC
+  // ==========================================
   rowsHTML += `
-    <div class="mt-2">
-      <div class="flex items-center gap-2 mb-3">
-        <div class="w-1.5 h-5 bg-emerald-500 rounded-full"></div>
-        <div class="text-sm font-bold text-slate-700">
-          ผลการตรวจงาน QA/QC
-        </div>
-      </div>
+    <div class="mt-1">
+      ${sectionTitle('ผลการตรวจงาน QA/QC', 'emerald')}
 
-      <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
           ${infoBox('Status', item.status)}
           ${infoBox('Result', item.result)}
@@ -2506,6 +2516,7 @@ function openViewDetailModal(topicKey, recordId) {
           )}
 
         </div>
+
       </div>
     </div>
   `;
