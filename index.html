@@ -2332,7 +2332,7 @@ function openViewDetailModal(topicKey, recordId) {
   document.getElementById('detailTopicBadge').textContent = topicKey;
   document.getElementById('detailJobNo').textContent = `Job No: ${item.jobNo}`;
 
-  // รองรับข้อมูลที่เป็น Array / String
+  // รองรับข้อมูล Tooling Req ทั้งแบบ Array และ String
   const toolingReqText = Array.isArray(item.toolingReq)
     ? item.toolingReq.join(', ')
     : (item.toolingReq || '-');
@@ -2343,45 +2343,31 @@ function openViewDetailModal(topicKey, recordId) {
     item.inspector ||
     '-';
 
-  // ==========================================
-  // ช่องข้อมูล 1 ช่อง
-  // ==========================================
+  // ช่องข้อมูล
   const infoBox = (label, value, fullWidth = false) => `
-    <div class="${fullWidth ? 'col-span-1 md:col-span-2' : ''} 
-                bg-white border border-slate-200 rounded-lg 
-                px-4 py-3 shadow-sm">
-
+    <div class="${fullWidth ? 'md:col-span-2' : ''} bg-white border border-slate-200 rounded-lg px-4 py-3 shadow-sm">
       <div class="text-[11px] font-semibold text-slate-500 mb-1">
         ${label}
       </div>
-
-      <div class="text-sm font-medium text-slate-800 
-                  break-words leading-5">
-        ${value !== undefined && value !== null && value !== ''
-          ? value
-          : '-'}
+      <div class="text-sm font-medium text-slate-800 break-words leading-5">
+        ${value !== undefined && value !== null && value !== '' ? value : '-'}
       </div>
-
     </div>
   `;
 
-  // ==========================================
   // หัวข้อ Section
-  // ==========================================
   const sectionTitle = (title, color = 'cyan') => `
     <div class="flex items-center gap-2 mb-2">
       <div class="w-1 h-4 bg-${color}-500 rounded-full"></div>
-
       <div class="text-sm font-bold text-slate-700">
         ${title}
       </div>
     </div>
   `;
 
-  // ==========================================
+  // ==================================================
   // ข้อมูลการส่งงาน
-  // 2 ช่องต่อแถว
-  // ==========================================
+  // ==================================================
   let rowsHTML = `
     <div class="mb-4">
 
@@ -2393,18 +2379,15 @@ function openViewDetailModal(topicKey, recordId) {
         ${infoBox('เวลาส่งงาน', item.userTime)}
 
         ${infoBox('ลูกค้า', item.customer)}
-        ${infoBox('Part No', item.partNo)}
-
-        ${infoBox('Revision', item.rev)}
-        ${infoBox('Job No', item.jobNo)}
+        ${infoBox('Part No / Rev', `${item.partNo || '-'} (Rev: ${item.rev || '-'})`)}
 
       </div>
     </div>
   `;
 
-  // ==========================================
+  // ==================================================
   // DIECUT
-  // ==========================================
+  // ==================================================
   if (topicKey === "DIECUT") {
 
     rowsHTML += `
@@ -2421,13 +2404,12 @@ function openViewDetailModal(topicKey, recordId) {
           ${infoBox('ผู้ส่ง MOULD', item.senderMould)}
 
         </div>
-
       </div>
     `;
 
-  // ==========================================
+  // ==================================================
   // JIG FA
-  // ==========================================
+  // ==================================================
   } else if (topicKey === "JIG_FA") {
 
     rowsHTML += `
@@ -2440,25 +2422,22 @@ function openViewDetailModal(topicKey, recordId) {
           ${infoBox(
             'JIG TYPE',
             item.jigType
-              ? `${item.jigType}${item.jigTypeDetail
-                ? ` (${item.jigTypeDetail})`
-                : ''}`
+              ? `${item.jigType}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}`
               : '-'
           )}
 
           ${infoBox('JIG Quantity', item.jigQty)}
 
           ${infoBox('ผู้ส่ง JIG', item.senderJig)}
-          ${infoBox('ประเภทงาน', 'JIG FA')}
+          ${infoBox('Job No', item.jobNo)}
 
         </div>
-
       </div>
     `;
 
-  // ==========================================
+  // ==================================================
   // FIRST SHOT FA
-  // ==========================================
+  // ==================================================
   } else if (topicKey === "FIRST_SHOT_FA") {
 
     rowsHTML += `
@@ -2472,11 +2451,7 @@ function openViewDetailModal(topicKey, recordId) {
 
           ${infoBox(
             'Tooling Req',
-            `${toolingReqText}${
-              item.toolingReqOther
-                ? ` (${item.toolingReqOther})`
-                : ''
-            }`
+            `${toolingReqText}${item.toolingReqOther ? ` (${item.toolingReqOther})` : ''}`
           )}
 
           ${infoBox('เครื่องผลิต', item.machineCategory)}
@@ -2493,16 +2468,15 @@ function openViewDetailModal(topicKey, recordId) {
           )}
 
           ${infoBox('ผู้ส่งงาน', item.sender)}
-          ${infoBox('ประเภทงาน', 'FIRST SHOT FA')}
+          ${infoBox('Job No', item.jobNo)}
 
         </div>
-
       </div>
     `;
 
-  // ==========================================
+  // ==================================================
   // FA FG
-  // ==========================================
+  // ==================================================
   } else if (topicKey === "FA_FG") {
 
     rowsHTML += `
@@ -2520,18 +2494,16 @@ function openViewDetailModal(topicKey, recordId) {
           )}
 
           ${infoBox('ผู้ส่งงาน', item.sender)}
-          ${infoBox('ประเภทงาน', 'FA FG')}
+          ${infoBox('Job No', item.jobNo)}
 
         </div>
-
       </div>
     `;
   }
 
-  // ==========================================
+  // ==================================================
   // QA / QC
-  // 2 ช่องต่อแถว
-  // ==========================================
+  // ==================================================
   rowsHTML += `
     <div class="mt-1">
 
@@ -2548,9 +2520,7 @@ function openViewDetailModal(topicKey, recordId) {
 
           ${infoBox(
             'วันที่ / เวลาตรวจ',
-            `${item.inspectionDate || '-'} ${
-              item.inspectionTime || ''
-            }`.trim()
+            `${item.inspectionDate || '-'} ${item.inspectionTime || ''}`.trim()
           )}
 
           ${infoBox(
@@ -2562,12 +2532,10 @@ function openViewDetailModal(topicKey, recordId) {
         </div>
 
       </div>
-
     </div>
   `;
 
   document.getElementById('detailContent').innerHTML = rowsHTML;
-
   openModal('viewDetailModal');
 }
 
