@@ -1432,6 +1432,15 @@ body, button, input, select, textarea, table {
   <!-- TOP MODULE TABS SELECTOR -->
   <nav class="bg-slate-900 border-b border-slate-800 px-4 py-2 shrink-0">
     <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+
+      <!-- ADMIN ONLY: TAB รวมทุกงาน -->
+<button
+  onclick="switchTopic('ALL')"
+  id="tab-ALL"
+  class="hidden tab-btn text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 px-4 py-2 rounded-t-md font-medium text-sm flex items-center gap-2 whitespace-nowrap transition"
+>
+  <i class="fa-solid fa-layer-group"></i> ทั้งหมด
+</button>
       <button onclick="switchTopic('DIECUT')" id="tab-DIECUT" class="tab-btn active border-b-2 border-cyan-400 text-cyan-400 bg-slate-800/80 px-4 py-2 rounded-t-md font-medium text-sm flex items-center gap-2 whitespace-nowrap transition">
         <i class="fa-solid fa-shapes"></i> DIECUT INSPECTION
       </button>
@@ -1787,6 +1796,40 @@ body, button, input, select, textarea, table {
     // Module Switcher
     function switchTopic(topicKey) {
       activeTopic = topicKey;
+
+      // Admin Global View
+if (topicKey === "ALL") {
+  if (!isAdminLoggedIn) return;
+
+  document.getElementById('filterTopicAdmin').value = "ALL";
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove(
+      'active',
+      'border-b-2',
+      'border-cyan-400',
+      'text-cyan-400',
+      'bg-slate-800/80'
+    );
+    btn.classList.add('text-slate-400');
+  });
+
+  const allTab = document.getElementById('tab-ALL');
+
+  if (allTab) {
+    allTab.classList.add(
+      'active',
+      'border-b-2',
+      'border-cyan-400',
+      'text-cyan-400',
+      'bg-slate-800/80'
+    );
+    allTab.classList.remove('text-slate-400');
+  }
+
+  applyFilters();
+  return;
+}
       
       // Update Tab Styles
       document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -2396,6 +2439,8 @@ function updateAdminUI() {
     `;
 
     adminTopicFilter.classList.remove('hidden');
+    // แสดงแท็บทั้งหมดเฉพาะ Admin
+document.getElementById('tab-ALL').classList.remove('hidden');
 
   } else {
 
@@ -2414,6 +2459,8 @@ function updateAdminUI() {
     `;
 
     adminTopicFilter.classList.add('hidden');
+    // ซ่อนแท็บทั้งหมดเมื่อกลับเป็น User
+document.getElementById('tab-ALL').classList.add('hidden');
     adminTopicFilter.value = "CURRENT";
   }
 
