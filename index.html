@@ -1824,15 +1824,14 @@ if (topicKey === "ALL") {
   document.getElementById('filterTopicAdmin').value = "ALL";
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.remove(
-      'active',
-      'border-b-2',
-      'border-cyan-400',
-      'text-cyan-400',
-      'bg-slate-800/80'
-    );
-    btn.classList.add('text-slate-400');
-  });
+  btn.classList.remove(
+    'active',
+    'border-b-2',
+    'border-cyan-400',
+    'text-cyan-400',
+    'bg-slate-800/80'
+  );
+});
 
   const allTab = document.getElementById('tab-ALL');
 
@@ -1863,9 +1862,8 @@ if (isAdminLoggedIn) {
       });
       const activeBtn = document.getElementById(`tab-${topicKey}`);
       if (activeBtn) {
-        activeBtn.classList.add('active', 'border-b-2', 'border-cyan-400', 'text-cyan-400', 'bg-slate-800/80');
-        activeBtn.classList.remove('text-slate-400');
-      }
+  activeBtn.classList.add('active');
+}
 
       // Update Form Title & Render Form
       renderFormForTopic(topicKey);
