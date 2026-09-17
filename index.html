@@ -1990,13 +1990,15 @@ if (isAdminLoggedIn) {
   `;
         
       } else if (topicKey === "JIG_FA") {
+
   formTitle.textContent = "บันทึกส่งงาน JIG FA";
 
   form.innerHTML = `
     <input type="hidden" name="topicKey" value="JIG_FA">
 
-    <!-- ข้อมูลหลัก -->
     <div class="mb-3">
+
+      <!-- หัวข้อ -->
       <div class="flex items-center gap-2 mb-2">
         <div class="w-1 h-4 bg-cyan-500 rounded-full"></div>
         <div class="text-sm font-bold text-slate-200">
@@ -2014,6 +2016,7 @@ if (isAdminLoggedIn) {
           <label class="block text-xs font-semibold text-slate-300 mb-1">
             PART NO <span class="text-rose-400">*</span>
           </label>
+
           <input
             type="text"
             name="partNo"
@@ -2025,116 +2028,143 @@ if (isAdminLoggedIn) {
         </div>
 
         <!-- REV -->
-<div>
-  <label class="block text-xs font-semibold text-slate-300 mb-1">
-    REV <span class="text-rose-400">*</span>
-  </label>
-  <input
-    type="text"
-    name="rev"
-    required
-    oninput="this.value = this.value.toUpperCase()"
-    placeholder="A"
-    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-  >
-</div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">
+            REV <span class="text-rose-400">*</span>
+          </label>
 
-<!-- JIG QUANTITY -->
-<div>
-  <label class="block text-xs font-semibold text-slate-300 mb-1">
-    JIG Quantity <span class="text-rose-400">*</span>
-  </label>
-  <input
-    type="number"
-    name="jigQty"
-    required
-    min="1"
-    placeholder="1"
-    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-  >
-</div>
+          <input
+            type="text"
+            name="rev"
+            required
+            oninput="this.value = this.value.toUpperCase()"
+            placeholder="A"
+            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+          >
+        </div>
 
-<!-- JIG TYPE -->
-<div class="md:col-span-2">
-  <label class="block text-xs font-semibold text-slate-300 mb-1">
-    JIG TYPE <span class="text-rose-400">*</span>
-  </label>
+        <!-- JIG QUANTITY -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">
+            JIG Quantity <span class="text-rose-400">*</span>
+          </label>
 
-  <div class="w-full flex flex-wrap justify-center gap-2 bg-slate-950 border border-slate-700 rounded-lg p-2">
+          <input
+            type="number"
+            name="jigQty"
+            required
+            min="1"
+            placeholder="1"
+            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+          >
+        </div>
 
-    <!-- วัด Dimension -->
-    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-amber-500/50">
-      <input
-        type="radio"
-        name="jigType"
-        value="วัด Dimension"
-        class="accent-amber-500"
-        onchange="toggleJigOtherField(false)"
-        required
-      >
-      <span class="text-xs text-slate-200">วัด Dimension</span>
-    </label>
+        <!-- JIG TYPE -->
+        <div class="md:col-span-2">
 
-    <!-- ติดกาว -->
-    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-amber-500/50">
-      <input
-        type="radio"
-        name="jigType"
-        value="ติดกาว"
-        class="accent-amber-500"
-        onchange="toggleJigOtherField(false)"
-      >
-      <span class="text-xs text-slate-200">ติดกาว</span>
-    </label>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">
+            JIG TYPE <span class="text-rose-400">*</span>
+          </label>
 
-    <!-- อื่นๆ -->
-    <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-amber-500/50">
-      <input
-        type="radio"
-        name="jigType"
-        value="อื่นๆ"
-        class="accent-amber-500"
-        onchange="toggleJigOtherField(true)"
-      >
-      <span class="text-xs text-slate-200">อื่นๆ</span>
-    </label>
+          <div class="w-full flex flex-wrap justify-center gap-2 bg-slate-950 border border-slate-700 rounded-lg p-2">
 
-  </div>
-</div>
+            <!-- วัด Dimension -->
+            <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-amber-500/50">
 
-<!-- SENDER JIG -->
-<div class="md:col-span-2">
-  <label class="block text-xs font-semibold text-slate-300 mb-1">
-    ผู้ส่ง JIG <span class="text-rose-400">*</span>
-  </label>
+              <input
+                type="radio"
+                name="jigType"
+                value="วัด Dimension"
+                class="accent-amber-500"
+                onchange="toggleJigOtherField(false)"
+                required
+              >
 
-  <select
-    name="senderJig"
-    required
-    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-  >
-    <option value="">-- เลือกผู้ส่ง JIG --</option>
-    ${senderOptions}
-  </select>
-</div>
+              <span class="text-xs text-slate-200">
+                วัด Dimension
+              </span>
 
-<!-- JIG OTHER -->
-<div
-  id="jigOtherContainer"
-  class="hidden md:col-span-2"
->
-  <label class="block text-xs font-semibold text-amber-400 mb-1">
-    ระบุรายละเอียดกรณีเลือก อื่นๆ
-  </label>
+            </label>
 
-  <input
-    type="text"
-    name="jigTypeDetail"
-    id="jigTypeDetail"
-    placeholder="ระบุประเภท JIG..."
-    class="w-full bg-slate-950 border border-amber-600/50 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none"
-  >
-</div>
+            <!-- ติดกาว -->
+            <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-amber-500/50">
+
+              <input
+                type="radio"
+                name="jigType"
+                value="ติดกาว"
+                class="accent-amber-500"
+                onchange="toggleJigOtherField(false)"
+              >
+
+              <span class="text-xs text-slate-200">
+                ติดกาว
+              </span>
+
+            </label>
+
+            <!-- อื่นๆ -->
+            <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 cursor-pointer hover:border-amber-500/50">
+
+              <input
+                type="radio"
+                name="jigType"
+                value="อื่นๆ"
+                class="accent-amber-500"
+                onchange="toggleJigOtherField(true)"
+              >
+
+              <span class="text-xs text-slate-200">
+                อื่นๆ
+              </span>
+
+            </label>
+
+          </div>
+        </div>
+
+        <!-- JIG OTHER -->
+        <div
+          id="jigOtherContainer"
+          class="hidden md:col-span-2"
+        >
+
+          <label class="block text-xs font-semibold text-amber-400 mb-1">
+            ระบุรายละเอียดกรณีเลือก อื่นๆ
+          </label>
+
+          <input
+            type="text"
+            name="jigTypeDetail"
+            id="jigTypeDetail"
+            placeholder="ระบุประเภท JIG..."
+            class="w-full bg-slate-950 border border-amber-600/50 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none"
+          >
+
+        </div>
+
+        <!-- SENDER JIG -->
+        <div class="md:col-span-2">
+
+          <label class="block text-xs font-semibold text-slate-300 mb-1">
+            ผู้ส่ง JIG <span class="text-rose-400">*</span>
+          </label>
+
+          <select
+            name="senderJig"
+            required
+            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+          >
+
+            <option value="">
+              -- เลือกผู้ส่ง JIG --
+            </option>
+
+            ${senderOptions}
+
+          </select>
+
+        </div>
 
       </div>
     </div>
