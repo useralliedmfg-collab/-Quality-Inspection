@@ -1814,38 +1814,77 @@ body, button, input, select, textarea, table {
     }
 
     // Module Switcher
-    function switchTopic(topicKey) {
-      activeTopic = topicKey;
+function switchTopic(topicKey) {
+  activeTopic = topicKey;
 
-      // Admin Global View
-if (topicKey === "ALL") {
-  if (!isAdminLoggedIn) return;
+  // Admin Global View
+  if (topicKey === "ALL") {
+    if (!isAdminLoggedIn) return;
 
-  document.getElementById('filterTopicAdmin').value = "ALL";
+    document.getElementById('filterTopicAdmin').value = "ALL";
 
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.classList.remove(
-    'active',
-    'border-b-2',
-    'border-cyan-400',
-    'text-cyan-400',
-    'bg-slate-800/80'
-  );
-});
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove(
+        'active',
+        'border-b-2',
+        'border-cyan-400',
+        'text-cyan-400',
+        'bg-slate-800/80'
+      );
+      btn.classList.add('text-slate-400');
+    });
 
-  const allTab = document.getElementById('tab-ALL');
-  allTab.classList.add(
-  'active',
-  'border-b-2',
-  'border-cyan-400',
-  'text-cyan-400',
-  'bg-slate-800/80'
-);
-    allTab.classList.remove('text-slate-400');
+    const allTab = document.getElementById('tab-ALL');
+
+    if (allTab) {
+      allTab.classList.add(
+        'active',
+        'border-b-2',
+        'border-cyan-400',
+        'text-cyan-400',
+        'bg-slate-800/80'
+      );
+      allTab.classList.remove('text-slate-400');
+    }
+
+    applyFilters();
+    return;
   }
 
+  // ถ้าเลือกหัวข้อปกติ ให้กลับมาใช้หัวข้อปัจจุบัน
+  if (isAdminLoggedIn) {
+    document.getElementById('filterTopicAdmin').value = "CURRENT";
+  }
+
+  // Update Tab Styles
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove(
+      'active',
+      'border-b-2',
+      'border-cyan-400',
+      'text-cyan-400',
+      'bg-slate-800/80'
+    );
+    btn.classList.add('text-slate-400');
+  });
+
+  const activeBtn = document.getElementById(`tab-${topicKey}`);
+
+  if (activeBtn) {
+    activeBtn.classList.add(
+      'active',
+      'border-b-2',
+      'border-cyan-400',
+      'text-cyan-400',
+      'bg-slate-800/80'
+    );
+
+    activeBtn.classList.remove('text-slate-400');
+  }
+
+  // Update Form Title & Render Form
+  renderFormForTopic(topicKey);
   applyFilters();
-  return;
 }
 
       // ถ้าเลือกหัวข้อปกติ ให้กลับมาใช้หัวข้อปัจจุบัน
@@ -1855,8 +1894,14 @@ if (isAdminLoggedIn) {
       
       // Update Tab Styles
      document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.classList.remove('active', 'border-b-2', 'border-cyan-400', 'text-cyan-400', 'bg-slate-800/80');
-  btn.classList.add('text-slate-400');
+  btn.classList.remove(
+    'active',
+    'border-b-2',
+    'border-cyan-400',
+    'text-cyan-400',
+    'bg-slate-800/80',
+    'text-slate-400'
+  );
 });
     
       const activeBtn = document.getElementById(`tab-${topicKey}`);
