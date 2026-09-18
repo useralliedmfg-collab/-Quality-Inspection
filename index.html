@@ -1456,9 +1456,9 @@ body, button, input, select, textarea, table {
     </div>
   </nav>
 
-  <!-- MAIN DESKTOP CONTAINER -->
+ <!-- MAIN DESKTOP SPLIT CONTAINER -->
 <main class="flex-1 flex flex-col overflow-hidden relative">
-
+  
   <!-- TOP DASHBOARD SUMMARY - FULL WIDTH -->
   <section class="w-full bg-slate-950 border-b border-slate-800 p-3 shrink-0">
 
@@ -1515,12 +1515,21 @@ body, button, input, select, textarea, table {
 <section
   id="userFormPanel"
   class="w-full md:w-[45%] bg-slate-900 border-r border-slate-800 flex flex-col h-full overflow-y-auto p-4 shrink-0 min-h-0"
->        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-pen-to-square text-cyan-400"></i>
-          <h2 id="formTitle" class="text-base font-semibold text-white">บันทึกส่งงาน DIECUT INSPECTION</h2>
-        </div>
-        <span class="text-[11px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded border border-slate-700">Auto Save & Lock</span>
-      </div>
+>        <div class="flex items-center justify-between gap-2 mb-3 shrink-0">
+  <div class="flex items-center gap-2 min-w-0">
+    <i class="fa-solid fa-pen-to-square text-cyan-400 shrink-0"></i>
+    <h2
+      id="formTitle"
+      class="text-base font-semibold text-white truncate"
+    >
+      บันทึกส่งงาน DIECUT INSPECTION
+    </h2>
+  </div>
+
+  <span class="text-[11px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded border border-slate-700 whitespace-nowrap shrink-0">
+    Auto Save & Lock
+  </span>
+</div>
 
      <!-- DYNAMIC FORM CONTENT CONTAINER -->
 <form
