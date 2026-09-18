@@ -2839,6 +2839,18 @@ ${customerFieldHTML}
         return true;
       });
 
+           // เรียงเลขงาน: มาก → น้อย
+      // แยกตามหัวข้อ ไม่ให้เลขงานต่างประเภทปนกัน
+      const getJobNumber = (r) => {
+        const jobNo = r.jobNo || r.faNo || r.diecutNo || '';
+        const match = String(jobNo).match(/(\d+)\s*$/);
+        return match ? parseInt(match[1], 10) : 0;
+      };
+
+      filtered.sort((a, b) => {
+        return getJobNumber(b) - getJobNumber(a);
+      });
+
       renderTableRows(filtered);
     }
 
