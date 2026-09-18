@@ -3401,7 +3401,6 @@ if (topicKey === "DIECUT") {
       </div>
     </div>
   `;
-
 } 
 
 // ========================================================
@@ -3430,34 +3429,81 @@ else if (topicKey === "JIG_FA") {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-        <!-- JIG TYPE -->
-        <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+        <!-- วันเดือนปี -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            JIG TYPE
+            วันเดือนปี
           </div>
-
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.jigType || '-'}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}
+          <div class="text-sm font-medium text-slate-200">
+            ${item.userDate || '-'}
           </div>
         </div>
 
-        <!-- JIG QUANTITY -->
+        <!-- เวลา -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            JIG QUANTITY
+            เวลา
           </div>
+          <div class="text-sm font-medium text-slate-200">
+            ${item.userTime || '-'}
+          </div>
+        </div>
 
+        <!-- CUSTOMER -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            CUSTOMER
+          </div>
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${item.customer || '-'}
+          </div>
+        </div>
+
+        <!-- PART NO. -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            PART NO.
+          </div>
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${item.partNo || '-'}
+          </div>
+        </div>
+
+        <!-- REV. -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            REV.
+          </div>
+          <div class="text-sm font-semibold text-slate-100">
+            ${item.rev || '-'}
+          </div>
+        </div>
+
+        <!-- จำนวน JIG ที่ส่่งตรวจ -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            จำนวน JIG ที่ส่่งตรวจ
+          </div>
           <div class="text-sm font-semibold text-slate-100">
             ${item.jigQty || '-'}
           </div>
         </div>
 
+        <!-- ชนิด JIG ที่ต้องการใช้งาน -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3 md:col-span-2">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            ชนิด JIG ที่ต้องการใช้งาน
+          </div>
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${item.jigType || '-'}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}
+          </div>
+        </div>
+
         <!-- ผู้ส่ง JIG -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3 md:col-span-2">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             ผู้ส่ง JIG
           </div>
-
           <div class="text-sm font-semibold text-cyan-300 break-words">
             ${item.senderJig || '-'}
           </div>
