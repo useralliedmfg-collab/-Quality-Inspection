@@ -2987,26 +2987,7 @@ function openViewDetailModal(topicKey, recordId) {
     </div>
   `;
 
-  // ==================================================
-  // ข้อมูลการส่งงาน
-  // ==================================================
-  let rowsHTML = `
-    <div class="mb-4">
-
-      ${sectionTitle('ข้อมูลการส่งงาน')}
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-
-        ${infoBox('วันที่ส่งงาน', item.userDate)}
-        ${infoBox('เวลาส่งงาน', item.userTime)}
-
-        ${infoBox('ลูกค้า', item.customer)}
-        ${infoBox('Part No / Rev', `${item.partNo || '-'} (Rev: ${item.rev || '-'})`)}
-
-      </div>
-    </div>
-  `;
-
+  let rowsHTML = ``;
   // ==================================================
 // DIECUT
 // ==================================================
