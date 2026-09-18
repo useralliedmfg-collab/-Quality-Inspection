@@ -1456,8 +1456,60 @@ body, button, input, select, textarea, table {
     </div>
   </nav>
 
-  <!-- MAIN DESKTOP SPLIT CONTAINER -->
-  <main class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
+  <!-- MAIN DESKTOP CONTAINER -->
+<main class="flex-1 flex flex-col overflow-hidden relative">
+
+  <!-- TOP DASHBOARD SUMMARY - FULL WIDTH -->
+  <section class="w-full bg-slate-950 border-b border-slate-800 p-3 shrink-0">
+
+    <!-- TITLE -->
+    <div class="flex items-center justify-between gap-3 mb-2">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-chart-line text-cyan-400"></i>
+        <div>
+          <h2 class="text-sm font-bold text-white">
+            FA Quality Inspection
+          </h2>
+          <p class="text-[11px] text-slate-400">
+            Topic: <span id="topTopicIndicator" class="text-cyan-400 font-medium">DIE CUT INSPECTION</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY METRICS -->
+    <div class="grid grid-cols-5 gap-2">
+
+      <div class="bg-slate-900 border border-slate-800 rounded-lg p-2 text-center">
+        <p class="text-[11px] text-slate-400">Total Jobs</p>
+        <p id="metricTotal" class="text-xl font-bold text-white">0</p>
+      </div>
+
+      <div class="bg-slate-900 border border-amber-500/30 bg-amber-500/5 rounded-lg p-2 text-center">
+        <p class="text-[11px] text-amber-400">Pending</p>
+        <p id="metricPending" class="text-xl font-bold text-amber-400">0</p>
+      </div>
+
+      <div class="bg-slate-900 border border-cyan-500/30 bg-cyan-500/5 rounded-lg p-2 text-center">
+        <p class="text-[11px] text-cyan-400">Inspected</p>
+        <p id="metricInspected" class="text-xl font-bold text-cyan-400">0</p>
+      </div>
+
+      <div class="bg-slate-900 border border-emerald-500/30 bg-emerald-500/5 rounded-lg p-2 text-center">
+        <p class="text-[11px] text-emerald-400">OK</p>
+        <p id="metricOk" class="text-xl font-bold text-emerald-400">0</p>
+      </div>
+
+      <div class="bg-slate-900 border border-rose-500/30 bg-rose-500/5 rounded-lg p-2 text-center">
+        <p class="text-[11px] text-rose-400">NG</p>
+        <p id="metricNg" class="text-xl font-bold text-rose-400">0</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTENT SPLIT 45% / 55% -->
+  <div class="flex flex-1 min-h-0 w-full flex-col md:flex-row">
 
     <!-- LEFT PANEL: USER INPUT FORM (42% Width) -->
 <section
@@ -1491,30 +1543,7 @@ body, button, input, select, textarea, table {
 
     <!-- RIGHT PANEL: DASHBOARD & JOB LIST TABLE (58% Width) -->
 <section id="dashboardPanel" class="w-full md:w-[55%] bg-slate-950 flex flex-col h-full overflow-hidden p-4 min-h-0">     
-      <!-- SUMMARY METRICS CARDS -->
-      <div class="grid grid-cols-5 gap-2 mb-2 shrink-0">
-        <div class="bg-slate-900 border border-slate-800 rounded-lg p-2 text-center">
-          <p class="text-[11px] text-slate-400">Total Jobs</p>
-          <p id="metricTotal" class="text-xl font-bold text-white">0</p>
-        </div>
-        <div class="bg-slate-900 border border-amber-500/30 bg-amber-500/5 rounded-lg p-2 text-center">
-          <p class="text-[11px] text-amber-400">Pending</p>
-          <p id="metricPending" class="text-xl font-bold text-amber-400">0</p>
-        </div>
-        <div class="bg-slate-900 border border-cyan-500/30 bg-cyan-500/5 rounded-lg p-2 text-center">
-          <p class="text-[11px] text-cyan-400">Inspected</p>
-          <p id="metricInspected" class="text-xl font-bold text-cyan-400">0</p>
-        </div>
-        <div class="bg-slate-900 border border-emerald-500/30 bg-emerald-500/5 rounded-lg p-2 text-center">
-          <p class="text-[11px] text-emerald-400">OK</p>
-          <p id="metricOk" class="text-xl font-bold text-emerald-400">0</p>
-        </div>
-        <div class="bg-slate-900 border border-rose-500/30 bg-rose-500/5 rounded-lg p-2 text-center">
-          <p class="text-[11px] text-rose-400">NG</p>
-          <p id="metricNg" class="text-xl font-bold text-rose-400">0</p>
-        </div>
-      </div>
-
+      
       <!-- SEARCH & FILTER TOOLBAR -->
       <div class="bg-slate-900 border border-slate-800 rounded-lg p-2 mb-2 shrink-0 flex flex-wrap gap-2 items-center">
         <!-- Search Input -->
@@ -1580,11 +1609,15 @@ body, button, input, select, textarea, table {
           <span id="tableCountText">แสดง 0 รายการ</span>
           <span id="topicIndicatorText" class="text-cyan-400 font-medium">Topic: DIECUT INSPECTION</span>
         </div>
-      </div>
+     </div>
     </section>
-  </main>
 
-  <!-- MODAL 1: ADD CUSTOMER MODAL -->
+  </div>
+  <!-- END CONTENT SPLIT 45% / 55% -->
+
+</main>
+
+<!-- MODAL 1: ADD CUSTOMER MODAL -->
   <div id="addCustomerModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-xl max-w-sm w-full p-5 shadow-2xl">
       <div class="flex justify-between items-center mb-4">
