@@ -1924,85 +1924,85 @@ if (isAdminLoggedIn) {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-        <!-- CUSTOMER -->
-        ${customerFieldHTML}
-
-        <!-- PART NO -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">
-            PART NO <span class="text-rose-400">*</span>
-          </label>
-          <input
-            type="text"
-            name="partNo"
-            required
-            oninput="this.value = this.value.toUpperCase()"
-            placeholder="เช่น PT-8821"
-            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-          >
-        </div>
-
-        <!-- REV -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">
-            REV <span class="text-rose-400">*</span>
-          </label>
-          <input
-            type="text"
-            name="rev"
-            required
-            oninput="this.value = this.value.toUpperCase()"
-            placeholder="01"
-            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-          >
-        </div>
-
         <!-- DIECUT NO -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">
-            DIECUT NO <span class="text-rose-400">*</span>
-          </label>
-          <input
-            type="text"
-            name="diecutNo"
-            required
-            oninput="this.value = this.value.toUpperCase()"
-            placeholder="เช่น DC-001"
-            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-          >
-        </div>
+<div>
+  <label class="block text-xs font-semibold text-slate-300 mb-1">
+    DIECUT NO <span class="text-rose-400">*</span>
+  </label>
+  <input
+    type="text"
+    name="diecutNo"
+    required
+    oninput="this.value = this.value.toUpperCase()"
+    placeholder="เช่น DC-001"
+    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+  >
+</div>
 
-        <!-- REFER NO DIECUT -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">
-            REFER NO DIECUT
-          </label>
-          <input
-            type="text"
-            name="referNoDiecut"
-            oninput="this.value = this.value.toUpperCase()"
-            placeholder="เช่น REF-99"
-            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-          >
-        </div>
+<!-- REFER NO DIECUT -->
+<div>
+  <label class="block text-xs font-semibold text-slate-300 mb-1">
+    REFER NO DIECUT
+  </label>
+  <input
+    type="text"
+    name="referNoDiecut"
+    oninput="this.value = this.value.toUpperCase()"
+    placeholder="เช่น REF-99"
+    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+  >
+</div>
 
-        <!-- CAVITY -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">
-            CAVITY <span class="text-rose-400">*</span>
-          </label>
-          <input
-            type="number"
-            name="cavity"
-            required
-            min="1"
-            placeholder="1"
-            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-          >
-        </div>
+<!-- CUSTOMER -->
+${customerFieldHTML}
 
-        <!-- SENDER MOULD -->
-        <div class="md:col-span-2">
+<!-- PART NO -->
+<div>
+  <label class="block text-xs font-semibold text-slate-300 mb-1">
+    PART NO <span class="text-rose-400">*</span>
+  </label>
+  <input
+    type="text"
+    name="partNo"
+    required
+    oninput="this.value = this.value.toUpperCase()"
+    placeholder="เช่น PT-8821"
+    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+  >
+</div>
+
+<!-- REV -->
+<div>
+  <label class="block text-xs font-semibold text-slate-300 mb-1">
+    REV <span class="text-rose-400">*</span>
+  </label>
+  <input
+    type="text"
+    name="rev"
+    required
+    oninput="this.value = this.value.toUpperCase()"
+    placeholder="01"
+    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+  >
+</div>
+
+<!-- CAVITY -->
+<div>
+  <label class="block text-xs font-semibold text-slate-300 mb-1">
+    CAVITY <span class="text-rose-400">*</span>
+  </label>
+  <input
+    type="number"
+    name="cavity"
+    required
+    min="1"
+    placeholder="1"
+    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+  >
+</div>
+
+<!-- SENDER MOULD -->
+<div class="md:col-span-2">
   <label class="block text-xs font-semibold text-slate-300 mb-1">
     ผู้ส่ง MOULD <span class="text-rose-400">*</span>
   </label>
@@ -2015,7 +2015,6 @@ if (isAdminLoggedIn) {
     ${senderOptions}
   </select>
 </div>
-
       </div>
     </div>
   `;
