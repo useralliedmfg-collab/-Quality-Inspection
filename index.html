@@ -3376,6 +3376,28 @@ if (topicKey === "DIECUT") {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
+        <!-- วันเดือนปี -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            วันเดือนปี
+          </div>
+
+          <div class="text-sm font-medium text-slate-200">
+            ${item.userDate || '-'}
+          </div>
+        </div>
+
+        <!-- เวลา -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            เวลา
+          </div>
+
+          <div class="text-sm font-medium text-slate-200">
+            ${item.userTime || '-'}
+          </div>
+        </div>
+
         <!-- DIECUT NO -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
@@ -3387,7 +3409,7 @@ if (topicKey === "DIECUT") {
           </div>
         </div>
 
-        <!-- REFER NO -->
+        <!-- REFER NO DIECUT -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             REFER NO DIECUT
@@ -3395,6 +3417,39 @@ if (topicKey === "DIECUT") {
 
           <div class="text-sm font-semibold text-slate-100 break-words">
             ${item.referNoDiecut || '-'}
+          </div>
+        </div>
+
+        <!-- CUSTOMER -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            CUSTOMER
+          </div>
+
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${item.customer || '-'}
+          </div>
+        </div>
+
+        <!-- PART NO -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            PART NO.
+          </div>
+
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${item.partNo || '-'}
+          </div>
+        </div>
+
+        <!-- REV -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            REV
+          </div>
+
+          <div class="text-sm font-semibold text-slate-100">
+            ${item.rev || '-'}
           </div>
         </div>
 
@@ -3410,7 +3465,7 @@ if (topicKey === "DIECUT") {
         </div>
 
         <!-- ผู้ส่ง MOULD -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3 md:col-span-2">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             ผู้ส่ง MOULD
           </div>
@@ -3423,7 +3478,8 @@ if (topicKey === "DIECUT") {
       </div>
     </div>
   `;
-}
+
+} 
 
 // ========================================================
 // JIG FA
