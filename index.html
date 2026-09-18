@@ -2661,16 +2661,16 @@ ${customerFieldHTML}
         Sender (ผู้ส่งงาน) <span class="text-rose-400">*</span>
       </label>
 
-      <select
-        name="sender"
-        required
-        class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-      >
-        <option value="">-- เลือกผู้ส่งงาน --</option>
-        ${senderOptions}
-      </select>
+      <input
+    type="text"
+    name="sender"
+    required
+    placeholder="กรอกชื่อผู้ส่งงาน"
+    autocomplete="off"
+    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500 select-text"
+  >
 
-    </div>
+</div>
   `;
       } else {
         formTitle.textContent = "บันทึกส่งงาน";
