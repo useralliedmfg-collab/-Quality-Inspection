@@ -3008,26 +3008,39 @@ function openViewDetailModal(topicKey, recordId) {
   `;
 
   // ==================================================
-  // DIECUT
-  // ==================================================
-  if (topicKey === "DIECUT") {
+// DIECUT
+// ==================================================
+if (topicKey === "DIECUT") {
 
-    rowsHTML += `
-      <div class="mb-4">
+  rowsHTML += `
+    <div class="mb-4">
 
-        ${sectionTitle('รายละเอียด DIECUT')}
+      ${sectionTitle('รายละเอียด DIECUT')}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-          ${infoBox('DIECUT NO', item.diecutNo)}
-          ${infoBox('REFER NO DIECUT', item.referNoDiecut)}
+        <!-- บรรทัด 1 -->
+        ${infoBox('วันเดือนปี', item.userDate)}
+        ${infoBox('เวลาที่ส่ง', item.userTime)}
 
-          ${infoBox('CAVITY', item.cavity)}
-          ${infoBox('ผู้ส่ง MOULD', item.senderMould)}
+        <!-- บรรทัด 2 -->
+        ${infoBox('DIECUT NO', item.diecutNo)}
+        ${infoBox('REFER NO DIECUT', item.referNoDiecut)}
 
-        </div>
+        <!-- บรรทัด 3 -->
+        ${infoBox('CUSTOMER', item.customer)}
+        ${infoBox('PART NO', item.partNo)}
+
+        <!-- บรรทัด 4 -->
+        ${infoBox('REV.', item.rev)}
+        ${infoBox('CAVITY', item.cavity)}
+
+        <!-- บรรทัด 5 -->
+        ${infoBox('ผู้ส่ง MOULD', item.senderMould, true)}
+
       </div>
-    `;
+    </div>
+  `;
 
   // ==================================================
   // JIG FA
