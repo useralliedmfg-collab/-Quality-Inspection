@@ -3024,132 +3024,162 @@ if (topicKey === "DIECUT") {
   `;
 
   // ==================================================
-  // JIG FA
-  // ==================================================
-  } else if (topicKey === "JIG_FA") {
+// JIG FA
+// ==================================================
+} else if (topicKey === "JIG_FA") {
 
-    rowsHTML += `
-      <div class="mb-4">
-
-        ${sectionTitle('รายละเอียด JIG FA')}
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-
-          ${infoBox(
-            'JIG TYPE',
-            item.jigType
-              ? `${item.jigType}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}`
-              : '-'
-          )}
-
-          ${infoBox('JIG Quantity', item.jigQty)}
-
-          ${infoBox('ผู้ส่ง JIG', item.senderJig)}
-          ${infoBox('Job No', item.jobNo)}
-
-        </div>
-      </div>
-    `;
-
-  // ==================================================
-  // FIRST SHOT FA
-  // ==================================================
-  } else if (topicKey === "FIRST_SHOT_FA") {
-
-    rowsHTML += `
-      <div class="mb-4">
-
-        ${sectionTitle('รายละเอียด FIRST SHOT FA')}
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-
-          ${infoBox('FA NO', item.faNo)}
-
-          ${infoBox(
-            'Tooling Req',
-            `${toolingReqText}${item.toolingReqOther ? ` (${item.toolingReqOther})` : ''}`
-          )}
-
-          ${infoBox('เครื่องผลิต', item.machineCategory)}
-          ${infoBox('Machine No', item.machineNo)}
-
-          ${infoBox(
-            'สถานะ PACK',
-            item.isPack ? 'PACK' : 'NO PACK'
-          )}
-
-          ${infoBox(
-            'จำนวนที่ส่ง',
-            `หลัก ${item.mainQty || 0} + เพิ่มเติม ${item.extraQty || 0}`
-          )}
-
-          ${infoBox('ผู้ส่งงาน', item.sender)}
-          ${infoBox('Job No', item.jobNo)}
-
-        </div>
-      </div>
-    `;
-
-  // ==================================================
-  // FA FG
-  // ==================================================
-  } else if (topicKey === "FA_FG") {
-
-    rowsHTML += `
-      <div class="mb-4">
-
-        ${sectionTitle('รายละเอียด FA FG')}
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-
-          ${infoBox('FA NO', item.faNo)}
-
-          ${infoBox(
-            'จำนวนที่ส่ง',
-            `หลัก ${item.mainQty || 0} + เพิ่มเติม ${item.extraQty || 0}`
-          )}
-
-          ${infoBox('ผู้ส่งงาน', item.sender)}
-          ${infoBox('Job No', item.jobNo)}
-
-        </div>
-      </div>
-    `;
-  }
-
-  // ==================================================
-  // QA / QC
-  // ==================================================
   rowsHTML += `
-    <div class="mt-1">
+    <div class="mb-4">
 
-      ${sectionTitle('ผลการตรวจงาน QA/QC', 'emerald')}
+      ${sectionTitle('รายละเอียด JIG FA')}
 
-      <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <!-- บรรทัด 1 -->
+        ${infoBox('วันเดือนปี', item.userDate)}
+        ${infoBox('เวลาที่ส่ง', item.userTime)}
 
-          ${infoBox('Status', item.status)}
-          ${infoBox('Result', item.result)}
+        <!-- บรรทัด 2 -->
+        ${infoBox('CUSTOMER', item.customer)}
+        ${infoBox('PART NO.', item.partNo)}
 
-          ${infoBox('Inspector', inspector)}
+        <!-- บรรทัด 3 -->
+        ${infoBox('REV.', item.rev)}
+        ${infoBox('จำนวน JIG ที่ส่งตรวจ', item.jigQty)}
 
-          ${infoBox(
-            'วันที่ / เวลาตรวจ',
-            `${item.inspectionDate || '-'} ${item.inspectionTime || ''}`.trim()
-          )}
+        <!-- บรรทัด 4 -->
+        ${infoBox(
+          'ชนิด JIG ที่ต้องการใช้งาน',
+          item.jigType
+            ? `${item.jigType}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}`
+            : '-',
+          true
+        )}
 
-          ${infoBox(
-            'Remark',
-            item.remark || '-',
-            true
-          )}
-
-        </div>
+        <!-- บรรทัด 5 -->
+        ${infoBox('ผู้ส่ง JIG', item.senderJig, true)}
 
       </div>
     </div>
   `;
+
+  // ==================================================
+// FIRST SHOT FA
+// ==================================================
+} else if (topicKey === "FIRST_SHOT_FA") {
+
+  rowsHTML += `
+    <div class="mb-4">
+
+      ${sectionTitle('รายละเอียด FIRST SHOT FA')}
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+
+        <!-- บรรทัด 1 -->
+        ${infoBox('วันเดือนปี', item.userDate)}
+        ${infoBox('เวลาส่ง', item.userTime)}
+
+        <!-- บรรทัด 2 -->
+        ${infoBox('FA NO.', item.faNo)}
+        ${infoBox('CUSTOMER', item.customer)}
+
+        <!-- บรรทัด 3 -->
+        ${infoBox('PART NO.', item.partNo)}
+        ${infoBox('REV.', item.rev)}
+
+        <!-- บรรทัด 4 -->
+        ${infoBox(
+          'TOOLING REQUIREMENT',
+          `${toolingReqText}${item.toolingReqOther ? ` (${item.toolingReqOther})` : ''}`
+        )}
+
+        ${infoBox(
+          'PACK',
+          item.isPack ? 'PACK' : '-'
+        )}
+
+        <!-- บรรทัด 5 -->
+        ${infoBox(
+          'เครื่องที่ผลิต',
+          `${item.machineCategory || '-'}${item.machineNo ? ` (${item.machineNo})` : ''}`
+        )}
+
+        ${infoBox(
+          'จำนวนที่ส่ง',
+          `${item.mainQty || '-'} + ${item.extraQty || '-'}`
+        )}
+
+        <!-- บรรทัด 6 -->
+        ${infoBox('ผู้ส่งงาน', item.sender, true)}
+
+      </div>
+    </div>
+  `;
+
+  // ==================================================
+// FA FG
+// ==================================================
+} else if (topicKey === "FA_FG") {
+
+  rowsHTML += `
+    <div class="mb-4">
+
+      ${sectionTitle('รายละเอียด FA FG')}
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+
+        <!-- บรรทัด 1 -->
+        ${infoBox('วันเดือนปี', item.userDate)}
+        ${infoBox('เวลาส่ง', item.userTime)}
+
+        <!-- บรรทัด 2 -->
+        ${infoBox('FA NO.', item.faNo)}
+        ${infoBox('CUSTOMER', item.customer)}
+
+        <!-- บรรทัด 3 -->
+        ${infoBox('PART NO.', item.partNo)}
+        ${infoBox('REV.', item.rev)}
+
+        <!-- บรรทัด 4 -->
+        ${infoBox('งานที่ส่ง', item.mainQty)}
+        ${infoBox('จำนวนเพิ่มเติม', item.extraQty)}
+
+        <!-- บรรทัด 5 -->
+        ${infoBox('ผู้ส่งงาน', item.sender, true)}
+
+      </div>
+    </div>
+  `;
+}
+
+ // ==================================================
+// QA / QC
+// ==================================================
+rowsHTML += `
+  <div class="mt-1">
+
+    ${sectionTitle('ผลการตรวจงาน QA/QC', 'emerald')}
+
+    <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+
+        <!-- บรรทัด 1 -->
+        ${infoBox('วันที่ตรวจ', item.inspectionDate)}
+        ${infoBox('เวลาตรวจ', item.inspectionTime)}
+
+        <!-- บรรทัด 2 -->
+        ${infoBox('ผลการตรวจ (Result)', item.result)}
+        ${infoBox('REMARK', item.remark || '-')}
+
+        <!-- บรรทัด 3 -->
+        ${infoBox('ผู้ตรวจงาน', inspector, true)}
+
+      </div>
+
+    </div>
+  </div>
+`;
 
   document.getElementById('detailContent').innerHTML = rowsHTML;
   openModal('viewDetailModal');
