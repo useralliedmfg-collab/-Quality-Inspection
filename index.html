@@ -1857,18 +1857,22 @@ async function apiCall(action, payload = {}) {
 
     // Load initial system data
     async function loadSystemData() {
-      const res = await apiCall("getInitialData");
-      if (res.success) {
-        masterData = res.master || masterData;
-        records = res.records || records;
-        populateCustomerFilter();
-        populateInspectorDropdown();
-        renderFormForTopic(activeTopic);
-        applyFilters();
-      } else {
-        showToast("ข้อผิดพลาด", res.message || "ไม่สามารถโหลดข้อมูลได้", "danger");
-      }
-    }
+  const res = await apiCall("getInitialData");
+
+  console.log("GET INITIAL DATA:", res);
+  console.log("RECORDS:", res.records);
+
+  if (res.success) {
+    masterData = res.master || masterData;
+    records = res.records || records;
+    populateCustomerFilter();
+    populateInspectorDropdown();
+    renderFormForTopic(activeTopic);
+    applyFilters();
+  } else {
+    showToast("ข้อผิดพลาด", res.message || "ไม่สามารถโหลดข้อมูลได้", "danger");
+  }
+}
 
     // Module Switcher
     function switchTopic(topicKey) {
