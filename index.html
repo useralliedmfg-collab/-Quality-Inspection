@@ -3029,124 +3029,33 @@ function openViewDetailModal(topicKey, recordId) {
       </div>
     `;
 
-  // ========================================================
-// JIG FA
-// ========================================================
+  // ==================================================
+  // JIG FA
+  // ==================================================
+  } else if (topicKey === "JIG_FA") {
 
-else if (topicKey === "JIG_FA") {
+    rowsHTML += `
+      <div class="mb-4">
 
-  detailHTML += `
-    <div>
+        ${sectionTitle('รายละเอียด JIG FA')}
 
-      <div class="flex items-center gap-2 mb-2.5">
-        <div class="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-          <i class="fa-solid fa-screwdriver-wrench text-amber-400 text-xs"></i>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-        <div>
-          <div class="text-xs font-bold text-slate-200">
-            รายละเอียด JIG FA
-          </div>
-          <div class="text-[10px] text-slate-500">
-            ข้อมูล JIG ที่ส่งเข้าตรวจสอบ
-          </div>
+          ${infoBox(
+            'JIG TYPE',
+            item.jigType
+              ? `${item.jigType}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}`
+              : '-'
+          )}
+
+          ${infoBox('JIG Quantity', item.jigQty)}
+
+          ${infoBox('ผู้ส่ง JIG', item.senderJig)}
+          ${infoBox('Job No', item.jobNo)}
+
         </div>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-
-        <!-- วันที่ส่งงาน -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            วันที่ส่งงาน
-          </div>
-
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userDate || '-'}
-          </div>
-        </div>
-
-        <!-- เวลาที่ส่งงาน -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            เวลาที่ส่งงาน
-          </div>
-
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userTime || '-'}
-          </div>
-        </div>
-
-        <!-- CUSTOMER -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            CUSTOMER
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.customer || '-'}
-          </div>
-        </div>
-
-        <!-- PART NO. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            PART NO.
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.partNo || '-'}
-          </div>
-        </div>
-
-        <!-- REV -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            REV
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.rev || '-'}
-          </div>
-        </div>
-
-        <!-- จำนวน JIG ที่ส่งตรวจ -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            จำนวน JIG ที่ส่งตรวจ
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.jigQty || '-'}
-          </div>
-        </div>
-
-        <!-- ชนิด JIG -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3 md:col-span-2">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            ชนิด JIG ที่ต้องการใช้งาน
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.jigType || '-'}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}
-          </div>
-        </div>
-
-        <!-- ผู้ส่ง JIG -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3 md:col-span-2">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            ผู้ส่ง JIG
-          </div>
-
-          <div class="text-sm font-semibold text-cyan-300 break-words">
-            ${item.senderJig || '-'}
-          </div>
-        </div>
-
-      </div>
-    </div>
-  `;
-}
+    `;
 
   // ==================================================
   // FIRST SHOT FA
