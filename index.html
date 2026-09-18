@@ -3310,10 +3310,10 @@ if (topicKey === "DIECUT") {
           </div>
         </div>
 
-        <!-- เวลา -->
+        <!-- เวลาที่ส่ง -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            เวลา
+            เวลาที่ส่ง
           </div>
 
           <div class="text-sm font-medium text-slate-200">
@@ -3365,10 +3365,10 @@ if (topicKey === "DIECUT") {
           </div>
         </div>
 
-        <!-- REV -->
+        <!-- REV. -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            REV
+            REV.
           </div>
 
           <div class="text-sm font-semibold text-slate-100">
@@ -3552,80 +3552,103 @@ else if (topicKey === "FIRST_SHOT_FA") {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-        <!-- FA NO -->
+        <!-- วันเดือนปี -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            วันเดือนปี
+          </div>
+          <div class="text-sm font-medium text-slate-200">
+            ${item.userDate || '-'}
+          </div>
+        </div>
+
+        <!-- เวลาส่ง -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            เวลาส่ง
+          </div>
+          <div class="text-sm font-medium text-slate-200">
+            ${item.userTime || '-'}
+          </div>
+        </div>
+
+        <!-- FA NO. -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             FA NO.
           </div>
-
           <div class="text-sm font-semibold text-slate-100 break-words">
             ${item.faNo || '-'}
+          </div>
+        </div>
+
+        <!-- CUSTOMER -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            CUSTOMER
+          </div>
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${item.customer || '-'}
+          </div>
+        </div>
+
+        <!-- PART NO. -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            PART NO.
+          </div>
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${item.partNo || '-'}
+          </div>
+        </div>
+
+        <!-- REV. -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            REV.
+          </div>
+          <div class="text-sm font-semibold text-slate-100">
+            ${item.rev || '-'}
+          </div>
+        </div>
+
+        <!-- TOOLING REQUIREMENT -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            TOOLING REQUIREMENT
+          </div>
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${toolingReqDisplay}
           </div>
         </div>
 
         <!-- PACK -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            สถานะ PACK
+            PACK
           </div>
-
           <div class="text-sm font-semibold text-slate-100">
-            ${item.isPack ? 'PACK' : 'NO PACK'}
+            ${item.isPack ? 'PACK' : '-'}
           </div>
         </div>
 
-        <!-- TOOLING REQUIREMENT -->
-        <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+        <!-- เครื่องที่ผลิต -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            TOOLING REQUIREMENT
+            เครื่องที่ผลิต
           </div>
-
           <div class="text-sm font-semibold text-slate-100 break-words">
-            ${toolingReqDisplay}
+            ${item.machineCategory || '-'}${item.machineNo ? ` (${item.machineNo})` : ''}
           </div>
         </div>
 
-        <!-- หมวดเครื่องจักร -->
+        <!-- จำนวนที่ส่ง -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            หมวดเครื่องจักร
+            จำนวนที่ส่ง
           </div>
-
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.machineCategory || '-'}
-          </div>
-        </div>
-
-        <!-- หมายเลขเครื่อง -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            หมายเลขเครื่อง
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.machineNo || '-'}
-          </div>
-        </div>
-
-        <!-- จำนวนหลัก -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            จำนวนที่ส่ง (หลัก)
-          </div>
-
           <div class="text-sm font-semibold text-slate-100">
             ${item.mainQty || '-'}
-          </div>
-        </div>
-
-        <!-- จำนวนเพิ่มเติม -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            จำนวนเพิ่มเติม
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.extraQty || '-'}
           </div>
         </div>
 
@@ -3634,7 +3657,6 @@ else if (topicKey === "FIRST_SHOT_FA") {
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             ผู้ส่งงาน
           </div>
-
           <div class="text-sm font-semibold text-cyan-300 break-words">
             ${item.sender || '-'}
           </div>
@@ -3671,24 +3693,72 @@ else if (topicKey === "FA_FG") {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-        <!-- FA NO -->
-        <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+        <!-- วันเดือนปี -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            วันเดือนปี
+          </div>
+          <div class="text-sm font-medium text-slate-200">
+            ${item.userDate || '-'}
+          </div>
+        </div>
+
+        <!-- เวลาส่ง -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            เวลาส่ง
+          </div>
+          <div class="text-sm font-medium text-slate-200">
+            ${item.userTime || '-'}
+          </div>
+        </div>
+
+        <!-- FA NO. -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             FA NO.
           </div>
-
           <div class="text-sm font-semibold text-slate-100 break-words">
             ${item.faNo || '-'}
           </div>
         </div>
 
-        <!-- จำนวนหลัก -->
+        <!-- CUSTOMER -->
         <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            จำนวนที่ส่ง (หลัก)
+            CUSTOMER
           </div>
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${item.customer || '-'}
+          </div>
+        </div>
 
+        <!-- PART NO. -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            PART NO.
+          </div>
+          <div class="text-sm font-semibold text-slate-100 break-words">
+            ${item.partNo || '-'}
+          </div>
+        </div>
+
+        <!-- REV. -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            REV.
+          </div>
           <div class="text-sm font-semibold text-slate-100">
+            ${item.rev || '-'}
+          </div>
+        </div>
+
+        <!-- งานที่ส่ง -->
+        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
+          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
+            งานที่ส่ง
+          </div>
+          <div class="text-sm font-semibold text-slate-100 break-words">
             ${item.mainQty || '-'}
           </div>
         </div>
@@ -3698,7 +3768,6 @@ else if (topicKey === "FA_FG") {
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             จำนวนเพิ่มเติม
           </div>
-
           <div class="text-sm font-semibold text-slate-100">
             ${item.extraQty || '-'}
           </div>
@@ -3709,7 +3778,6 @@ else if (topicKey === "FA_FG") {
           <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
             ผู้ส่งงาน
           </div>
-
           <div class="text-sm font-semibold text-cyan-300 break-words">
             ${item.sender || '-'}
           </div>
