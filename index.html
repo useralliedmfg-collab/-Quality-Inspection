@@ -1805,58 +1805,94 @@ async function apiCall(action, payload = {}) {
   console.log("Action:", action);
   console.log("Time:", new Date().toLocaleTimeString());
 
-  try {
-    console.log("กำลังส่ง Request...");
+  const maxRetries = 2;
+  let lastError = null;
 
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ action, ...payload })
-    });
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
 
-    console.log("ได้รับ Response แล้ว");
-    console.log("HTTP Status:", response.status);
+    try {
+      console.log(`กำลังส่ง Request... ครั้งที่ ${attempt}/${maxRetries}`);
 
-    // ป้องกันกรณี Server ตอบ 404/500 หรือส่ง HTML กลับมา
-    if (!response.ok) {
-      const errorText = await response.text();
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          action,
+          ...payload
+        })
+      });
 
-      console.error("API HTTP ERROR:", response.status);
-      console.error("Server Response:", errorText);
+      console.log("ได้รับ Response แล้ว");
+      console.log("HTTP Status:", response.status);
 
-      throw new Error(
-        `Server HTTP ${response.status}`
+      // ถ้า Server ตอบ 404 / 500 ฯลฯ
+      if (!response.ok) {
+
+        const errorText = await response.text();
+
+        console.error(
+          `API HTTP ERROR ครั้งที่ ${attempt}:`,
+          response.status
+        );
+
+        console.error("Server Response:", errorText);
+
+        throw new Error(`Server HTTP ${response.status}`);
+      }
+
+      console.log("กำลังอ่าน JSON...");
+
+      const result = await response.json();
+
+      console.log("อ่าน JSON สำเร็จ");
+      console.log("Result:", result);
+      console.log("========== API END ==========");
+
+      hideLoadingToast();
+
+      return result;
+
+    } catch (err) {
+
+      lastError = err;
+
+      console.error(
+        `API ERROR ครั้งที่ ${attempt}:`,
+        err
       );
+
+      // ถ้ายังเหลือรอบให้ลองใหม่
+      if (attempt < maxRetries) {
+
+        console.log("กำลังลองเชื่อมต่อใหม่...");
+
+        await new Promise(resolve =>
+          setTimeout(resolve, 1000)
+        );
+
+      }
     }
-
-    console.log("กำลังอ่าน JSON...");
-
-    const result = await response.json();
-
-    console.log("อ่าน JSON สำเร็จ");
-    console.log("Result:", result);
-    console.log("========== API END ==========");
-
-    hideLoadingToast();
-    return result;
-
-  } catch (err) {
-
-    console.error("API ERROR:", err);
-
-    hideLoadingToast();
-
-    showToast(
-      "Error",
-      "ไม่สามารถเชื่อมต่อ Server ได้: " + err.message,
-      "danger"
-    );
-
-    return {
-      success: false,
-      message: err.message
-    };
   }
+
+  // ลองครบแล้วแต่ยังไม่ได้
+  console.error("API FAILED หลังจากลองครบทุกครั้ง");
+  console.error("Last Error:", lastError);
+
+  hideLoadingToast();
+
+  showToast(
+    "Error",
+    "ไม่สามารถเชื่อมต่อ Server ได้: " +
+      (lastError?.message || "Unknown error"),
+    "danger"
+  );
+
+  return {
+    success: false,
+    message: lastError?.message || "ไม่สามารถเชื่อมต่อ Server ได้"
+  };
 }
 
     // Load initial system data
