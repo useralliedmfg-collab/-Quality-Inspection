@@ -3967,13 +3967,47 @@ detailHTML += `</div>`;
       btn.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> บันทึกผลตรวจ & Lock Row`;
 
       if (res.success) {
-        showToast("สำเร็จ!", res.message, "success");
-        closeModal('inspectionModal');
-        await loadSystemData();
-      } else {
-        showToast("ข้อผิดพลาด", res.message, "danger");
-      }
+  showToast("สำเร็จ!", res.message, "success");
+  closeModal('inspectionModal');
+
+  // =========================================================
+  // UPDATE เฉพาะรายการที่เพิ่งตรวจ
+  // ไม่โหลดข้อมูลทั้งระบบใหม่
+  // =========================================================
+  const topicRecords = records[topicKey] || [];
+  const item = topicRecords.find(r => r.recordId === recordId);
+
+  if (item) {
+    item.status = "Inspected";
+    item.result = result;
+    item.inspectionDate = res.inspectionDate || "";
+    item.inspectionTime = res.inspectionTime || "";
+    item.remark = remark;
+    item.isLocked = true;
+
+    // Inspector field ของแต่ละหัวข้อ
+    if (topicKey === "DIECUT") {
+      item.inspectorMould = inspector;
+    } else if (topicKey === "JIG_FA") {
+      item.inspectorJig = inspector;
+    } else if (topicKey === "FIRST_SHOT_FA") {
+      item.inspector = inspector;
+    } else if (topicKey === "FA_FG") {
+      item.inspector = inspector;
     }
+  }
+
+  // Render เฉพาะข้อมูลใน Memory
+  applyFilters();
+
+} else {
+  showToast(
+    "ข้อผิดพลาด",
+    res.message || "ไม่สามารถบันทึกผลตรวจได้",
+    "danger"
+  );
+}
+}
 
     // Dropdown Helpers
     function populateCustomerFilter() {
