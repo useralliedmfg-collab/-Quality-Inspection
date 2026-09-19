@@ -1598,14 +1598,17 @@ body, button, input, select, textarea, table {
           <table class="w-full text-left text-xs text-slate-300">
             <thead class="bg-slate-950 border-b border-slate-800 text-slate-400 sticky top-0 uppercase tracking-wider">
              <tr>
-              <th class="p-2 text-center">Job No.</th>
-              <th class="p-2 text-center">Part No. / Rev</th>
-              <th class="p-2 text-center">CUSTOMER</th>
-              <th class="p-2 text-center">ส่งงานโดย / เวลา</th>
-              <th class="p-2 text-center">Status</th>
-              <th class="p-2 text-center">Result</th>
-              <th class="p-2 text-center">Action</th>
-            </tr>
+  <th class="p-2 text-center align-middle">JOB NO.</th>
+  <th class="p-2 text-center align-middle">วันเดือนปี</th>
+  <th class="p-2 text-center align-middle">เวลาส่ง</th>
+  <th class="p-2 text-center align-middle">PART NO.</th>
+  <th class="p-2 text-center align-middle">REV.</th>
+  <th class="p-2 text-center align-middle">CUSTOMER</th>
+  <th class="p-2 text-center align-middle">ผู้ส่งงาน</th>
+  <th class="p-2 text-center align-middle">STATUS</th>
+  <th class="p-2 text-center align-middle">RESULT</th>
+  <th class="p-2 text-center align-middle">ACTION</th>
+</tr>
             </thead>
             <tbody id="jobTableBody" class="divide-y divide-slate-800/60">
               <!-- Dynamic Rows -->
@@ -2904,85 +2907,113 @@ ${customerFieldHTML}
     }
 
     function renderTableRows(items) {
-      const tbody = document.getElementById('jobTableBody');
-      const countText = document.getElementById('tableCountText');
+  const tbody = document.getElementById('jobTableBody');
+  const countText = document.getElementById('tableCountText');
 
-      countText.textContent = `แสดง ${items.length} รายการ`;
+  countText.textContent = `แสดง ${items.length} รายการ`;
 
-      if (items.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="7" class="p-8 text-center text-slate-500">
-              <i class="fa-solid fa-folder-open text-2xl mb-2 block"></i>
-              ไม่พบข้อมูล Job ในระบบ
-            </td>
-          </tr>
-        `;
-        return;
-      }
+  if (items.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="10" class="p-8 text-center text-slate-500">
+          <i class="fa-solid fa-folder-open text-2xl mb-2 block"></i>
+          ไม่พบข้อมูล Job ในระบบ
+        </td>
+      </tr>
+    `;
+    return;
+  }
 
-      tbody.innerHTML = items.map(item => {
-        const sender = item.senderMould || item.senderJig || item.sender || "-";
-        
-        // Status Badge
-        let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">Pending</span>`;
-        if (item.status === "Inspected") {
-          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30"><i class="fa-solid fa-lock text-[9px] mr-1"></i>Inspected</span>`;
-        }
+  tbody.innerHTML = items.map(item => {
+    const sender = item.senderMould || item.senderJig || item.sender || "-";
 
-        // Result Badge
-        let resultBadge = `<span class="text-slate-500">-</span>`;
-        if (item.result === "OK") {
-          resultBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">OK</span>`;
-        } else if (item.result === "NG") {
-          resultBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40">NG</span>`;
-        }
-
-        let actionBtn = "";
-        if (isAdminLoggedIn) {
-          if (item.isLocked) {
-            actionBtn = `<button onclick="openInspectionModal('${item.topicKey}', '${item.recordId}')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] px-2.5 py-1 rounded border border-slate-700 flex items-center gap-1"><i class="fa-solid fa-eye"></i> ดูผลตรวจ</button>`;
-          } else {
-            actionBtn = `<button onclick="openInspectionModal('${item.topicKey}', '${item.recordId}')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-semibold px-2.5 py-1 rounded shadow flex items-center gap-1"><i class="fa-solid fa-clipboard-check"></i> ตรวจงาน</button>`;
-          }
-        } else {
-          actionBtn = `<button onclick="openViewDetailModal('${item.topicKey}', '${item.recordId}')" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[11px] px-2.5 py-1 rounded border border-slate-700 flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-plus"></i> รายละเอียด</button>`;
-        }
-
-        return `
-         
-              <tr class="hover:bg-cyan-100/20 transition">
-      <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300">
-        ${item.jobNo}
-      </td>
-
-      <td class="p-2.5 text-center align-middle">
-        <div class="font-semibold text-slate-200">${item.partNo || '-'}</div>
-        <div class="text-[10px] text-slate-400">Rev: ${item.rev || '-'}</div>
-      </td>
-
-      <td class="p-2.5 text-center align-middle text-slate-300 max-w-[120px] truncate" title="${item.customer}">
-        ${item.customer || '-'}
-      </td>
-
-      <td class="p-2.5 text-center align-middle">
-        <div class="text-slate-300">${sender}</div>
-        <div class="text-[10px] text-slate-400">${item.userDate} ${item.userTime}</div>
-      </td>
-
-      <td class="p-2.5 text-center">${statusBadge}</td>
-      <td class="p-2.5 text-center">${resultBadge}</td>
-
-      <td class="p-2.5 text-center align-middle w-[120px]">
-        <div class="flex justify-center items-center">
-    ${actionBtn}
-  </div>
-</td>
-          </tr>
-        `;
-      }).join("");
+    // Status Badge
+    let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">Pending</span>`;
+    if (item.status === "Inspected") {
+      statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30"><i class="fa-solid fa-lock text-[9px] mr-1"></i>Inspected</span>`;
     }
 
+    // Result Badge
+    let resultBadge = `<span class="text-slate-500">-</span>`;
+    if (item.result === "OK") {
+      resultBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">OK</span>`;
+    } else if (item.result === "NG") {
+      resultBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40">NG</span>`;
+    }
+
+    let actionBtn = "";
+    if (isAdminLoggedIn) {
+      if (item.isLocked) {
+        actionBtn = `<button onclick="openInspectionModal('${item.topicKey}', '${item.recordId}')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] px-2.5 py-1 rounded border border-slate-700 flex items-center gap-1"><i class="fa-solid fa-eye"></i> ดูผลตรวจ</button>`;
+      } else {
+        actionBtn = `<button onclick="openInspectionModal('${item.topicKey}', '${item.recordId}')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-semibold px-2.5 py-1 rounded shadow flex items-center gap-1"><i class="fa-solid fa-clipboard-check"></i> ตรวจงาน</button>`;
+      }
+    } else {
+      actionBtn = `<button onclick="openViewDetailModal('${item.topicKey}', '${item.recordId}')" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[11px] px-2.5 py-1 rounded border border-slate-700 flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-plus"></i> รายละเอียด</button>`;
+    }
+
+    return `
+      <tr class="hover:bg-cyan-100/20 transition">
+
+        <!-- 1. JOB NO. -->
+        <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300">
+          ${item.jobNo || '-'}
+        </td>
+
+        <!-- 2. วันเดือนปี -->
+        <td class="p-2.5 text-center align-middle text-slate-300">
+          ${item.userDate || '-'}
+        </td>
+
+        <!-- 3. เวลาส่ง -->
+        <td class="p-2.5 text-center align-middle text-slate-300">
+          ${item.userTime || '-'}
+        </td>
+
+        <!-- 4. PART NO. -->
+        <td class="p-2.5 text-center align-middle">
+          <div class="font-semibold text-slate-200">
+            ${item.partNo || '-'}
+          </div>
+        </td>
+
+        <!-- 5. REV. -->
+        <td class="p-2.5 text-center align-middle text-slate-300">
+          ${item.rev || '-'}
+        </td>
+
+        <!-- 6. CUSTOMER -->
+        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[120px] truncate" title="${item.customer || '-'}">
+          ${item.customer || '-'}
+        </td>
+
+        <!-- 7. ผู้ส่งงาน -->
+        <td class="p-2.5 text-center align-middle text-slate-300">
+          ${sender}
+        </td>
+
+        <!-- 8. STATUS -->
+        <td class="p-2.5 text-center align-middle">
+          ${statusBadge}
+        </td>
+
+        <!-- 9. RESULT -->
+        <td class="p-2.5 text-center align-middle">
+          ${resultBadge}
+        </td>
+
+        <!-- 10. ACTION -->
+        <td class="p-2.5 text-center align-middle w-[120px]">
+          <div class="flex justify-center items-center">
+            ${actionBtn}
+          </div>
+        </td>
+
+      </tr>
+    `;
+  }).join("");
+}
+    
     // Modal Operations
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
