@@ -2918,12 +2918,12 @@ if (isAdminLoggedIn) {
 } else {
   tableHead.innerHTML = `
     <tr>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[110px]">JOB NO.</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[180px]">PART NO.</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[180px]">CUSTOMER</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[110px]">STATUS</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[90px]">RESULT</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[130px]">ACTION</th>
+      <th class="p-2 text-center align-middle whitespace-nowrap">JOB NO. / PART NO.</th>
+      <th class="p-2 text-center align-middle whitespace-nowrap">วันที่ตรวจ</th>
+      <th class="p-2 text-center align-middle whitespace-nowrap">เวลาตรวจ</th>
+      <th class="p-2 text-center align-middle whitespace-nowrap">ผู้ตรวจงาน</th>
+      <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
+      <th class="p-2 text-center align-middle whitespace-nowrap">ACTION</th>
     </tr>
   `;
 }
@@ -2944,6 +2944,7 @@ if (isAdminLoggedIn) {
 
   tbody.innerHTML = items.map(item => {
     const sender = item.senderMould || item.senderJig || item.sender || "-";
+    const inspector = item.inspectorMould || item.inspectorJig || item.inspector || "-";
 
     let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">Pending</span>`;
 
@@ -2971,67 +2972,110 @@ if (isAdminLoggedIn) {
       actionBtn = `<button onclick="openViewDetailModal('${item.topicKey}', '${item.recordId}')" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[11px] px-2.5 py-1 rounded border border-slate-700 flex items-center gap-1"><i class="fa-solid fa-magnifying-glass-plus"></i> รายละเอียด</button>`;
     }
 
-    return `
+   return `
   <tr class="hover:bg-cyan-100/20 transition">
 
-    <!-- 1. JOB NO. -->
-    <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
-      ${item.jobNo || '-'}
-    </td>
+    ${
+      isAdminLoggedIn
+      ? `
+        <!-- ADMIN 1. JOB NO. -->
+        <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+          ${item.jobNo || '-'}
+        </td>
 
-    <!-- 2. วันเดือนปี -->
-    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-      ${item.userDate || '-'}
-    </td>
+        <!-- ADMIN 2. วันเดือนปี -->
+        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+          ${item.userDate || '-'}
+        </td>
 
-    <!-- 3. เวลาส่ง -->
-    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-      ${item.userTime || '-'}
-    </td>
+        <!-- ADMIN 3. เวลาส่ง -->
+        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+          ${item.userTime || '-'}
+        </td>
 
-    <!-- 4. PART NO. -->
-    <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
-      ${item.partNo || '-'}
-    </td>
+        <!-- ADMIN 4. PART NO. -->
+        <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
+          ${item.partNo || '-'}
+        </td>
 
-    <!-- 5. REV. -->
-    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-      ${item.rev !== undefined && item.rev !== null && item.rev !== '' 
-  ? String(item.rev).padStart(2, '0') 
-  : '-'}
-    </td>
+        <!-- ADMIN 5. REV. -->
+        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+          ${
+            item.rev !== undefined && item.rev !== null && item.rev !== ''
+              ? String(item.rev).padStart(2, '0')
+              : '-'
+          }
+        </td>
 
-    <!-- 6. CUSTOMER -->
-    <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
-      ${item.customer || '-'}
-    </td>
+        <!-- ADMIN 6. CUSTOMER -->
+        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
+          ${item.customer || '-'}
+        </td>
 
-    <!-- 7. ผู้ส่งงาน -->
-    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-      ${sender}
-    </td>
+        <!-- ADMIN 7. ผู้ส่งงาน -->
+        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+          ${sender}
+        </td>
 
-    <!-- 8. STATUS -->
-    <td class="p-2.5 text-center align-middle whitespace-nowrap">
-      ${statusBadge}
-    </td>
+        <!-- ADMIN 8. STATUS -->
+        <td class="p-2.5 text-center align-middle whitespace-nowrap">
+          ${statusBadge}
+        </td>
 
-    <!-- 9. RESULT -->
-    <td class="p-2.5 text-center align-middle whitespace-nowrap">
-      ${resultBadge}
-    </td>
+        <!-- ADMIN 9. RESULT -->
+        <td class="p-2.5 text-center align-middle whitespace-nowrap">
+          ${resultBadge}
+        </td>
 
-    <!-- 10. ACTION -->
-    <td class="p-2.5 text-center align-middle whitespace-nowrap">
-      <div class="flex justify-center items-center">
-        ${actionBtn}
-      </div>
-    </td>
+        <!-- ADMIN 10. ACTION -->
+        <td class="p-2.5 text-center align-middle whitespace-nowrap">
+          <div class="flex justify-center items-center">
+            ${actionBtn}
+          </div>
+        </td>
+      `
+      : `
+        <!-- USER 1. JOB NO. / PART NO. -->
+        <td class="p-2.5 text-center align-middle">
+          <div class="font-mono font-bold text-cyan-300 whitespace-nowrap">
+            ${item.jobNo || '-'}
+          </div>
+          <div class="text-[10px] text-slate-400 truncate max-w-[180px]" title="${item.partNo || ''}">
+            ${item.partNo || '-'}
+          </div>
+        </td>
+
+        <!-- USER 2. วันที่ตรวจ -->
+        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+          ${item.inspectionDate || '-'}
+        </td>
+
+        <!-- USER 3. เวลาตรวจ -->
+        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+          ${item.inspectionTime || '-'}
+        </td>
+
+        <!-- USER 4. ผู้ตรวจงาน -->
+        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+          ${inspector}
+        </td>
+
+        <!-- USER 5. RESULT -->
+        <td class="p-2.5 text-center align-middle whitespace-nowrap">
+          ${resultBadge}
+        </td>
+
+        <!-- USER 6. ACTION -->
+        <td class="p-2.5 text-center align-middle whitespace-nowrap">
+          <div class="flex justify-center items-center">
+            ${actionBtn}
+          </div>
+        </td>
+      `
+    }
 
   </tr>
 `;
-  }).join("");
-}
     
     // Modal Operations
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
