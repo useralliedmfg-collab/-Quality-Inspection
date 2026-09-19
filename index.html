@@ -2918,13 +2918,13 @@ if (isAdminLoggedIn) {
 } else {
   tableHead.innerHTML = `
     <tr>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[100px]">JOB NO.</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[150px]">PART NO.</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[110px]">วันที่ตรวจ</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[130px]">ผู้ตรวจงาน</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[80px]">RESULT</th>
-      <th class="p-2 text-center align-middle whitespace-nowrap w-[130px]">ACTION</th>
-    </tr>
+  <th class="p-2 text-center whitespace-nowrap w-[100px]">JOB NO.</th>
+  <th class="p-2 text-center whitespace-nowrap w-[150px]">PART NO.</th>
+  <th class="p-2 text-center whitespace-nowrap w-[110px]">วันที่ตรวจ</th>
+  <th class="p-2 text-center whitespace-nowrap w-[130px]">ผู้ตรวจงาน</th>
+  <th class="p-2 text-center whitespace-nowrap w-[80px]">RESULT</th>
+  <th class="p-2 text-center whitespace-nowrap w-[130px]">ACTION</th>
+</tr>
   `;
 }
 
@@ -3036,36 +3036,36 @@ if (isAdminLoggedIn) {
            `
       : `
         <!-- USER 1. JOB NO. -->
-<td class="w-[100px] p-2 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+<td class="w-[70px] p-1 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
   ${item.jobNo || '-'}
 </td>
 
 <!-- USER 2. PART NO. -->
-<td class="w-[150px] p-2 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
+<td class="w-[100px] p-1 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
   ${item.partNo || '-'}
 </td>
 
 <!-- USER 3. วันที่ตรวจ -->
-<td class="w-[110px] p-2 text-center align-middle text-slate-300 whitespace-nowrap">
+<td class="w-[90px] p-1 text-center align-middle text-slate-300 whitespace-nowrap">
   ${item.inspectionDate || '-'}
 </td>
 
 <!-- USER 4. ผู้ตรวจงาน -->
-<td class="w-[130px] p-2 text-center align-middle text-slate-300 whitespace-nowrap">
+<td class="w-[100px] p-1 text-center align-middle text-slate-300 whitespace-nowrap">
   ${inspector}
 </td>
 
 <!-- USER 5. RESULT -->
-<td class="w-[80px] p-2 text-center align-middle whitespace-nowrap">
+<td class="w-[60px] p-1 text-center align-middle whitespace-nowrap">
   ${resultBadge}
 </td>
 
 <!-- USER 6. ACTION -->
-<td class="w-[130px] p-2 text-center align-middle whitespace-nowrap">
+<td class="w-[80px] p-1 text-center align-middle whitespace-nowrap">
   <div class="flex justify-center items-center">
     ${actionBtn}
   </div>
-</td>      
+</td>
 `
     }
   </tr>
