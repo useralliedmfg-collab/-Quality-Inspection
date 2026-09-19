@@ -1599,15 +1599,12 @@ body, button, input, select, textarea, table {
             <thead class="bg-slate-950 border-b border-slate-800 text-slate-400 sticky top-0 uppercase tracking-wider">
              <tr>
   <th class="p-2 text-center align-middle">JOB NO.</th>
-  <th class="p-2 text-center align-middle">วันเดือนปี</th>
-  <th class="p-2 text-center align-middle">เวลาส่ง</th>
-  <th class="p-2 text-center align-middle">PART NO.</th>
-  <th class="p-2 text-center align-middle">REV.</th>
+  <th class="p-2 text-center align-middle">Part No. / Rev</th>
   <th class="p-2 text-center align-middle">CUSTOMER</th>
-  <th class="p-2 text-center align-middle">ผู้ส่งงาน</th>
-  <th class="p-2 text-center align-middle">STATUS</th>
-  <th class="p-2 text-center align-middle">RESULT</th>
-  <th class="p-2 text-center align-middle">ACTION</th>
+  <th class="p-2 text-center align-middle">ส่งงานโดย / เวลา</th>
+  <th class="p-2 text-center align-middle">Status</th>
+  <th class="p-2 text-center align-middle">Result</th>
+  <th class="p-2 text-center align-middle">Action</th>
 </tr>
             </thead>
             <tbody id="jobTableBody" class="divide-y divide-slate-800/60">
@@ -2915,7 +2912,7 @@ ${customerFieldHTML}
   if (items.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="10" class="p-8 text-center text-slate-500">
+        <td colspan="7" class="p-8 text-center text-slate-500">
           <i class="fa-solid fa-folder-open text-2xl mb-2 block"></i>
           ไม่พบข้อมูล Job ในระบบ
         </td>
@@ -2927,14 +2924,14 @@ ${customerFieldHTML}
   tbody.innerHTML = items.map(item => {
     const sender = item.senderMould || item.senderJig || item.sender || "-";
 
-    // Status Badge
     let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">Pending</span>`;
+
     if (item.status === "Inspected") {
       statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30"><i class="fa-solid fa-lock text-[9px] mr-1"></i>Inspected</span>`;
     }
 
-    // Result Badge
     let resultBadge = `<span class="text-slate-500">-</span>`;
+
     if (item.result === "OK") {
       resultBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">OK</span>`;
     } else if (item.result === "NG") {
@@ -2942,6 +2939,7 @@ ${customerFieldHTML}
     }
 
     let actionBtn = "";
+
     if (isAdminLoggedIn) {
       if (item.isLocked) {
         actionBtn = `<button onclick="openInspectionModal('${item.topicKey}', '${item.recordId}')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] px-2.5 py-1 rounded border border-slate-700 flex items-center gap-1"><i class="fa-solid fa-eye"></i> ดูผลตรวจ</button>`;
@@ -2955,54 +2953,32 @@ ${customerFieldHTML}
     return `
       <tr class="hover:bg-cyan-100/20 transition">
 
-        <!-- 1. JOB NO. -->
         <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300">
-          ${item.jobNo || '-'}
+          ${item.jobNo}
         </td>
 
-        <!-- 2. วันเดือนปี -->
-        <td class="p-2.5 text-center align-middle text-slate-300">
-          ${item.userDate || '-'}
-        </td>
-
-        <!-- 3. เวลาส่ง -->
-        <td class="p-2.5 text-center align-middle text-slate-300">
-          ${item.userTime || '-'}
-        </td>
-
-        <!-- 4. PART NO. -->
         <td class="p-2.5 text-center align-middle">
-          <div class="font-semibold text-slate-200">
-            ${item.partNo || '-'}
-          </div>
+          <div class="font-semibold text-slate-200">${item.partNo || '-'}</div>
+          <div class="text-[10px] text-slate-400">Rev: ${item.rev || '-'}</div>
         </td>
 
-        <!-- 5. REV. -->
-        <td class="p-2.5 text-center align-middle text-slate-300">
-          ${item.rev || '-'}
-        </td>
-
-        <!-- 6. CUSTOMER -->
-        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[120px] truncate" title="${item.customer || '-'}">
+        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[120px] truncate" title="${item.customer}">
           ${item.customer || '-'}
         </td>
 
-        <!-- 7. ผู้ส่งงาน -->
-        <td class="p-2.5 text-center align-middle text-slate-300">
-          ${sender}
+        <td class="p-2.5 text-center align-middle">
+          <div class="text-slate-300">${sender}</div>
+          <div class="text-[10px] text-slate-400">${item.userDate} ${item.userTime}</div>
         </td>
 
-        <!-- 8. STATUS -->
-        <td class="p-2.5 text-center align-middle">
+        <td class="p-2.5 text-center">
           ${statusBadge}
         </td>
 
-        <!-- 9. RESULT -->
-        <td class="p-2.5 text-center align-middle">
+        <td class="p-2.5 text-center">
           ${resultBadge}
         </td>
 
-        <!-- 10. ACTION -->
         <td class="p-2.5 text-center align-middle w-[120px]">
           <div class="flex justify-center items-center">
             ${actionBtn}
