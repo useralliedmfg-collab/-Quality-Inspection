@@ -1817,6 +1817,18 @@ async function apiCall(action, payload = {}) {
     console.log("ได้รับ Response แล้ว");
     console.log("HTTP Status:", response.status);
 
+    // ป้องกันกรณี Server ตอบ 404/500 หรือส่ง HTML กลับมา
+    if (!response.ok) {
+      const errorText = await response.text();
+
+      console.error("API HTTP ERROR:", response.status);
+      console.error("Server Response:", errorText);
+
+      throw new Error(
+        `Server HTTP ${response.status}`
+      );
+    }
+
     console.log("กำลังอ่าน JSON...");
 
     const result = await response.json();
