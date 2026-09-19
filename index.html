@@ -3033,47 +3033,46 @@ if (isAdminLoggedIn) {
             ${actionBtn}
           </div>
         </td>
-      `
+           `
       : `
-        <!-- USER 1. JOB NO. / PART NO. -->
-        <td class="p-2.5 text-center align-middle">
-          <div class="font-mono font-bold text-cyan-300 whitespace-nowrap">
-            ${item.jobNo || '-'}
-          </div>
-          <div class="text-[10px] text-slate-400 truncate max-w-[180px]" title="${item.partNo || ''}">
-            ${item.partNo || '-'}
-          </div>
-        </td>
+        <!-- USER 1. JOB NO. -->
+<td class="px-2 py-2 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+  ${item.jobNo || '-'}
+</td>
 
-        <!-- USER 2. วันที่ตรวจ -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.inspectionDate || '-'}
-        </td>
+<!-- USER 2. PART NO. -->
+<td class="px-2 py-2 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
+  ${item.partNo || '-'}
+</td>
 
-        <!-- USER 3. เวลาตรวจ -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.inspectionTime || '-'}
-        </td>
+<!-- USER 3. วันที่ตรวจ -->
+<td class="px-2 py-2 text-center align-middle text-slate-300 whitespace-nowrap">
+  ${item.inspectionDate || '-'}
+</td>
 
-        <!-- USER 4. ผู้ตรวจงาน -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${inspector}
-        </td>
+<!-- USER 4. เวลาตรวจ -->
+<td class="px-2 py-2 text-center align-middle text-slate-300 whitespace-nowrap">
+  ${item.inspectionTime || '-'}
+</td>
 
-        <!-- USER 5. RESULT -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          ${resultBadge}
-        </td>
+<!-- USER 5. ผู้ตรวจงาน -->
+<td class="px-2 py-2 text-center align-middle text-slate-300 whitespace-nowrap">
+  ${inspector}
+</td>
 
-        <!-- USER 6. ACTION -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          <div class="flex justify-center items-center">
-            ${actionBtn}
-          </div>
-        </td>
+<!-- USER 6. RESULT -->
+<td class="px-2 py-2 text-center align-middle whitespace-nowrap">
+  ${resultBadge}
+</td>
+
+<!-- USER 7. ACTION -->
+<td class="px-2 py-2 text-center align-middle whitespace-nowrap">
+  <div class="flex justify-center items-center">
+    ${actionBtn}
+  </div>
+</td>
       `
     }
-
   </tr>
 `;
     }).join("");
