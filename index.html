@@ -2978,7 +2978,9 @@ ${customerFieldHTML}
 
     <!-- 5. REV. -->
     <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-      ${item.rev ?? '-'}
+      ${item.rev !== undefined && item.rev !== null && item.rev !== '' 
+  ? String(item.rev).padStart(2, '0') 
+  : '-'}
     </td>
 
     <!-- 6. CUSTOMER -->
