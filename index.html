@@ -3002,8 +3002,7 @@ if (isAdminLoggedIn) {
         <th class="p-2 text-center align-middle whitespace-nowrap">CUSTOMER</th>
         <th class="p-2 text-center align-middle whitespace-nowrap">PART NO.</th>
         <th class="p-2 text-center align-middle whitespace-nowrap">REV.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">งานที่ส่ง</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">จำนวนเพิ่มเติม</th>
+        <th class="p-2 text-center align-middle whitespace-nowrap">จำนวนที่ส่ง</th>
         <th class="p-2 text-center align-middle whitespace-nowrap">ผู้ส่งงาน</th>
         <th class="p-2 text-center align-middle whitespace-nowrap">STATUS</th>
         <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
@@ -3308,32 +3307,31 @@ if (isAdminLoggedIn) {
           }
         </td>
 
-        <!-- ADMIN FA FG 5. งานที่ส่ง -->
-<td class="p-2.5 text-center align-middle text-slate-300 max-w-[160px] truncate" title="${item.sender || ''}">
-  ${item.sender || '-'}
+        <!-- ADMIN FA FG 5. จำนวนที่ส่ง -->
+<td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+  ${
+    item.mainQty
+      ? `${item.mainQty}${item.extraQty ? '+' + item.extraQty : ''}`
+      : '-'
+  }
 </td>
 
-        <!-- ADMIN FA FG 6. จำนวนเพิ่มเติม -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.additionalQty || item.extraQty || '-'}
-        </td>
-
-        <!-- ADMIN FA FG 7. ผู้ส่งงาน -->
+        <!-- ADMIN FA FG ุ6. ผู้ส่งงาน -->
         <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
           ${item.sender || '-'}
         </td>
 
-        <!-- ADMIN FA FG 8. STATUS -->
+        <!-- ADMIN FA FG 7. STATUS -->
         <td class="p-2.5 text-center align-middle whitespace-nowrap">
           ${statusBadge}
         </td>
 
-        <!-- ADMIN FA FG 9. RESULT -->
+        <!-- ADMIN FA FG 8. RESULT -->
         <td class="p-2.5 text-center align-middle whitespace-nowrap">
           ${resultBadge}
         </td>
 
-        <!-- ADMIN FA FG 10. ACTION -->
+        <!-- ADMIN FA FG 9. ACTION -->
         <td class="p-2.5 text-center align-middle whitespace-nowrap">
           <div class="flex justify-center items-center">
             ${actionBtn}
