@@ -3930,24 +3930,34 @@ if (isAdminLoggedIn) {
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
     // Add Customer Submit
-    async function submitAddCustomer() {
-      const input = document.getElementById('newCustomerInput');
-      const val = input.value.trim();
-      if (!val) {
-        showToast("แจ้งเตือน", "กรุณากรอกชื่อลูกค้า", "warning");
-        return;
-      }
+async function submitAddCustomer() {
+  const input = document.getElementById('newCustomerInput');
+  const val = input.value.trim();
 
-      const res = await apiCall("addCustomer", { customerName: val });
-      if (res.success) {
-        showToast("สำเร็จ", res.message, "success");
-        input.value = "";
-        closeModal('addCustomerModal');
-        await loadSystemData();
-      } else {
-        showToast("ข้อผิดพลาด", res.message, "danger");
+  if (!val) {
+    showToast("แจ้งเตือน", "กรุณากรอกชื่อลูกค้า", "warning");
+    return;
+  }
+
+  const res = await apiCall("addCustomer", { customerName: val });
+
+  if (res.success) {
+    showToast("สำเร็จ", res.message, "success");
+
+    input.value = "";
+    closeModal('addCustomerModal');
+
+    // เพิ่ม CUSTOMER เข้า dropdown ทันที
+    if (typeof customers !== 'undefined' && Array.isArray(customers)) {
+      if (!customers.includes(val)) {
+        customers.push(val);
       }
     }
+
+  } else {
+    showToast("ข้อผิดพลาด", res.message, "danger");
+  }
+}
 
 // View Detail Modal (User Read-only)
 function openViewDetailModal(topicKey, recordId) {
