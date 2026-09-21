@@ -3947,10 +3947,10 @@ async function submitAddCustomer() {
     input.value = "";
     closeModal('addCustomerModal');
 
-    // เพิ่ม CUSTOMER เข้า dropdown ทันที
-    if (typeof customers !== 'undefined' && Array.isArray(customers)) {
-      if (!customers.includes(val)) {
-        customers.push(val);
+    // เพิ่ม CUSTOMER เข้า masterData ทันที
+    if (Array.isArray(masterData.customers)) {
+      if (!masterData.customers.includes(val)) {
+        masterData.customers.push(val);
       }
     }
 
