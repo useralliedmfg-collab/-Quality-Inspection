@@ -3947,12 +3947,17 @@ async function submitAddCustomer() {
     input.value = "";
     closeModal('addCustomerModal');
 
-    // เพิ่ม CUSTOMER เข้า masterData ทันที
-    if (Array.isArray(masterData.customers)) {
-      if (!masterData.customers.includes(val)) {
-        masterData.customers.push(val);
-      }
+    // เพิ่ม CUSTOMER ใหม่เข้า masterData
+    if (!Array.isArray(masterData.customers)) {
+      masterData.customers = [];
     }
+
+    if (!masterData.customers.includes(val)) {
+      masterData.customers.push(val);
+    }
+
+    // Render ฟอร์มใหม่ เพื่อให้ CUSTOMER ใหม่ขึ้นทันที
+    renderFormForTopic(activeTopic);
 
   } else {
     showToast("ข้อผิดพลาด", res.message, "danger");
