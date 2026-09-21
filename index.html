@@ -1571,10 +1571,13 @@ body, button, input, select, textarea, table {
         </select>
 
         <!-- Admin Global Topic Filter (Visible only in Admin Mode) -->
-        <select id="filterTopicAdmin" onchange="applyFilters()" class="hidden bg-cyan-950 border border-cyan-700 rounded-md px-2 py-1.5 text-xs text-cyan-200 focus:outline-none">
-          <option value="CURRENT">หัวข้อปัจจุบัน</option>
-          <option value="ALL">ล้างตัวกรอง</option>
-        </select>
+        <button
+  id="filterTopicAdmin"
+  onclick="clearAdminFilters()"
+  class="hidden bg-cyan-950 hover:bg-cyan-900 border border-cyan-700 rounded-md px-2.5 py-1.5 text-xs text-cyan-200 focus:outline-none"
+>
+  ล้างตัวกรอง
+</button>
 
         <button onclick="loadSystemData()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-md border border-slate-700" title="รีเฟรชข้อมูล">
           <i class="fa-solid fa-rotate"></i>
@@ -2856,18 +2859,24 @@ data.isPack = packCheckbox ? packCheckbox.checked : false;
 }
     }
 
+    function clearAdminFilters() {
+  // ล้างช่องค้นหา
+  document.getElementById('searchInput').value = '';
+
+  // ล้าง Status
+  document.getElementById('filterStatus').value = 'ALL';
+
+  // ล้าง Result
+  document.getElementById('filterResult').value = 'ALL';
+
+  // ล้าง Customer
+  document.getElementById('filterCustomer').value = 'ALL';
+
+  applyFilters();
+}
+
     // Filter Logic & Table Rendering
     function applyFilters() {
-
-  const topicAdminF = document.getElementById('filterTopicAdmin').value;
-
-  // ล้างตัวกรองทั้งหมด
-  if (isAdminLoggedIn && topicAdminF === "ALL") {
-    document.getElementById('searchInput').value = '';
-    document.getElementById('filterStatus').value = 'ALL';
-    document.getElementById('filterResult').value = 'ALL';
-    document.getElementById('filterCustomer').value = 'ALL';
-  }
 
   // อ่านค่าหลังจากล้างแล้ว
   const search = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -2875,27 +2884,20 @@ data.isPack = packCheckbox ? packCheckbox.checked : false;
   const resultF = document.getElementById('filterResult').value;
   const customerF = document.getElementById('filterCustomer').value;
 
-  let dataset = [];
+      let dataset = [];
 
-      if (isAdminLoggedIn && topicAdminF === "ALL") {
-        dataset = [
-          ...records.DIECUT,
-          ...records.JIG_FA,
-          ...records.FIRST_SHOT_FA,
-          ...records.FA_FG
-        ];
-        document.getElementById('topicIndicatorText').textContent = "Topic: ทุกหัวข้อ";
-      } else {
-        dataset = records[activeTopic] || [];
-        const topicNames = {
-          DIECUT: "DIECUT INSPECTION",
-          JIG_FA: "JIG FA",
-          FIRST_SHOT_FA: "FIRST SHOT FA",
-          FA_FG: "FA FG"
-        };
-        document.getElementById('topicIndicatorText').textContent = `Topic: ${topicNames[activeTopic]}`;
-      }
+dataset = records[activeTopic] || [];
 
+const topicNames = {
+  DIECUT: "DIECUT INSPECTION",
+  JIG_FA: "JIG FA",
+  FIRST_SHOT_FA: "FIRST SHOT FA",
+  FA_FG: "FA FG"
+};
+
+document.getElementById('topicIndicatorText').textContent =
+  `Topic: ${topicNames[activeTopic]}`;
+        
       // Calculate Metrics for Current Active Dataset
       let total = dataset.length;
       let pending = 0;
