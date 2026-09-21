@@ -3261,9 +3261,13 @@ if (isAdminLoggedIn) {
         </td>
 
         <!-- ADMIN FIRST SHOT FA 8. จำนวนที่ส่ง -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.mainQty || '-'}
-        </td>
+<td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+  ${
+    item.mainQty
+      ? `${item.mainQty}${item.extraQty ? ' + ' + item.extraQty : ''}`
+      : '-'
+  }
+</td>
 
         <!-- ADMIN FIRST SHOT FA 9. RESULT -->
         <td class="p-2.5 text-center align-middle whitespace-nowrap">
