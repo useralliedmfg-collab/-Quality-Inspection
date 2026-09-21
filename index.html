@@ -4190,17 +4190,23 @@ rowsHTML += `
 
     // Admin Authentication Handlers
     function openAdminLoginModal() {
-      if (isAdminLoggedIn) {
-        if (confirm("คุณต้องการออกจากระบบ Admin หรือไม่?")) {
-          isAdminLoggedIn = false;
-          adminToken = "";
-          updateAdminUI();
-          showToast("แจ้งเตือน", "ออกจากระบบ Admin เรียบร้อยแล้ว", "info");
-        }
-      } else {
-        openModal('adminLoginModal');
-      }
+  if (isAdminLoggedIn) {
+    if (confirm("คุณต้องการออกจากระบบ Admin หรือไม่?")) {
+      isAdminLoggedIn = false;
+      adminToken = "";
+
+      // กลับไปหน้า User
+      activeTopic = "DIECUT";
+      
+      updateAdminUI();
+      switchTopic(activeTopic);
+
+      showToast("แจ้งเตือน", "ออกจากระบบ Admin เรียบร้อยแล้ว", "info");
     }
+  } else {
+    openModal('adminLoginModal');
+  }
+}
 
     async function handleAdminLoginSubmit(e) {
       e.preventDefault();
@@ -4261,9 +4267,14 @@ document.getElementById('tab-ALL').classList.remove('hidden');
     document.getElementById('userFormPanel').classList.remove('hidden');
 
     // คืน Dashboard เป็น 58%
-    document.getElementById('dashboardPanel').classList.remove('md:w-full');
-    document.getElementById('dashboardPanel').classList.add('md:w-[58%]');
+const dashboardPanel = document.getElementById('dashboardPanel');
 
+dashboardPanel.classList.remove('md:w-full');
+dashboardPanel.classList.add('md:w-[58%]');
+
+// บังคับให้ Layout กลับมาคำนวณใหม่หลัง Logout
+dashboardPanel.style.width = '';
+dashboardPanel.style.maxWidth = '';
     container.innerHTML = `
       <button onclick="openAdminLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition">
         <i class="fa-solid fa-user-shield text-slate-400"></i>
