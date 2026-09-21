@@ -2818,6 +2818,10 @@ ${customerFieldHTML}
 }
       });
 
+      // PACK checkbox
+const packCheckbox = form.querySelector('input[name="isPack"]');
+data.isPack = packCheckbox ? packCheckbox.checked : false;
+
       const btn = document.getElementById('btnSubmitForm');
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังบันทึก...`;
