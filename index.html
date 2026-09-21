@@ -2971,67 +2971,75 @@ if (isAdminLoggedIn) {
 
     tableHead.innerHTML = `
       <tr>
-        <th class="p-2 text-center align-middle whitespace-nowrap">DIECUT NO.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">REFER NO DIECUT</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">CUSTOMER</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">PART NO.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">REV.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">CAVITY</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">ผู้ส่ง MOULD</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">STATUS</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">ACTION</th>
-      </tr>
+  <th class="p-2 text-center align-middle whitespace-nowrap">JOB NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">วันที่ส่ง</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">DIECUT NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">REFER NO DIECUT</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">CUSTOMER</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">PART NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">REV.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">CAVITY</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">ผู้ส่ง MOULD</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">STATUS</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">ACTION</th>
+</tr>
     `;
 
   } else if (activeTopic === "JIG_FA") {
 
     tableHead.innerHTML = `
       <tr>
-        <th class="p-2 text-center align-middle whitespace-nowrap">CUSTOMER</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">PART NO.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">REV.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">จำนวน JIG</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">ชนิด JIG</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">รายละเอียด</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">ผู้ส่ง JIG</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">STATUS</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">ACTION</th>
-      </tr>
+  <th class="p-2 text-center align-middle whitespace-nowrap">JOB NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">วันที่ส่ง</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">CUSTOMER</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">PART NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">REV.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">จำนวน JIG</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">ชนิด JIG</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">รายละเอียด</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">ผู้ส่ง JIG</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">STATUS</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">ACTION</th>
+</tr>
     `;
 
   } else if (activeTopic === "FIRST_SHOT_FA") {
 
     tableHead.innerHTML = `
       <tr>
-        <th class="p-2 text-center align-middle whitespace-nowrap">FA NO.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">CUSTOMER</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">PART NO.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">REV.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">TOOLING REQUIREMENT</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">PACK</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">เครื่องที่ผลิต</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">จำนวนที่ส่ง</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">ACTION</th>
-      </tr>
+  <th class="p-2 text-center align-middle whitespace-nowrap">JOB NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">วันที่ส่ง</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">FA NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">CUSTOMER</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">PART NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">REV.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">TOOLING REQUIREMENT</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">PACK</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">เครื่องที่ผลิต</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">จำนวนที่ส่ง</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">ACTION</th>
+</tr>
     `;
 
   } else if (activeTopic === "FA_FG") {
 
     tableHead.innerHTML = `
-      <tr>
-        <th class="p-2 text-center align-middle whitespace-nowrap">FA NO.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">CUSTOMER</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">PART NO.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">REV.</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">จำนวนที่ส่ง</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">ผู้ส่งงาน</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">STATUS</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
-        <th class="p-2 text-center align-middle whitespace-nowrap">ACTION</th>
-      </tr>
+     <tr>
+  <th class="p-2 text-center align-middle whitespace-nowrap">JOB NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">วันที่ส่ง</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">FA NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">CUSTOMER</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">PART NO.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">REV.</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">จำนวนที่ส่ง</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">ผู้ส่งงาน</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">STATUS</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">RESULT</th>
+  <th class="p-2 text-center align-middle whitespace-nowrap">ACTION</th>
+</tr>
     `;
 
   } else {
@@ -3116,252 +3124,292 @@ if (isAdminLoggedIn) {
   isAdminLoggedIn
   ? (
       activeTopic === "DIECUT"
-      ? `
-        <!-- ADMIN DIECUT 1. DIECUT NO. -->
-        <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
-          ${item.diecutNo || item.jobNo || '-'}
-        </td>
+  ? `
+    <!-- ADMIN DIECUT 1. JOB NO. -->
+    <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+      ${item.jobNo || '-'}
+    </td>
 
-        <!-- ADMIN DIECUT 2. REFER NO DIECUT -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.referNoDiecut || '-'}
-        </td>
+    <!-- ADMIN DIECUT 2. วันที่ส่ง -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.userDate || '-'}
+    </td>
 
-        <!-- ADMIN DIECUT 3. CUSTOMER -->
-        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
-          ${item.customer || '-'}
-        </td>
+    <!-- ADMIN DIECUT 3. DIECUT NO. -->
+    <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+      ${item.diecutNo || item.jobNo || '-'}
+    </td>
 
-        <!-- ADMIN DIECUT 4. PART NO. -->
-        <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
-          ${item.partNo || '-'}
-        </td>
+    <!-- ADMIN DIECUT 4. REFER NO DIECUT -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.referNoDiecut || '-'}
+    </td>
 
-        <!-- ADMIN DIECUT 5. REV. -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${
-            item.rev !== undefined && item.rev !== null && item.rev !== ''
-              ? String(item.rev).padStart(2, '0')
-              : '-'
-          }
-        </td>
+    <!-- ADMIN DIECUT 5. CUSTOMER -->
+    <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
+      ${item.customer || '-'}
+    </td>
 
-        <!-- ADMIN DIECUT 6. CAVITY -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.cavity || '-'}
-        </td>
+    <!-- ADMIN DIECUT 6. PART NO. -->
+    <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
+      ${item.partNo || '-'}
+    </td>
 
-        <!-- ADMIN DIECUT 7. ผู้ส่ง MOULD -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.senderMould || '-'}
-        </td>
+    <!-- ADMIN DIECUT 7. REV. -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${
+        item.rev !== undefined && item.rev !== null && item.rev !== ''
+          ? String(item.rev).padStart(2, '0')
+          : '-'
+      }
+    </td>
 
-        <!-- ADMIN DIECUT 8. STATUS -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          ${statusBadge}
-        </td>
+    <!-- ADMIN DIECUT 8. CAVITY -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.cavity || '-'}
+    </td>
 
-        <!-- ADMIN DIECUT 9. RESULT -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          ${resultBadge}
-        </td>
+    <!-- ADMIN DIECUT 9. ผู้ส่ง MOULD -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.senderMould || '-'}
+    </td>
 
-        <!-- ADMIN DIECUT 10. ACTION -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          <div class="flex justify-center items-center">
-            ${actionBtn}
-          </div>
-        </td>
-      `
+    <!-- ADMIN DIECUT 10. STATUS -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      ${statusBadge}
+    </td>
+
+    <!-- ADMIN DIECUT 11. RESULT -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      ${resultBadge}
+    </td>
+
+    <!-- ADMIN DIECUT 12. ACTION -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      <div class="flex justify-center items-center">
+        ${actionBtn}
+      </div>
+    </td>
+  `
 
       : activeTopic === "JIG_FA"
-      ? `
-        <!-- ADMIN JIG FA 1. CUSTOMER -->
-        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
-          ${item.customer || '-'}
-        </td>
+  ? `
+    <!-- ADMIN JIG FA 1. JOB NO. -->
+    <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+      ${item.jobNo || '-'}
+    </td>
 
-        <!-- ADMIN JIG FA 2. PART NO. -->
-        <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
-          ${item.partNo || '-'}
-        </td>
+    <!-- ADMIN JIG FA 2. วันที่ส่ง -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.userDate || '-'}
+    </td>
 
-        <!-- ADMIN JIG FA 3. REV. -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${
-            item.rev !== undefined && item.rev !== null && item.rev !== ''
-              ? String(item.rev).padStart(2, '0')
-              : '-'
-          }
-        </td>
+    <!-- ADMIN JIG FA 3. CUSTOMER -->
+    <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
+      ${item.customer || '-'}
+    </td>
 
-        <!-- ADMIN JIG FA 4. จำนวน JIG -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.jigQty || item.jigQuantity || '-'}
-        </td>
+    <!-- ADMIN JIG FA 4. PART NO. -->
+    <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
+      ${item.partNo || '-'}
+    </td>
 
-        <!-- ADMIN JIG FA 5. ชนิด JIG -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.jigType || '-'}
-        </td>
+    <!-- ADMIN JIG FA 5. REV. -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${
+        item.rev !== undefined && item.rev !== null && item.rev !== ''
+          ? String(item.rev).padStart(2, '0')
+          : '-'
+      }
+    </td>
 
-        <!-- ADMIN JIG FA 6. รายละเอียด -->
-        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[180px] truncate" title="${item.detail || item.jigDetail || ''}">
-          ${item.detail || item.jigDetail || '-'}
-        </td>
+    <!-- ADMIN JIG FA 6. จำนวน JIG -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.jigQty || item.jigQuantity || '-'}
+    </td>
 
-        <!-- ADMIN JIG FA 7. ผู้ส่ง JIG -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.senderJig || '-'}
-        </td>
+    <!-- ADMIN JIG FA 7. ชนิด JIG -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.jigType || '-'}
+    </td>
 
-        <!-- ADMIN JIG FA 8. STATUS -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          ${statusBadge}
-        </td>
+    <!-- ADMIN JIG FA 8. รายละเอียด -->
+    <td class="p-2.5 text-center align-middle text-slate-300 max-w-[180px] truncate" title="${item.detail || item.jigDetail || ''}">
+      ${item.detail || item.jigDetail || '-'}
+    </td>
 
-        <!-- ADMIN JIG FA 9. RESULT -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          ${resultBadge}
-        </td>
+    <!-- ADMIN JIG FA 9. ผู้ส่ง JIG -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.senderJig || '-'}
+    </td>
 
-        <!-- ADMIN JIG FA 10. ACTION -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          <div class="flex justify-center items-center">
-            ${actionBtn}
-          </div>
-        </td>
-      `
+    <!-- ADMIN JIG FA 10. STATUS -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      ${statusBadge}
+    </td>
 
+    <!-- ADMIN JIG FA 11. RESULT -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      ${resultBadge}
+    </td>
+
+    <!-- ADMIN JIG FA 12. ACTION -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      <div class="flex justify-center items-center">
+        ${actionBtn}
+      </div>
+    </td>
+  `
+    
       : activeTopic === "FIRST_SHOT_FA"
-      ? `
-        <!-- ADMIN FIRST SHOT FA 1. FA NO. -->
-        <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
-          ${item.faNo || item.jobNo || '-'}
-        </td>
+  ? `
+    <!-- ADMIN FIRST SHOT FA 1. JOB NO. -->
+    <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+      ${item.jobNo || '-'}
+    </td>
 
-        <!-- ADMIN FIRST SHOT FA 2. CUSTOMER -->
-        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
-          ${item.customer || '-'}
-        </td>
+    <!-- ADMIN FIRST SHOT FA 2. วันที่ส่ง -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.userDate || '-'}
+    </td>
 
-        <!-- ADMIN FIRST SHOT FA 3. PART NO. -->
-        <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
-          ${item.partNo || '-'}
-        </td>
+    <!-- ADMIN FIRST SHOT FA 3. FA NO. -->
+    <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+      ${item.faNo || item.jobNo || '-'}
+    </td>
 
-        <!-- ADMIN FIRST SHOT FA 4. REV. -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${
-            item.rev !== undefined && item.rev !== null && item.rev !== ''
-              ? String(item.rev).padStart(2, '0')
-              : '-'
-          }
-        </td>
+    <!-- ADMIN FIRST SHOT FA 4. CUSTOMER -->
+    <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
+      ${item.customer || '-'}
+    </td>
 
-        <!-- ADMIN FIRST SHOT FA 5. TOOLING REQUIREMENT -->
-        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[180px] truncate" title="${
-          item.toolingRequirement ||
-          item.toolingReq ||
-          item.toolingReqOther ||
-          ''
-        }">
-          ${
-            item.toolingReqOther
-              ? `อื่นๆ (${item.toolingReqOther})`
-              : (item.toolingRequirement || item.toolingReq || '-')
-          }
-        </td>
+    <!-- ADMIN FIRST SHOT FA 5. PART NO. -->
+    <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
+      ${item.partNo || '-'}
+    </td>
 
-        <!-- ADMIN FIRST SHOT FA 6. PACK -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.isPack ? 'PACK' : '-'}
-        </td>
+    <!-- ADMIN FIRST SHOT FA 6. REV. -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${
+        item.rev !== undefined && item.rev !== null && item.rev !== ''
+          ? String(item.rev).padStart(2, '0')
+          : '-'
+      }
+    </td>
 
-        <!-- ADMIN FIRST SHOT FA 7. เครื่องที่ผลิต -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.machineCategory || item.machineNo || '-'}
-        </td>
+    <!-- ADMIN FIRST SHOT FA 7. TOOLING REQUIREMENT -->
+    <td class="p-2.5 text-center align-middle text-slate-300 max-w-[180px] truncate" title="${
+      item.toolingRequirement ||
+      item.toolingReq ||
+      item.toolingReqOther ||
+      ''
+    }">
+      ${
+        item.toolingReqOther
+          ? `อื่นๆ (${item.toolingReqOther})`
+          : (item.toolingRequirement || item.toolingReq || '-')
+      }
+    </td>
 
-        <!-- ADMIN FIRST SHOT FA 8. จำนวนที่ส่ง -->
-<td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-  ${
-    item.mainQty
-      ? `${item.mainQty}${item.extraQty ? ' + ' + item.extraQty : ''}`
-      : '-'
-  }
-</td>
+    <!-- ADMIN FIRST SHOT FA 8. PACK -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.isPack ? 'PACK' : '-'}
+    </td>
 
-        <!-- ADMIN FIRST SHOT FA 9. RESULT -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          ${resultBadge}
-        </td>
+    <!-- ADMIN FIRST SHOT FA 9. เครื่องที่ผลิต -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.machineCategory || item.machineNo || '-'}
+    </td>
 
-        <!-- ADMIN FIRST SHOT FA 10. ACTION -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          <div class="flex justify-center items-center">
-            ${actionBtn}
-          </div>
-        </td>
-      `
+    <!-- ADMIN FIRST SHOT FA 10. จำนวนที่ส่ง -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${
+        item.mainQty
+          ? `${item.mainQty}${item.extraQty ? ' + ' + item.extraQty : ''}`
+          : '-'
+      }
+    </td>
 
-      : activeTopic === "FA_FG"
-      ? `
-        <!-- ADMIN FA FG 1. FA NO. -->
-        <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
-          ${item.faNo || item.jobNo || '-'}
-        </td>
+    <!-- ADMIN FIRST SHOT FA 11. RESULT -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      ${resultBadge}
+    </td>
 
-        <!-- ADMIN FA FG 2. CUSTOMER -->
-        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
-          ${item.customer || '-'}
-        </td>
+    <!-- ADMIN FIRST SHOT FA 12. ACTION -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      <div class="flex justify-center items-center">
+        ${actionBtn}
+      </div>
+    </td>
+  `
 
-        <!-- ADMIN FA FG 3. PART NO. -->
-        <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
-          ${item.partNo || '-'}
-        </td>
+    : activeTopic === "FA_FG"
+  ? `
+    <!-- ADMIN FA FG 1. JOB NO. -->
+    <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+      ${item.jobNo || '-'}
+    </td>
 
-        <!-- ADMIN FA FG 4. REV. -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${
-            item.rev !== undefined && item.rev !== null && item.rev !== ''
-              ? String(item.rev).padStart(2, '0')
-              : '-'
-          }
-        </td>
+    <!-- ADMIN FA FG 2. วันที่ส่ง -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.userDate || '-'}
+    </td>
 
-        <!-- ADMIN FA FG 5. จำนวนที่ส่ง -->
-<td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-  ${
-    item.mainQty
-      ? `${item.mainQty}${item.extraQty ? '+' + item.extraQty : ''}`
-      : '-'
-  }
-</td>
+    <!-- ADMIN FA FG 3. FA NO. -->
+    <td class="p-2.5 text-center align-middle font-mono font-bold text-cyan-300 whitespace-nowrap">
+      ${item.faNo || item.jobNo || '-'}
+    </td>
 
-        <!-- ADMIN FA FG ุ6. ผู้ส่งงาน -->
-        <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.sender || '-'}
-        </td>
+    <!-- ADMIN FA FG 4. CUSTOMER -->
+    <td class="p-2.5 text-center align-middle text-slate-300 max-w-[140px] truncate" title="${item.customer || ''}">
+      ${item.customer || '-'}
+    </td>
 
-        <!-- ADMIN FA FG 7. STATUS -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          ${statusBadge}
-        </td>
+    <!-- ADMIN FA FG 5. PART NO. -->
+    <td class="p-2.5 text-center align-middle font-semibold text-slate-200 whitespace-nowrap">
+      ${item.partNo || '-'}
+    </td>
 
-        <!-- ADMIN FA FG 8. RESULT -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          ${resultBadge}
-        </td>
+    <!-- ADMIN FA FG 6. REV. -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${
+        item.rev !== undefined && item.rev !== null && item.rev !== ''
+          ? String(item.rev).padStart(2, '0')
+          : '-'
+      }
+    </td>
 
-        <!-- ADMIN FA FG 9. ACTION -->
-        <td class="p-2.5 text-center align-middle whitespace-nowrap">
-          <div class="flex justify-center items-center">
-            ${actionBtn}
-          </div>
-        </td>
-      `
+    <!-- ADMIN FA FG 7. จำนวนที่ส่ง -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${
+        item.mainQty
+          ? `${item.mainQty}${item.extraQty ? '+' + item.extraQty : ''}`
+          : '-'
+      }
+    </td>
+
+    <!-- ADMIN FA FG 8. ผู้ส่งงาน -->
+    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+      ${item.sender || '-'}
+    </td>
+
+    <!-- ADMIN FA FG 9. STATUS -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      ${statusBadge}
+    </td>
+
+    <!-- ADMIN FA FG 10. RESULT -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      ${resultBadge}
+    </td>
+
+    <!-- ADMIN FA FG 11. ACTION -->
+    <td class="p-2.5 text-center align-middle whitespace-nowrap">
+      <div class="flex justify-center items-center">
+        ${actionBtn}
+      </div>
+    </td>
+  `
 
       : `
         <!-- ADMIN DEFAULT 1. JOB NO. -->
