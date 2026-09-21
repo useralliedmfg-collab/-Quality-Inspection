@@ -5012,16 +5012,28 @@ detailHTML += `</div>`;
     }
 
     function showLoadingToast(msg) {
-      let loadingToast = document.getElementById('globalLoadingToast');
-      if (!loadingToast) {
-        loadingToast = document.createElement('div');
-        loadingToast.id = 'globalLoadingToast';
-        loadingToast.className = 'fixed bottom-4 right-4 z-50 bg-slate-900 border border-cyan-500/50 text-cyan-300 px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-3 text-xs';
-        document.body.appendChild(loadingToast);
-      }
-      loadingToast.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-base text-cyan-400"></i> <span>${msg}</span>`;
-      loadingToast.classList.remove('hidden');
-    }
+  let loadingToast = document.getElementById('globalLoadingToast');
+
+  if (!loadingToast) {
+    loadingToast = document.createElement('div');
+    loadingToast.id = 'globalLoadingToast';
+
+    loadingToast.className =
+      'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ' +
+      'z-[9999] bg-slate-900 border-2 border-cyan-500/60 ' +
+      'text-cyan-300 px-8 py-5 rounded-2xl shadow-2xl ' +
+      'flex items-center gap-4 text-lg';
+
+    document.body.appendChild(loadingToast);
+  }
+
+  loadingToast.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin text-3xl text-cyan-400"></i>
+    <span>${msg}</span>
+  `;
+
+  loadingToast.classList.remove('hidden');
+}
 
     function hideLoadingToast() {
       const loadingToast = document.getElementById('globalLoadingToast');
