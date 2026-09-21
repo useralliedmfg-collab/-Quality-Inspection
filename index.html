@@ -2886,17 +2886,28 @@ data.isPack = packCheckbox ? packCheckbox.checked : false;
 
       let dataset = [];
 
-dataset = records[activeTopic] || [];
+if (isAdminLoggedIn && activeTopic === "ALL") {
+  dataset = [
+    ...records.DIECUT,
+    ...records.JIG_FA,
+    ...records.FIRST_SHOT_FA,
+    ...records.FA_FG
+  ];
 
-const topicNames = {
-  DIECUT: "DIECUT INSPECTION",
-  JIG_FA: "JIG FA",
-  FIRST_SHOT_FA: "FIRST SHOT FA",
-  FA_FG: "FA FG"
-};
+  document.getElementById('topicIndicatorText').textContent = "Topic: ทุกหัวข้อ";
+} else {
+  dataset = records[activeTopic] || [];
 
-document.getElementById('topicIndicatorText').textContent =
-  `Topic: ${topicNames[activeTopic]}`;
+  const topicNames = {
+    DIECUT: "DIECUT INSPECTION",
+    JIG_FA: "JIG FA",
+    FIRST_SHOT_FA: "FIRST SHOT FA",
+    FA_FG: "FA FG"
+  };
+
+  document.getElementById('topicIndicatorText').textContent =
+    `Topic: ${topicNames[activeTopic]}`;
+}
         
       // Calculate Metrics for Current Active Dataset
       let total = dataset.length;
