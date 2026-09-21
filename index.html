@@ -4264,13 +4264,18 @@ document.getElementById('tab-ALL').classList.remove('hidden');
   } else {
 
     // แสดงฝั่งกรอกข้อมูลกลับมาเมื่อเป็น User
-    document.getElementById('userFormPanel').classList.remove('hidden');
+const userFormPanel = document.getElementById('userFormPanel');
+
+userFormPanel.classList.remove('hidden');
+userFormPanel.classList.remove('md:w-full');
+userFormPanel.classList.add('md:w-[35%]');
 
     // คืน Dashboard เป็น 58%
 const dashboardPanel = document.getElementById('dashboardPanel');
 
 dashboardPanel.classList.remove('md:w-full');
-dashboardPanel.classList.add('md:w-[58%]');
+dashboardPanel.classList.remove('md:w-[58%]');
+dashboardPanel.classList.add('md:w-[65%]');
 
 // บังคับให้ Layout กลับมาคำนวณใหม่หลัง Logout
 dashboardPanel.style.width = '';
