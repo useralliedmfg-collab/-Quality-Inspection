@@ -1573,7 +1573,7 @@ body, button, input, select, textarea, table {
         <!-- Admin Global Topic Filter (Visible only in Admin Mode) -->
         <select id="filterTopicAdmin" onchange="applyFilters()" class="hidden bg-cyan-950 border border-cyan-700 rounded-md px-2 py-1.5 text-xs text-cyan-200 focus:outline-none">
           <option value="CURRENT">หัวข้อปัจจุบัน</option>
-          <option value="ALL">ทุกหัวข้อ (Global)</option>
+          <option value="ALL">ล้างตัวกรอง</option>
         </select>
 
         <button onclick="loadSystemData()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-md border border-slate-700" title="รีเฟรชข้อมูล">
@@ -2858,13 +2858,24 @@ data.isPack = packCheckbox ? packCheckbox.checked : false;
 
     // Filter Logic & Table Rendering
     function applyFilters() {
-      const search = document.getElementById('searchInput').value.trim().toLowerCase();
-      const statusF = document.getElementById('filterStatus').value;
-      const resultF = document.getElementById('filterResult').value;
-      const customerF = document.getElementById('filterCustomer').value;
-      const topicAdminF = document.getElementById('filterTopicAdmin').value;
 
-      let dataset = [];
+  const topicAdminF = document.getElementById('filterTopicAdmin').value;
+
+  // ล้างตัวกรองทั้งหมด
+  if (isAdminLoggedIn && topicAdminF === "ALL") {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('filterStatus').value = 'ALL';
+    document.getElementById('filterResult').value = 'ALL';
+    document.getElementById('filterCustomer').value = 'ALL';
+  }
+
+  // อ่านค่าหลังจากล้างแล้ว
+  const search = document.getElementById('searchInput').value.trim().toLowerCase();
+  const statusF = document.getElementById('filterStatus').value;
+  const resultF = document.getElementById('filterResult').value;
+  const customerF = document.getElementById('filterCustomer').value;
+
+  let dataset = [];
 
       if (isAdminLoggedIn && topicAdminF === "ALL") {
         dataset = [
@@ -2873,7 +2884,7 @@ data.isPack = packCheckbox ? packCheckbox.checked : false;
           ...records.FIRST_SHOT_FA,
           ...records.FA_FG
         ];
-        document.getElementById('topicIndicatorText').textContent = "Topic: ทุกหัวข้อ (Admin Global View)";
+        document.getElementById('topicIndicatorText').textContent = "Topic: ทุกหัวข้อ";
       } else {
         dataset = records[activeTopic] || [];
         const topicNames = {
