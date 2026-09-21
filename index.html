@@ -3248,17 +3248,17 @@ if (isAdminLoggedIn) {
 
         <!-- ADMIN FIRST SHOT FA 6. PACK -->
         <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.pack || '-'}
+          ${item.isPack ? 'PACK' : '-'}
         </td>
 
         <!-- ADMIN FIRST SHOT FA 7. เครื่องที่ผลิต -->
         <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.machine || item.machineName || '-'}
+          ${item.machineCategory || item.machineNo || '-'}
         </td>
 
         <!-- ADMIN FIRST SHOT FA 8. จำนวนที่ส่ง -->
         <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-          ${item.quantity || item.qty || '-'}
+          ${item.mainQty || '-'}
         </td>
 
         <!-- ADMIN FIRST SHOT FA 9. RESULT -->
@@ -3301,9 +3301,9 @@ if (isAdminLoggedIn) {
         </td>
 
         <!-- ADMIN FA FG 5. งานที่ส่ง -->
-        <td class="p-2.5 text-center align-middle text-slate-300 max-w-[160px] truncate" title="${item.senderType || item.sendType || item.jobType || ''}">
-          ${item.senderType || item.sendType || item.jobType || '-'}
-        </td>
+<td class="p-2.5 text-center align-middle text-slate-300 max-w-[160px] truncate" title="${item.sender || ''}">
+  ${item.sender || '-'}
+</td>
 
         <!-- ADMIN FA FG 6. จำนวนเพิ่มเติม -->
         <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
