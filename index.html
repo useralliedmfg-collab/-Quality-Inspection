@@ -3939,6 +3939,15 @@ async function submitAddCustomer() {
     return;
   }
 
+  // เก็บข้อมูลที่กรอกในฟอร์มปัจจุบันไว้ก่อน
+  const form = document.getElementById('userJobForm');
+  const formData = new FormData(form);
+  const savedValues = {};
+
+  formData.forEach((value, key) => {
+    savedValues[key] = value;
+  });
+
   const res = await apiCall("addCustomer", { customerName: val });
 
   if (res.success) {
@@ -3956,8 +3965,21 @@ async function submitAddCustomer() {
       masterData.customers.push(val);
     }
 
-    // Render ฟอร์มใหม่ เพื่อให้ CUSTOMER ใหม่ขึ้นทันที
+    // Render ฟอร์มใหม่
     renderFormForTopic(activeTopic);
+
+    // ใส่ข้อมูลเดิมกลับเข้าไป
+    Object.keys(savedValues).forEach(key => {
+      const field = form.querySelector(`[name="${key}"]`);
+
+      if (field) {
+        if (field.type === "checkbox") {
+          field.checked = savedValues[key] === "on";
+        } else {
+          field.value = savedValues[key];
+        }
+      }
+    });
 
   } else {
     showToast("ข้อผิดพลาด", res.message, "danger");
