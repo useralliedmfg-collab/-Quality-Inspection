@@ -1940,8 +1940,8 @@ if (topicKey === "ALL") {
     allTab.classList.remove('text-slate-400');
   }
 
-  applyFilters();
-  return;
+    applyFilters();
+return;
 }
 
       // ถ้าเลือกหัวข้อปกติ ให้กลับมาใช้หัวข้อปัจจุบัน
@@ -2985,8 +2985,614 @@ if (isAdminLoggedIn && activeTopic === "ALL") {
         return getJobNumber(b) - getJobNumber(a);
       });
 
-      renderTableRows(filtered);
+      if (isAdminLoggedIn && activeTopic === "ALL") {
+  renderAdminSummary(filtered);
+} else {
+  renderTableRows(filtered);
+}
+}
+
+    // =========================================================
+// ADMIN SUMMARY DASHBOARD
+// แสดงเฉพาะเมื่อเลือก ALL
+// ไม่กระทบตารางเดิมของแต่ละ Topic
+// =========================================================
+function renderAdminSummary(items) {
+
+  const tbody = document.getElementById('jobTableBody');
+  const tableHead = document.getElementById('jobTableHead');
+  const countText = document.getElementById('tableCountText');
+
+  if (!tbody || !tableHead) return;
+
+  // ซ่อนหัวตารางเดิม
+  tableHead.innerHTML = '';
+
+  // ไม่ใช้ข้อความ "แสดง xx รายการ" แบบตาราง
+  if (countText) {
+    countText.textContent = '';
+  }
+
+  // =========================================================
+  // SUMMARY DATA
+  // =========================================================
+
+  const total = items.length;
+
+  const inspected = items.filter(r =>
+    r.status === "Inspected"
+  ).length;
+
+  const pending = items.filter(r =>
+    r.status === "Pending"
+  ).length;
+
+  const ok = items.filter(r =>
+    r.result === "OK"
+  ).length;
+
+  const ng = items.filter(r =>
+    r.result === "NG"
+  ).length;
+
+
+  // =========================================================
+  // จำนวนชิ้นงาน
+  // =========================================================
+
+  const getQty = (item) => {
+
+    let totalQty = Number(item.mainQty) || 0;
+
+    if (item.extraQty) {
+
+      const extra = String(item.extraQty)
+        .split('+')
+        .reduce((sum, value) => {
+          return sum + (Number(value) || 0);
+        }, 0);
+
+      totalQty += extra;
     }
+
+    return totalQty;
+  };
+
+
+  const totalPieces = items.reduce((sum, item) => {
+    return sum + getQty(item);
+  }, 0);
+
+
+  // =========================================================
+  // จำนวนงานแยกตามประเภท
+  // =========================================================
+
+  const topicCount = {
+    DIECUT: items.filter(r => r.topicKey === "DIECUT").length,
+    JIG_FA: items.filter(r => r.topicKey === "JIG_FA").length,
+    FIRST_SHOT_FA: items.filter(r => r.topicKey === "FIRST_SHOT_FA").length,
+    FA_FG: items.filter(r => r.topicKey === "FA_FG").length
+  };
+
+
+  // =========================================================
+  // จำนวนชิ้นงานแยกตามประเภท
+  // =========================================================
+
+  const topicQty = {
+    DIECUT: 0,
+    JIG_FA: 0,
+    FIRST_SHOT_FA: 0,
+    FA_FG: 0
+  };
+
+  items.forEach(item => {
+
+    if (topicQty[item.topicKey] !== undefined) {
+      topicQty[item.topicKey] += getQty(item);
+    }
+
+  });
+
+
+  // =========================================================
+  // GRAPH : จำนวนงานตามวัน
+  // =========================================================
+
+  const dailyMap = {};
+
+  items.forEach(item => {
+
+    const date = item.userDate || '-';
+
+    if (!dailyMap[date]) {
+      dailyMap[date] = 0;
+    }
+
+    dailyMap[date]++;
+  });
+
+  const dailyData = Object.entries(dailyMap)
+    .sort((a, b) => a[0].localeCompare(b[0]));
+
+
+  // =========================================================
+  // GRAPH : งานตามประเภท
+  // =========================================================
+
+  const maxTopicCount = Math.max(
+    topicCount.DIECUT,
+    topicCount.JIG_FA,
+    topicCount.FIRST_SHOT_FA,
+    topicCount.FA_FG,
+    1
+  );
+
+
+  // =========================================================
+  // SUMMARY HTML
+  // =========================================================
+
+  tbody.innerHTML = `
+    <tr>
+      <td colspan="20" class="p-0">
+
+        <div class="w-full bg-slate-950/40 rounded-xl p-4">
+
+          <!-- HEADER -->
+          <div class="mb-4">
+
+            <div class="flex items-center gap-2 mb-1">
+              <i class="fa-solid fa-chart-pie text-cyan-400"></i>
+
+              <span class="text-lg font-bold text-slate-100">
+                SUMMARY DASHBOARD
+              </span>
+            </div>
+
+            <div class="text-xs text-slate-500">
+              ภาพรวมงานทั้งหมด
+            </div>
+
+          </div>
+
+
+          <!-- FILTER -->
+          <div class="flex flex-wrap gap-3 mb-4">
+
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">
+                ช่วงเวลา
+              </label>
+
+              <select
+                id="summaryPeriodFilter"
+                class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white"
+              >
+                <option value="ALL">ทั้งหมด</option>
+                <option value="MONTH">เดือนนี้</option>
+                <option value="TODAY">วันนี้</option>
+              </select>
+            </div>
+
+
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">
+                ประเภทงาน
+              </label>
+
+              <select
+                id="summaryTopicFilter"
+                class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white"
+              >
+                <option value="ALL">ทั้งหมด</option>
+                <option value="DIECUT">DIECUT</option>
+                <option value="JIG_FA">JIG FA</option>
+                <option value="FIRST_SHOT_FA">FIRST SHOT FA</option>
+                <option value="FA_FG">FA FG</option>
+              </select>
+            </div>
+
+          </div>
+
+
+          <!-- METRICS -->
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
+
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+              <div class="text-xs text-slate-400">
+                งานทั้งหมด
+              </div>
+              <div class="text-2xl font-bold text-white mt-1">
+                ${total.toLocaleString()}
+              </div>
+            </div>
+
+
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+              <div class="text-xs text-slate-400">
+                ตรวจแล้ว
+              </div>
+              <div class="text-2xl font-bold text-cyan-400 mt-1">
+                ${inspected.toLocaleString()}
+              </div>
+            </div>
+
+
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+              <div class="text-xs text-slate-400">
+                PASS
+              </div>
+              <div class="text-2xl font-bold text-emerald-400 mt-1">
+                ${ok.toLocaleString()}
+              </div>
+            </div>
+
+
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+              <div class="text-xs text-slate-400">
+                NG
+              </div>
+              <div class="text-2xl font-bold text-rose-400 mt-1">
+                ${ng.toLocaleString()}
+              </div>
+            </div>
+
+
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+              <div class="text-xs text-slate-400">
+                จำนวนชิ้นงาน
+              </div>
+              <div class="text-2xl font-bold text-amber-400 mt-1">
+                ${totalPieces.toLocaleString()}
+              </div>
+            </div>
+
+          </div>
+
+
+          <!-- GRAPHS -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+
+
+            <!-- DAILY -->
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+
+              <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-chart-line text-cyan-400"></i>
+
+                <span class="text-sm font-bold text-slate-200">
+                  จำนวนงานตามวัน
+                </span>
+              </div>
+
+              <div class="space-y-2">
+
+                ${
+                  dailyData.length
+                    ? dailyData.map(([date, count]) => {
+
+                        const width =
+                          Math.max(
+                            5,
+                            (count / Math.max(
+                              ...dailyData.map(x => x[1]),
+                              1
+                            )) * 100
+                          );
+
+                        return `
+                          <div>
+
+                            <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                              <span>${date}</span>
+                              <span>${count}</span>
+                            </div>
+
+                            <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+
+                              <div
+                                class="h-full bg-cyan-500 rounded-full"
+                                style="width:${width}%"
+                              ></div>
+
+                            </div>
+
+                          </div>
+                        `;
+
+                      }).join('')
+                    : `
+                      <div class="text-center text-slate-500 py-8 text-xs">
+                        ไม่มีข้อมูล
+                      </div>
+                    `
+                }
+
+              </div>
+
+            </div>
+
+
+            <!-- TOPIC -->
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+
+              <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-chart-column text-cyan-400"></i>
+
+                <span class="text-sm font-bold text-slate-200">
+                  งานตามประเภท
+                </span>
+              </div>
+
+
+              <div class="space-y-3">
+
+                ${
+                  [
+                    ["DIECUT", "DIECUT"],
+                    ["JIG_FA", "JIG FA"],
+                    ["FIRST_SHOT_FA", "FIRST SHOT FA"],
+                    ["FA_FG", "FA FG"]
+                  ].map(([key, label]) => {
+
+                    const count = topicCount[key];
+
+                    const width =
+                      Math.max(
+                        3,
+                        (count / maxTopicCount) * 100
+                      );
+
+                    return `
+                      <div>
+
+                        <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                          <span>${label}</span>
+                          <span>${count}</span>
+                        </div>
+
+                        <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+
+                          <div
+                            class="h-full bg-cyan-500 rounded-full"
+                            style="width:${width}%"
+                          ></div>
+
+                        </div>
+
+                      </div>
+                    `;
+
+                  }).join('')
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- BOTTOM -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+
+            <!-- RESULT -->
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+
+              <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-clipboard-check text-cyan-400"></i>
+
+                <span class="text-sm font-bold text-slate-200">
+                  ผลการตรวจ
+                </span>
+              </div>
+
+
+              <div class="grid grid-cols-3 gap-2">
+
+                <div class="text-center bg-slate-950 rounded-lg p-3">
+                  <div class="text-[10px] text-slate-500">
+                    PASS
+                  </div>
+
+                  <div class="text-xl font-bold text-emerald-400">
+                    ${ok}
+                  </div>
+                </div>
+
+
+                <div class="text-center bg-slate-950 rounded-lg p-3">
+                  <div class="text-[10px] text-slate-500">
+                    NG
+                  </div>
+
+                  <div class="text-xl font-bold text-rose-400">
+                    ${ng}
+                  </div>
+                </div>
+
+
+                <div class="text-center bg-slate-950 rounded-lg p-3">
+                  <div class="text-[10px] text-slate-500">
+                    รอตรวจ
+                  </div>
+
+                  <div class="text-xl font-bold text-amber-400">
+                    ${pending}
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- QUANTITY -->
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-4">
+
+              <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-boxes-stacked text-cyan-400"></i>
+
+                <span class="text-sm font-bold text-slate-200">
+                  ยอดจำนวนที่ส่ง
+                </span>
+              </div>
+
+
+              <div class="space-y-2">
+
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">DIECUT</span>
+                  <span class="font-bold text-slate-200">
+                    ${topicQty.DIECUT.toLocaleString()}
+                  </span>
+                </div>
+
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">JIG FA</span>
+                  <span class="font-bold text-slate-200">
+                    ${topicQty.JIG_FA.toLocaleString()}
+                  </span>
+                </div>
+
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">FIRST SHOT FA</span>
+                  <span class="font-bold text-slate-200">
+                    ${topicQty.FIRST_SHOT_FA.toLocaleString()}
+                  </span>
+                </div>
+
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-400">FA FG</span>
+                  <span class="font-bold text-slate-200">
+                    ${topicQty.FA_FG.toLocaleString()}
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </td>
+    </tr>
+  `;
+}
+
+    // =========================================================
+// SUMMARY FILTER EVENT
+// =========================================================
+const periodFilter = document.getElementById('summaryPeriodFilter');
+const topicFilter = document.getElementById('summaryTopicFilter');
+
+if (periodFilter) {
+  periodFilter.onchange = () => {
+
+    const period = periodFilter.value;
+    const topic = topicFilter ? topicFilter.value : "ALL";
+
+    let filteredItems = [...items];
+
+    // กรองประเภทงาน
+    if (topic !== "ALL") {
+      filteredItems = filteredItems.filter(
+        item => item.topicKey === topic
+      );
+    }
+
+    // กรองช่วงเวลา
+    if (period !== "ALL") {
+
+      const now = new Date();
+
+      filteredItems = filteredItems.filter(item => {
+
+        if (!item.userDate) return false;
+
+        const itemDate = new Date(item.userDate);
+
+        if (isNaN(itemDate.getTime())) return false;
+
+        if (period === "TODAY") {
+          return (
+            itemDate.getFullYear() === now.getFullYear() &&
+            itemDate.getMonth() === now.getMonth() &&
+            itemDate.getDate() === now.getDate()
+          );
+        }
+
+        if (period === "MONTH") {
+          return (
+            itemDate.getFullYear() === now.getFullYear() &&
+            itemDate.getMonth() === now.getMonth()
+          );
+        }
+
+        return true;
+      });
+    }
+
+    renderAdminSummary(filteredItems);
+  };
+}
+
+
+if (topicFilter) {
+  topicFilter.onchange = () => {
+
+    const period = periodFilter ? periodFilter.value : "ALL";
+    const topic = topicFilter.value;
+
+    let filteredItems = [...items];
+
+    // กรองประเภทงาน
+    if (topic !== "ALL") {
+      filteredItems = filteredItems.filter(
+        item => item.topicKey === topic
+      );
+    }
+
+    // กรองช่วงเวลา
+    if (period !== "ALL") {
+
+      const now = new Date();
+
+      filteredItems = filteredItems.filter(item => {
+
+        if (!item.userDate) return false;
+
+        const itemDate = new Date(item.userDate);
+
+        if (isNaN(itemDate.getTime())) return false;
+
+        if (period === "TODAY") {
+          return (
+            itemDate.getFullYear() === now.getFullYear() &&
+            itemDate.getMonth() === now.getMonth() &&
+            itemDate.getDate() === now.getDate()
+          );
+        }
+
+        if (period === "MONTH") {
+          return (
+            itemDate.getFullYear() === now.getFullYear() &&
+            itemDate.getMonth() === now.getMonth()
+          );
+        }
+
+        return true;
+      });
+    }
+
+    renderAdminSummary(filteredItems);
+  };
+}
 
     function renderTableRows(items) {
   const tbody = document.getElementById('jobTableBody');
