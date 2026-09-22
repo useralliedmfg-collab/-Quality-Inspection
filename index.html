@@ -1465,6 +1465,15 @@ body, button, input, select, textarea, table {
 
  <!-- MAIN DESKTOP SPLIT CONTAINER -->
 <main class="flex-1 flex flex-col overflow-hidden relative">
+
+  <!-- ADMIN ALL OVERVIEW -->
+<section
+  id="adminOverviewPanel"
+  class="hidden flex-1 min-h-0 overflow-y-auto bg-white"
+>
+  <div id="adminOverviewContent" class="w-full p-6">
+  </div>
+</section>
   
   <!-- TOP DASHBOARD SUMMARY - FULL WIDTH -->
   <section class="w-full bg-slate-950 border-b border-slate-800 p-6 shrink-0">
@@ -1887,6 +1896,8 @@ async function apiCall(action, payload = {}) {
   };
 }
 
+    
+
     // Load initial system data
     async function loadSystemData() {
   const res = await apiCall("getInitialData");
@@ -1903,6 +1914,450 @@ async function apiCall(action, payload = {}) {
     applyFilters();
   } else {
     showToast("ข้อผิดพลาด", res.message || "ไม่สามารถโหลดข้อมูลได้", "danger");
+  }
+}
+
+    function showAdminOverview() {
+  const overviewPanel = document.getElementById('adminOverviewPanel');
+  const overviewContent = document.getElementById('adminOverviewContent');
+
+  if (!overviewPanel || !overviewContent) return;
+
+  // ซ่อนหน้าปกติ
+  const userFormPanel = document.getElementById('userFormPanel');
+  const dashboardPanel = document.getElementById('dashboardPanel');
+
+  if (userFormPanel) userFormPanel.classList.add('hidden');
+  if (dashboardPanel) dashboardPanel.classList.add('hidden');
+
+  // แสดง Overview
+  overviewPanel.classList.remove('hidden');
+
+  overviewContent.innerHTML = `
+    <div class="max-w-[1600px] mx-auto">
+
+      <!-- HEADER -->
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <p class="text-xs font-semibold tracking-[0.18em] text-cyan-600 uppercase">
+            AMS Quality Control
+          </p>
+
+          <h1 class="text-2xl font-bold text-slate-900 mt-1">
+            Quality Control Overview
+          </h1>
+
+          <p class="text-sm text-slate-500 mt-1">
+            ภาพรวมสถานะงานตรวจสอบคุณภาพทั้งหมด
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="text-xs font-medium text-slate-500">
+            LIVE SYSTEM
+          </span>
+        </div>
+      </div>
+
+
+      <!-- FILTER -->
+      <div class="bg-white border border-slate-200 rounded-xl p-4 mb-6 shadow-sm">
+        <div class="flex flex-wrap items-center gap-3">
+
+          <select
+            id="overviewPeriod"
+            class="h-10 px-3 text-sm text-slate-700 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-cyan-400"
+          >
+            <option value="ALL">ALL PERIOD</option>
+            <option value="TODAY">TODAY</option>
+            <option value="WEEK">THIS WEEK</option>
+            <option value="MONTH">THIS MONTH</option>
+          </select>
+
+          <select
+            id="overviewTopic"
+            class="h-10 px-3 text-sm text-slate-700 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-cyan-400"
+          >
+            <option value="ALL">ALL TOPIC</option>
+            <option value="DIECUT">DIECUT INSPECTION</option>
+            <option value="JIG_FA">JIG FA</option>
+            <option value="FIRST_SHOT_FA">FIRST SHOT FA</option>
+            <option value="FA_FG">FA FG</option>
+          </select>
+
+          <div class="relative flex-1 min-w-[220px]">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+
+            <input
+              id="overviewSearch"
+              type="text"
+              placeholder="Search Job No. / Part No. / Customer..."
+              class="w-full h-10 pl-9 pr-3 text-sm text-slate-700 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-cyan-400"
+            >
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- KPI -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <p class="text-xs font-medium text-slate-500">TOTAL JOBS</p>
+          <p id="overviewTotal" class="text-3xl font-bold text-slate-900 mt-2">0</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <p class="text-xs font-medium text-slate-500">INSPECTED</p>
+          <p id="overviewInspected" class="text-3xl font-bold text-slate-900 mt-2">0</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <p class="text-xs font-medium text-slate-500">PASS</p>
+          <p id="overviewPass" class="text-3xl font-bold text-slate-900 mt-2">0</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <p class="text-xs font-medium text-slate-500">NG</p>
+          <p id="overviewNg" class="text-3xl font-bold text-slate-900 mt-2">0</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <p class="text-xs font-medium text-slate-500">PENDING</p>
+          <p id="overviewPending" class="text-3xl font-bold text-slate-900 mt-2">0</p>
+        </div>
+
+      </div>
+
+
+      <!-- MAIN GRID -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+
+        <!-- ACTIVITY -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <div class="flex items-center justify-between mb-5">
+            <div>
+              <h2 class="text-sm font-bold text-slate-900">
+                Inspection Activity
+              </h2>
+              <p class="text-xs text-slate-500 mt-1">
+                ภาพรวมงานตรวจสอบ
+              </p>
+            </div>
+          </div>
+
+          <div id="overviewActivity" class="space-y-3">
+            <div class="text-sm text-slate-400 text-center py-10">
+              No data
+            </div>
+          </div>
+        </div>
+
+
+        <!-- RESULT -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5">
+          <div class="mb-5">
+            <h2 class="text-sm font-bold text-slate-900">
+              Result Overview
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">
+              สรุปผลการตรวจสอบ
+            </p>
+          </div>
+
+          <div id="overviewResult" class="space-y-4">
+            <div class="text-sm text-slate-400 text-center py-10">
+              No data
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- WORKLOAD -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
+
+        <div class="mb-5">
+          <h2 class="text-sm font-bold text-slate-900">
+            Workload by Topic
+          </h2>
+
+          <p class="text-xs text-slate-500 mt-1">
+            จำนวนงานแยกตามหัวข้อ
+          </p>
+        </div>
+
+        <div
+          id="overviewWorkload"
+          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4"
+        >
+          <div class="text-sm text-slate-400 text-center py-10 col-span-full">
+            No data
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- RECENT INSPECTIONS -->
+      <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+
+        <div class="p-5 border-b border-slate-200">
+          <h2 class="text-sm font-bold text-slate-900">
+            Recent Inspections
+          </h2>
+
+          <p class="text-xs text-slate-500 mt-1">
+            รายการตรวจสอบล่าสุด
+          </p>
+        </div>
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-sm">
+
+            <thead class="bg-slate-50 border-b border-slate-200">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 whitespace-nowrap">
+                  JOB NO.
+                </th>
+
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 whitespace-nowrap">
+                  PART NO.
+                </th>
+
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 whitespace-nowrap">
+                  CUSTOMER
+                </th>
+
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 whitespace-nowrap">
+                  TOPIC
+                </th>
+
+                <th class="px-4 py-3 text-center text-xs font-semibold text-slate-500 whitespace-nowrap">
+                  RESULT
+                </th>
+              </tr>
+            </thead>
+
+            <tbody id="overviewRecentBody">
+              <tr>
+                <td
+                  colspan="5"
+                  class="px-4 py-10 text-center text-sm text-slate-400"
+                >
+                  No data
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+  `;
+
+  // รวมข้อมูลจากทั้ง 4 หัวข้อ
+  const allRecords = [
+    ...(records.DIECUT || []).map(r => ({ ...r, topic: 'DIECUT' })),
+    ...(records.JIG_FA || []).map(r => ({ ...r, topic: 'JIG_FA' })),
+    ...(records.FIRST_SHOT_FA || []).map(r => ({ ...r, topic: 'FIRST_SHOT_FA' })),
+    ...(records.FA_FG || []).map(r => ({ ...r, topic: 'FA_FG' }))
+  ];
+
+  // =========================
+  // KPI
+  // =========================
+  const total = allRecords.length;
+
+  const inspected = allRecords.filter(r =>
+    r.inspectionDate ||
+    r.inspector ||
+    r.result
+  ).length;
+
+  const pass = allRecords.filter(r =>
+    String(r.result || '').toUpperCase() === 'OK' ||
+    String(r.result || '').toUpperCase() === 'PASS'
+  ).length;
+
+  const ng = allRecords.filter(r =>
+    String(r.result || '').toUpperCase() === 'NG'
+  ).length;
+
+  const pending = Math.max(total - inspected, 0);
+
+  document.getElementById('overviewTotal').textContent = total;
+  document.getElementById('overviewInspected').textContent = inspected;
+  document.getElementById('overviewPass').textContent = pass;
+  document.getElementById('overviewNg').textContent = ng;
+  document.getElementById('overviewPending').textContent = pending;
+
+
+  // =========================
+  // WORKLOAD BY TOPIC
+  // =========================
+  const topicNames = {
+    DIECUT: 'DIECUT INSPECTION',
+    JIG_FA: 'JIG FA',
+    FIRST_SHOT_FA: 'FIRST SHOT FA',
+    FA_FG: 'FA FG'
+  };
+
+  const workloadHTML = Object.keys(topicNames).map(topic => {
+    const count = allRecords.filter(r => r.topic === topic).length;
+
+    return `
+      <div class="border border-slate-200 rounded-xl p-4">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-semibold text-slate-700">
+            ${topicNames[topic]}
+          </span>
+
+          <span class="text-xl font-bold text-slate-900">
+            ${count}
+          </span>
+        </div>
+
+        <div class="mt-3 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+          <div
+            class="h-full bg-cyan-500 rounded-full"
+            style="width:${total ? Math.min((count / total) * 100, 100) : 0}%"
+          ></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('overviewWorkload').innerHTML =
+    workloadHTML;
+
+
+  // =========================
+  // RESULT OVERVIEW
+  // =========================
+  document.getElementById('overviewResult').innerHTML = `
+    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+      <span class="text-sm text-slate-600">PASS / OK</span>
+      <span class="text-lg font-bold text-slate-900">${pass}</span>
+    </div>
+
+    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+      <span class="text-sm text-slate-600">NG</span>
+      <span class="text-lg font-bold text-slate-900">${ng}</span>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <span class="text-sm text-slate-600">PENDING</span>
+      <span class="text-lg font-bold text-slate-900">${pending}</span>
+    </div>
+  `;
+
+
+  // =========================
+  // RECENT INSPECTIONS
+  // =========================
+  const recent = [...allRecords]
+    .sort((a, b) => {
+      const dateA = new Date(
+        `${a.inspectionDate || a.userDate || ''} ${a.inspectionTime || a.userTime || ''}`
+      );
+
+      const dateB = new Date(
+        `${b.inspectionDate || b.userDate || ''} ${b.inspectionTime || b.userTime || ''}`
+      );
+
+      return dateB - dateA;
+    })
+    .slice(0, 10);
+
+  const recentBody = document.getElementById('overviewRecentBody');
+
+  if (!recent.length) {
+    recentBody.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-4 py-10 text-center text-sm text-slate-400">
+          No data
+        </td>
+      </tr>
+    `;
+  } else {
+    recentBody.innerHTML = recent.map(item => `
+      <tr class="border-b border-slate-100 hover:bg-slate-50">
+
+        <td class="px-4 py-3 font-mono font-semibold text-slate-800 whitespace-nowrap">
+          ${item.jobNo || '-'}
+        </td>
+
+        <td class="px-4 py-3 text-slate-700 whitespace-nowrap">
+          ${item.partNo || '-'}
+        </td>
+
+        <td class="px-4 py-3 text-slate-600 whitespace-nowrap">
+          ${item.customer || '-'}
+        </td>
+
+        <td class="px-4 py-3 text-slate-600 whitespace-nowrap">
+          ${topicNames[item.topic] || item.topic || '-'}
+        </td>
+
+        <td class="px-4 py-3 text-center font-semibold">
+          ${item.result || 'PENDING'}
+        </td>
+
+      </tr>
+    `).join('');
+  }
+
+
+  // =========================
+  // ACTIVITY
+  // =========================
+  const activity = {};
+
+  allRecords.forEach(item => {
+    const date = item.inspectionDate || item.userDate;
+
+    if (!date) return;
+
+    activity[date] = (activity[date] || 0) + 1;
+  });
+
+  const activityList = Object.entries(activity)
+    .sort((a, b) => String(b[0]).localeCompare(String(a[0])))
+    .slice(0, 7);
+
+  const activityEl = document.getElementById('overviewActivity');
+
+  if (!activityList.length) {
+    activityEl.innerHTML = `
+      <div class="text-sm text-slate-400 text-center py-10">
+        No data
+      </div>
+    `;
+  } else {
+    const maxActivity = Math.max(...activityList.map(x => x[1]));
+
+    activityEl.innerHTML = activityList.map(([date, count]) => `
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs text-slate-500">${date}</span>
+          <span class="text-xs font-semibold text-slate-700">${count}</span>
+        </div>
+
+        <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+          <div
+            class="h-full bg-cyan-500 rounded-full"
+            style="width:${maxActivity ? (count / maxActivity) * 100 : 0}%"
+          ></div>
+        </div>
+      </div>
+    `).join('');
   }
 }
 
@@ -1940,14 +2395,24 @@ if (topicKey === "ALL") {
     allTab.classList.remove('text-slate-400');
   }
 
-  applyFilters();
-  return;
+  showAdminOverview();
+return;
 }
 
       // ถ้าเลือกหัวข้อปกติ ให้กลับมาใช้หัวข้อปัจจุบัน
 if (isAdminLoggedIn) {
   document.getElementById('filterTopicAdmin').value = "CURRENT";
 }
+      // ซ่อน Overview
+const overviewPanel = document.getElementById('adminOverviewPanel');
+if (overviewPanel) overviewPanel.classList.add('hidden');
+
+// แสดงหน้าปกติกลับมา
+const userFormPanel = document.getElementById('userFormPanel');
+const dashboardPanel = document.getElementById('dashboardPanel');
+
+if (userFormPanel) userFormPanel.classList.remove('hidden');
+if (dashboardPanel) dashboardPanel.classList.remove('hidden');
       
       // Update Tab Styles
       document.querySelectorAll('.tab-btn').forEach(btn => {
