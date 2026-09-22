@@ -3807,7 +3807,9 @@ if (isAdminLoggedIn) {
     <!-- USER FIRST SHOT FA 10. จำนวนที่ส่ง -->
 <td class="p-1.5 text-center align-middle text-slate-300 whitespace-nowrap">
   ${
-    item.mainQty
+    item.mainQty !== undefined &&
+    item.mainQty !== null &&
+    item.mainQty !== ''
       ? `${item.mainQty}${item.extraQty ? '+' + item.extraQty : ''}`
       : '-'
   }
@@ -3873,13 +3875,15 @@ if (isAdminLoggedIn) {
     </td>
 
     <!-- USER FA FG 7. จำนวนที่ส่ง -->
-    <td class="p-1.5 text-center align-middle text-slate-300 whitespace-nowrap">
-      ${
-        item.mainQty
-          ? `${item.mainQty}${item.extraQty ? '+' + item.extraQty : ''}`
-          : '-'
-      }
-    </td>
+<td class="p-1.5 text-center align-middle text-slate-300 whitespace-nowrap">
+  ${
+    item.mainQty !== undefined &&
+    item.mainQty !== null &&
+    item.mainQty !== ''
+      ? `${item.mainQty}${item.extraQty ? '+' + item.extraQty : ''}`
+      : '-'
+  }
+</td>
 
     <!-- USER FA FG 8. ผู้ส่งงาน -->
     <td class="p-1.5 text-center align-middle text-slate-300 whitespace-nowrap">
