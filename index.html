@@ -3481,10 +3481,10 @@ function renderAdminSummary(items) {
 
       </td>
     </tr>
-  `;
+   `;
 }
 
-    // =========================================================
+// =========================================================
 // SUMMARY FILTER EVENT
 // =========================================================
 const periodFilter = document.getElementById('summaryPeriodFilter');
@@ -3541,7 +3541,6 @@ if (periodFilter) {
   };
 }
 
-
 if (topicFilter) {
   topicFilter.onchange = () => {
 
@@ -3593,7 +3592,7 @@ if (topicFilter) {
   };
 }
 
-    function renderTableRows(items) {
+function renderTableRows(items) {
   const tbody = document.getElementById('jobTableBody');
 const tableHead = document.getElementById('jobTableHead');
 const countText = document.getElementById('tableCountText');
