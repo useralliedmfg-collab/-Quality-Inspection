@@ -2576,13 +2576,20 @@ ${customerFieldHTML}
           </label>
 
           <input
-            type="number"
-            name="extraQty"
-            min="0"
-            value=""
-            placeholder="0"
-            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-          >
+  type="text"
+  name="extraQty"
+  inputmode="numeric"
+  placeholder="เช่น 10+4+3+2"
+  oninput="
+    this.value = this.value.replace(/[^0-9+]/g, '');
+    this.setCustomValidity(
+      /^(?:[0-9]+)(?:\+[0-9]+)*$/.test(this.value)
+        ? ''
+        : 'กรุณากรอกเป็นตัวเลขคั่นด้วย + เช่น 10+4+3'
+    );
+  "
+  class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+>
         </div>
 
       </div>
@@ -2720,13 +2727,20 @@ ${customerFieldHTML}
           </label>
 
           <input
-            type="number"
-            name="extraQty"
-            min="0"
-            value=""
-            placeholder="0"
-            class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
-          >
+  type="text"
+  name="extraQty"
+  inputmode="numeric"
+  placeholder="เช่น 10+4+3+2"
+  oninput="
+    this.value = this.value.replace(/[^0-9+]/g, '');
+    this.setCustomValidity(
+      /^(?:[0-9]+)(?:\+[0-9]+)*$/.test(this.value)
+        ? ''
+        : 'กรุณากรอกเป็นตัวเลขคั่นด้วย + เช่น 10+4+3'
+    );
+  "
+  class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+>
         </div>
 
       </div>
@@ -3421,13 +3435,13 @@ if (isAdminLoggedIn) {
     </td>
 
     <!-- ADMIN FIRST SHOT FA 10. จำนวนที่ส่ง -->
-    <td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
-      ${
-        item.mainQty
-          ? `${item.mainQty}${item.extraQty ? ' + ' + item.extraQty : ''}`
-          : '-'
-      }
-    </td>
+<td class="p-2.5 text-center align-middle text-slate-300 whitespace-nowrap">
+  ${
+    item.mainQty
+      ? `${item.mainQty}${item.extraQty ? '+' + item.extraQty : ''}`
+      : '-'
+  }
+</td>
 
     <!-- ADMIN FIRST SHOT FA 11. RESULT -->
     <td class="p-2.5 text-center align-middle whitespace-nowrap">
@@ -3777,13 +3791,13 @@ if (isAdminLoggedIn) {
     </td>
 
     <!-- USER FIRST SHOT FA 10. จำนวนที่ส่ง -->
-    <td class="p-1.5 text-center align-middle text-slate-300 whitespace-nowrap">
-      ${
-        item.mainQty
-          ? `${item.mainQty}${item.extraQty ? ' + ' + item.extraQty : ''}`
-          : '-'
-      }
-    </td>
+<td class="p-1.5 text-center align-middle text-slate-300 whitespace-nowrap">
+  ${
+    item.mainQty
+      ? `${item.mainQty}${item.extraQty ? '+' + item.extraQty : ''}`
+      : '-'
+  }
+</td>
 
     <!-- USER FIRST SHOT FA 11. วันที่ตรวจ -->
     <td class="p-1.5 text-center align-middle text-slate-300 whitespace-nowrap">
