@@ -2839,7 +2839,21 @@ ${customerFieldHTML}
 const packCheckbox = form.querySelector('input[name="isPack"]');
 data.isPack = packCheckbox ? packCheckbox.checked : false;
 
-      const btn = document.getElementById('btnSubmitForm');
+
+// ตรวจสอบจำนวนเพิ่มเติม
+if (data.topicKey === 'FIRST_SHOT_FA' || data.topicKey === 'FA_FG') {
+  const extraQty = String(data.extraQty || '').trim();
+
+  if (extraQty && !/^[0-9]+(?:\+[0-9]+)*$/.test(extraQty)) {
+    showToast(
+      "ข้อผิดพลาด",
+      "จำนวนเพิ่มเติมต้องเป็นตัวเลขคั่นด้วย + เช่น 10+4+3",
+      "danger"
+    );
+    return;
+  }
+}
+const btn = document.getElementById('btnSubmitForm');
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังบันทึก...`;
 
