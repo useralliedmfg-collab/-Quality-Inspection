@@ -1923,12 +1923,6 @@ async function apiCall(action, payload = {}) {
 
   if (!overviewPanel || !overviewContent) return;
 
-  // ซ่อนหน้าปกติ
-  const userFormPanel = document.getElementById('userFormPanel');
-  const dashboardPanel = document.getElementById('dashboardPanel');
-
-  if (userFormPanel) userFormPanel.classList.add('hidden');
-  if (dashboardPanel) dashboardPanel.classList.add('hidden');
 
   // แสดง Overview
   overviewPanel.classList.remove('hidden');
@@ -2403,16 +2397,6 @@ return;
 if (isAdminLoggedIn) {
   document.getElementById('filterTopicAdmin').value = "CURRENT";
 }
-      // ซ่อน Overview
-const overviewPanel = document.getElementById('adminOverviewPanel');
-if (overviewPanel) overviewPanel.classList.add('hidden');
-
-// แสดงหน้าปกติกลับมา
-const userFormPanel = document.getElementById('userFormPanel');
-const dashboardPanel = document.getElementById('dashboardPanel');
-
-if (userFormPanel) userFormPanel.classList.remove('hidden');
-if (dashboardPanel) dashboardPanel.classList.remove('hidden');
       
       // Update Tab Styles
       document.querySelectorAll('.tab-btn').forEach(btn => {
