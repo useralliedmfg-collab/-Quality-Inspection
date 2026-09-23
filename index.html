@@ -1732,9 +1732,10 @@ body, button, input, select, textarea, table {
             </label>
 
             <input
-              type="date"
+              type="text"
               id="overviewFilterDateTo"
               onchange="applyOverviewFilters()"
+              placeholder="dd/mm/yyyy"
               class="w-full bg-slate-950 border border-slate-700 hover:border-cyan-500/50 rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
             >
           </div>
@@ -2864,11 +2865,28 @@ function applyOverviewFilters() {
   const result =
     document.getElementById('overviewFilterResult')?.value || 'ALL';
 
-  const dateFrom =
-    document.getElementById('overviewFilterDateFrom')?.value || '';
+  const dateFromRaw =
+  document.getElementById('overviewFilterDateFrom')?.value || '';
 
-  const dateTo =
-    document.getElementById('overviewFilterDateTo')?.value || '';
+const dateToRaw =
+  document.getElementById('overviewFilterDateTo')?.value || '';
+
+const normalizeOverviewInputDate = (value) => {
+  const v = String(value || '').trim();
+
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(v)) {
+    const [day, month, year] = v.split('/');
+    return `${year}-${month}-${day}`;
+  }
+
+  return v;
+};
+
+const dateFrom =
+  normalizeOverviewInputDate(dateFromRaw);
+
+const dateTo =
+  normalizeOverviewInputDate(dateToRaw);
 
   const search =
     (document.getElementById('overviewFilterSearch')?.value || '')
