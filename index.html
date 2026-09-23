@@ -2867,16 +2867,20 @@ const btn = document.getElementById('btnSubmitForm');
   form.reset();
 
   // เพิ่มงานใหม่เข้า Dashboard ทันที
-  if (res.record && res.record.topicKey) {
+if (res.record && res.record.topicKey) {
 
-    if (!records[res.record.topicKey]) {
-      records[res.record.topicKey] = [];
-    }
-
-    records[res.record.topicKey].unshift(res.record);
-
-    applyFilters();
+  if (!records[res.record.topicKey]) {
+    records[res.record.topicKey] = [];
   }
+
+  records[res.record.topicKey].unshift({
+    ...res.record,
+    mainQty: data.mainQty,
+    extraQty: data.extraQty
+  });
+
+  applyFilters();
+}
 
 } else {
   showToast(
