@@ -2462,6 +2462,12 @@ if (topicKey === "ALL") {
   return;
 }
 
+      // ซ่อน Dashboard ALL เมื่อกลับเข้าหัวข้อปกติ
+const adminOverviewPanel = document.getElementById('adminOverviewPanel');
+if (adminOverviewPanel) {
+  adminOverviewPanel.classList.add('hidden');
+}
+
       // ถ้าเลือกหัวข้อปกติ ให้กลับมาใช้หัวข้อปัจจุบัน
 if (isAdminLoggedIn) {
   document.getElementById('filterTopicAdmin').value = "CURRENT";
