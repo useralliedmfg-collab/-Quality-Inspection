@@ -4435,8 +4435,7 @@ function updateAdminUI() {
   applyFilters();
 }
     // Admin Inspection Modal
-    
-function openInspectionModal(topicKey, recordId) {
+    function openInspectionModal(topicKey, recordId) {
   const item = (records[topicKey] || []).find(r => r.recordId === recordId);
   if (!item) return;
 
@@ -4447,541 +4446,514 @@ function openInspectionModal(topicKey, recordId) {
   const sender = item.senderMould || item.senderJig || item.sender || "-";
 
   // ========================================================
-// ข้อมูลรายละเอียดสำหรับ Admin Inspection
-// Compact Clean Inspection UI - 2 Columns
-// ========================================================
+  // ข้อมูลรายละเอียดสำหรับ Admin Inspection
+  // Light Modern UI
+  // ========================================================
 
-let detailHTML = `
-  <div class="space-y-4">
-`;
-
-// ========================================================
-// DIECUT
-// ========================================================
-
-if (topicKey === "DIECUT") {
-
-  detailHTML += `
-    <div>
-
-      <div class="flex items-center gap-2 mb-2.5">
-        <div class="w-7 h-7 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-          <i class="fa-solid fa-scissors text-violet-400 text-xs"></i>
-        </div>
-
-        <div>
-          <div class="text-xs font-bold text-slate-200">
-            รายละเอียด DIECUT
-          </div>
-          <div class="text-[10px] text-slate-500">
-            ข้อมูลแม่พิมพ์และรายละเอียดการส่งงาน
-          </div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-
-        <!-- วันเดือนปี -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            วันเดือนปี
-          </div>
-
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userDate || '-'}
-          </div>
-        </div>
-
-        <!-- เวลาส่ง -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            เวลาส่ง
-          </div>
-
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userTime || '-'}
-          </div>
-        </div>
-
-        <!-- DIECUT NO -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            DIECUT NO.
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.diecutNo || '-'}
-          </div>
-        </div>
-
-        <!-- REFER NO DIECUT -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            REFER NO DIECUT
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.referNoDiecut || '-'}
-          </div>
-        </div>
-
-        <!-- CUSTOMER -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            CUSTOMER
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.customer || '-'}
-          </div>
-        </div>
-
-        <!-- PART NO -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            PART NO.
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.partNo || '-'}
-          </div>
-        </div>
-
-        <!-- REV. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            REV.
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.rev || '-'}
-          </div>
-        </div>
-
-        <!-- CAVITY -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            CAVITY
-          </div>
-
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.cavity || '-'}
-          </div>
-        </div>
-
-        <!-- ผู้ส่ง MOULD -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3 md:col-span-2">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            ผู้ส่ง MOULD
-          </div>
-
-          <div class="text-sm font-semibold text-cyan-300 break-words">
-            ${item.senderMould || '-'}
-          </div>
-        </div>
-
-      </div>
-    </div>
+  let detailHTML = `
+    <div class="space-y-5">
   `;
-} 
 
-// ========================================================
-// JIG FA
-// ========================================================
+  // ========================================================
+  // DIECUT
+  // ========================================================
 
-else if (topicKey === "JIG_FA") {
+  if (topicKey === "DIECUT") {
 
-  detailHTML += `
-    <div>
+    detailHTML += `
+      <div>
 
-      <div class="flex items-center gap-2 mb-2.5">
-        <div class="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-          <i class="fa-solid fa-screwdriver-wrench text-amber-400 text-xs"></i>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center">
+            <i class="fa-solid fa-scissors text-violet-600 text-sm"></i>
+          </div>
+
+          <div>
+            <div class="text-sm font-bold text-slate-800">
+              รายละเอียด DIECUT
+            </div>
+            <div class="text-[11px] text-slate-500">
+              ข้อมูลแม่พิมพ์และรายละเอียดการส่งงาน
+            </div>
+          </div>
         </div>
 
-        <div>
-          <div class="text-xs font-bold text-slate-200">
-            รายละเอียด JIG FA
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              วันเดือนปี
+            </div>
+            <div class="text-sm font-medium text-slate-700">
+              ${item.userDate || '-'}
+            </div>
           </div>
-          <div class="text-[10px] text-slate-500">
-            ข้อมูล JIG ที่ส่งเข้าตรวจสอบ
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              เวลาส่ง
+            </div>
+            <div class="text-sm font-medium text-slate-700">
+              ${item.userTime || '-'}
+            </div>
           </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              DIECUT NO.
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.diecutNo || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              REFER NO DIECUT
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.referNoDiecut || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              CUSTOMER
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.customer || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              PART NO.
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.partNo || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              REV.
+            </div>
+            <div class="text-sm font-semibold text-slate-800">
+              ${item.rev || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              CAVITY
+            </div>
+            <div class="text-sm font-semibold text-slate-800">
+              ${item.cavity || '-'}
+            </div>
+          </div>
+
+          <div class="md:col-span-2 bg-violet-50/60 border border-violet-100 rounded-xl p-3.5">
+            <div class="text-[10px] font-semibold text-violet-500 mb-1">
+              ผู้ส่ง MOULD
+            </div>
+            <div class="text-sm font-semibold text-violet-700 break-words">
+              ${item.senderMould || '-'}
+            </div>
+          </div>
+
         </div>
       </div>
+    `;
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-
-        <!-- วันเดือนปี -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            วันเดือนปี
-          </div>
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userDate || '-'}
-          </div>
-        </div>
-
-        <!-- เวลาส่ง -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            เวลาส่ง
-          </div>
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userTime || '-'}
-          </div>
-        </div>
-
-        <!-- CUSTOMER -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            CUSTOMER
-          </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.customer || '-'}
-          </div>
-        </div>
-
-        <!-- PART NO. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            PART NO.
-          </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.partNo || '-'}
-          </div>
-        </div>
-
-        <!-- REV. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            REV.
-          </div>
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.rev || '-'}
-          </div>
-        </div>
-
-        <!-- จำนวน JIG ที่ส่่งตรวจ -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            จำนวน JIG ที่ส่่งตรวจ
-          </div>
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.jigQty || '-'}
-          </div>
-        </div>
-
-        <!-- ชนิด JIG ที่ต้องการใช้งาน -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3 md:col-span-2">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            ชนิด JIG ที่ต้องการใช้งาน
-          </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.jigType || '-'}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}
-          </div>
-        </div>
-
-        <!-- ผู้ส่ง JIG -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3 md:col-span-2">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            ผู้ส่ง JIG
-          </div>
-          <div class="text-sm font-semibold text-cyan-300 break-words">
-            ${item.senderJig || '-'}
-          </div>
-        </div>
-
-      </div>
-    </div>
-  `;
-}
-
-// ========================================================
-// FIRST SHOT FA
-// ========================================================
-
-else if (topicKey === "FIRST_SHOT_FA") {
-
-  let toolingReqDisplay = "-";
-
-  if (Array.isArray(item.toolingReq)) {
-    toolingReqDisplay = item.toolingReq.join(", ");
-  } else if (item.toolingReq) {
-    toolingReqDisplay = item.toolingReq;
   }
 
-  if (item.toolingReqOther) {
-    toolingReqDisplay += `, อื่นๆ: ${item.toolingReqOther}`;
+  // ========================================================
+  // JIG FA
+  // ========================================================
+
+  else if (topicKey === "JIG_FA") {
+
+    detailHTML += `
+      <div>
+
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
+            <i class="fa-solid fa-screwdriver-wrench text-amber-600 text-sm"></i>
+          </div>
+
+          <div>
+            <div class="text-sm font-bold text-slate-800">
+              รายละเอียด JIG FA
+            </div>
+            <div class="text-[11px] text-slate-500">
+              ข้อมูล JIG ที่ส่งเข้าตรวจสอบ
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              วันเดือนปี
+            </div>
+            <div class="text-sm font-medium text-slate-700">
+              ${item.userDate || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              เวลาส่ง
+            </div>
+            <div class="text-sm font-medium text-slate-700">
+              ${item.userTime || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              CUSTOMER
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.customer || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              PART NO.
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.partNo || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              REV.
+            </div>
+            <div class="text-sm font-semibold text-slate-800">
+              ${item.rev || '-'}
+            </div>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              จำนวน JIG ที่ส่งตรวจ
+            </div>
+            <div class="text-sm font-semibold text-slate-800">
+              ${item.jigQty || '-'}
+            </div>
+          </div>
+
+          <div class="md:col-span-2 bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              ชนิด JIG ที่ต้องการใช้งาน
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.jigType || '-'}${item.jigTypeDetail ? ` (${item.jigTypeDetail})` : ''}
+            </div>
+          </div>
+
+          <div class="md:col-span-2 bg-amber-50/60 border border-amber-100 rounded-xl p-3.5">
+            <div class="text-[10px] font-semibold text-amber-600 mb-1">
+              ผู้ส่ง JIG
+            </div>
+            <div class="text-sm font-semibold text-amber-700 break-words">
+              ${item.senderJig || '-'}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+
   }
 
-  detailHTML += `
-    <div>
+  // ========================================================
+  // FIRST SHOT FA
+  // ========================================================
 
-      <div class="flex items-center gap-2 mb-2.5">
-        <div class="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-          <i class="fa-solid fa-flask text-emerald-400 text-xs"></i>
-        </div>
+  else if (topicKey === "FIRST_SHOT_FA") {
 
-        <div>
-          <div class="text-xs font-bold text-slate-200">
-            รายละเอียด FIRST SHOT FA
-          </div>
-          <div class="text-[10px] text-slate-500">
-            ข้อมูล FA และเครื่องจักร
-          </div>
-        </div>
-      </div>
+    let toolingReqDisplay = "-";
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+    if (Array.isArray(item.toolingReq)) {
+      toolingReqDisplay = item.toolingReq.join(", ");
+    } else if (item.toolingReq) {
+      toolingReqDisplay = item.toolingReq;
+    }
 
-        <!-- วันเดือนปี -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            วันเดือนปี
-          </div>
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userDate || '-'}
-          </div>
-        </div>
+    if (item.toolingReqOther) {
+      toolingReqDisplay += `, อื่นๆ: ${item.toolingReqOther}`;
+    }
 
-        <!-- เวลาส่ง -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            เวลาส่ง
+    detailHTML += `
+      <div>
+
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+            <i class="fa-solid fa-flask text-emerald-600 text-sm"></i>
           </div>
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userTime || '-'}
+
+          <div>
+            <div class="text-sm font-bold text-slate-800">
+              รายละเอียด FIRST SHOT FA
+            </div>
+            <div class="text-[11px] text-slate-500">
+              ข้อมูล FA และเครื่องจักร
+            </div>
           </div>
         </div>
 
-        <!-- FA NO. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            FA NO.
-          </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.faNo || '-'}
-          </div>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
-        <!-- CUSTOMER -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            CUSTOMER
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              วันเดือนปี
+            </div>
+            <div class="text-sm font-medium text-slate-700">
+              ${item.userDate || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.customer || '-'}
-          </div>
-        </div>
 
-        <!-- PART NO. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            PART NO.
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              เวลาส่ง
+            </div>
+            <div class="text-sm font-medium text-slate-700">
+              ${item.userTime || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.partNo || '-'}
-          </div>
-        </div>
 
-        <!-- REV. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            REV.
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              FA NO.
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.faNo || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.rev || '-'}
-          </div>
-        </div>
 
-        <!-- TOOLING REQUIREMENT -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            TOOLING REQUIREMENT
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              CUSTOMER
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.customer || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${toolingReqDisplay}
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              PART NO.
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.partNo || '-'}
+            </div>
           </div>
-        </div>
 
-        <!-- PACK -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            PACK
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              REV.
+            </div>
+            <div class="text-sm font-semibold text-slate-800">
+              ${item.rev || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.isPack ? 'PACK' : '-'}
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              TOOLING REQUIREMENT
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${toolingReqDisplay}
+            </div>
           </div>
-        </div>
 
-        <!-- เครื่องที่ผลิต -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            เครื่องที่ผลิต
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              PACK
+            </div>
+            <div class="text-sm font-semibold text-slate-800">
+              ${item.isPack ? 'PACK' : '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.machineCategory || '-'}${item.machineNo ? ` (${item.machineNo})` : ''}
+
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              เครื่องที่ผลิต
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.machineCategory || '-'}${item.machineNo ? ` (${item.machineNo})` : ''}
+            </div>
           </div>
-        </div>
 
-        <!-- จำนวนที่ส่ง -->
-<div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-  <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-    จำนวนที่ส่ง
-  </div>
-  <div class="text-sm font-semibold text-slate-100">
-    ${item.mainQty || '-'}
-    <span class="text-slate-500 mx-1">+</span>
-    ${item.extraQty || '-'}
-  </div>
-</div>
-
-        <!-- ผู้ส่งงาน -->
-        <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            ผู้ส่งงาน
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              จำนวนที่ส่ง
+            </div>
+            <div class="text-sm font-semibold text-slate-800">
+              ${item.mainQty || '-'}
+              <span class="text-slate-400 mx-1">+</span>
+              ${item.extraQty || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-cyan-300 break-words">
-            ${item.sender || '-'}
+
+          <div class="md:col-span-2 bg-emerald-50/60 border border-emerald-100 rounded-xl p-3.5">
+            <div class="text-[10px] font-semibold text-emerald-600 mb-1">
+              ผู้ส่งงาน
+            </div>
+            <div class="text-sm font-semibold text-emerald-700 break-words">
+              ${item.sender || '-'}
+            </div>
           </div>
-        </div>
 
-      </div>
-    </div>
-  `;
-}
-
-// ========================================================
-// FA FG
-// ========================================================
-
-else if (topicKey === "FA_FG") {
-
-  detailHTML += `
-    <div>
-
-      <div class="flex items-center gap-2 mb-2.5">
-        <div class="w-7 h-7 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
-          <i class="fa-solid fa-box-open text-rose-400 text-xs"></i>
-        </div>
-
-        <div>
-          <div class="text-xs font-bold text-slate-200">
-            รายละเอียด FA FG
-          </div>
-          <div class="text-[10px] text-slate-500">
-            ข้อมูล FA FG ที่ส่งเข้าตรวจสอบ
-          </div>
         </div>
       </div>
+    `;
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+  }
 
-        <!-- วันเดือนปี -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            วันเดือนปี
+  // ========================================================
+  // FA FG
+  // ========================================================
+
+  else if (topicKey === "FA_FG") {
+
+    detailHTML += `
+      <div>
+
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center">
+            <i class="fa-solid fa-box-open text-rose-600 text-sm"></i>
           </div>
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userDate || '-'}
+
+          <div>
+            <div class="text-sm font-bold text-slate-800">
+              รายละเอียด FA FG
+            </div>
+            <div class="text-[11px] text-slate-500">
+              ข้อมูล FA FG ที่ส่งเข้าตรวจสอบ
+            </div>
           </div>
         </div>
 
-        <!-- เวลาส่ง -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            เวลาส่ง
-          </div>
-          <div class="text-sm font-medium text-slate-200">
-            ${item.userTime || '-'}
-          </div>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
-        <!-- FA NO. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            FA NO.
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              วันเดือนปี
+            </div>
+            <div class="text-sm font-medium text-slate-700">
+              ${item.userDate || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.faNo || '-'}
-          </div>
-        </div>
 
-        <!-- CUSTOMER -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            CUSTOMER
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              เวลาส่ง
+            </div>
+            <div class="text-sm font-medium text-slate-700">
+              ${item.userTime || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.customer || '-'}
-          </div>
-        </div>
 
-        <!-- PART NO. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            PART NO.
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              FA NO.
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.faNo || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.partNo || '-'}
-          </div>
-        </div>
 
-        <!-- REV. -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            REV.
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              CUSTOMER
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.customer || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.rev || '-'}
-          </div>
-        </div>
 
-        <!-- งานที่ส่ง -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            งานที่ส่ง
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              PART NO.
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.partNo || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100 break-words">
-            ${item.mainQty || '-'}
-          </div>
-        </div>
 
-        <!-- จำนวนเพิ่มเติม -->
-        <div class="bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            จำนวนเพิ่มเติม
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              REV.
+            </div>
+            <div class="text-sm font-semibold text-slate-800">
+              ${item.rev || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-slate-100">
-            ${item.extraQty || '-'}
-          </div>
-        </div>
 
-        <!-- ผู้ส่งงาน -->
-        <div class="md:col-span-2 bg-slate-900 border border-slate-700/70 rounded-lg p-3">
-          <div class="text-[10px] font-semibold text-slate-500 mb-0.5">
-            ผู้ส่งงาน
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              งานที่ส่ง
+            </div>
+            <div class="text-sm font-semibold text-slate-800 break-words">
+              ${item.mainQty || '-'}
+            </div>
           </div>
-          <div class="text-sm font-semibold text-cyan-300 break-words">
-            ${item.sender || '-'}
-          </div>
-        </div>
 
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+            <div class="text-[10px] font-semibold text-slate-400 mb-1">
+              จำนวนเพิ่มเติม
+            </div>
+            <div class="text-sm font-semibold text-slate-800">
+              ${item.extraQty || '-'}
+            </div>
+          </div>
+
+          <div class="md:col-span-2 bg-rose-50/60 border border-rose-100 rounded-xl p-3.5">
+            <div class="text-[10px] font-semibold text-rose-600 mb-1">
+              ผู้ส่งงาน
+            </div>
+            <div class="text-sm font-semibold text-rose-700 break-words">
+              ${item.sender || '-'}
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
-  `;
-}
+    `;
+  }
 
-detailHTML += `</div>`;
-  
-  // แสดงข้อมูลทั้งหมดในส่วน Summary
+  detailHTML += `</div>`;
+
+  // ========================================================
+  // SUMMARY
+  // ========================================================
+
   document.getElementById('inspJobSummary').innerHTML = `
-    <div class="bg-slate-950 border border-slate-800 rounded-lg p-4">
-      <div class="text-cyan-400 font-bold text-xs mb-2">
-        <i class="fa-solid fa-clipboard-list mr-1"></i>
-        ข้อมูลที่ User ส่งมา
+    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+
+      <div class="flex items-center gap-2 mb-4 pb-3 border-b border-slate-200">
+        <div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center">
+          <i class="fa-solid fa-clipboard-list text-sky-600 text-xs"></i>
+        </div>
+
+        <div>
+          <div class="text-sm font-bold text-slate-800">
+            ข้อมูลที่ User ส่งมา
+          </div>
+          <div class="text-[10px] text-slate-400">
+            รายละเอียดงานสำหรับการตรวจสอบ
+          </div>
+        </div>
       </div>
+
       ${detailHTML}
+
     </div>
   `;
 
@@ -5037,7 +5009,7 @@ detailHTML += `</div>`;
 
   openModal('inspectionModal');
 }
-
+    
     async function handleInspectionSubmit(e) {
       e.preventDefault();
       const recordId = document.getElementById('inspRecordId').value;
