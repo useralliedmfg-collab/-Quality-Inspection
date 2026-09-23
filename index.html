@@ -2929,12 +2929,12 @@ const dateTo =
       }
 
 } else if (result === 'PENDING') {
-  const itemResult =
-    String(item.result || '').trim().toUpperCase();
+  const inspected =
+    item.inspectionDate ||
+    item.inspector ||
+    item.result;
 
-  if (itemResult === 'OK' || itemResult === 'PASS' || itemResult === 'NG') {
-    return false;
-  }
+  if (inspected) return false;
 }
     }
 
