@@ -1400,6 +1400,43 @@ button:disabled {
 body, button, input, select, textarea, table {
     letter-spacing: .01em;
 }
+
+    #adminOverviewPanel .bg-green-100 {
+  background-color: #dcfce7 !important;
+}
+
+#adminOverviewPanel .text-green-700 {
+  color: #15803d !important;
+}
+
+#adminOverviewPanel .border-green-300 {
+  border-color: #86efac !important;
+}
+
+#adminOverviewPanel .bg-red-100 {
+  background-color: #fee2e2 !important;
+}
+
+#adminOverviewPanel .text-red-700 {
+  color: #b91c1c !important;
+}
+
+#adminOverviewPanel .border-red-300 {
+  border-color: #fca5a5 !important;
+}
+
+#adminOverviewPanel .bg-amber-100 {
+  background-color: #fef3c7 !important;
+}
+
+#adminOverviewPanel .text-amber-700 {
+  color: #b45309 !important;
+}
+
+#adminOverviewPanel .border-amber-300 {
+  border-color: #fcd34d !important;
+}
+    
 </style>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans h-full overflow-hidden flex flex-col">
@@ -2435,6 +2472,7 @@ async function apiCall(action, payload = {}) {
 
       const response = await fetch(API_URL, {
         method: "POST",
+        redirect: 'follow',
         headers: {
           "Content-Type": "text/plain;charset=utf-8"
         },
@@ -3123,64 +3161,62 @@ if (itemResult === 'OK' || itemResult === 'PASS') {
         }
         
         return `
+  <tr class="group border-b border-slate-100 bg-white hover:bg-cyan-50/60 transition-all duration-200">
 
-          <tr class="border-b border-slate-100 hover:bg-cyan-50/50 transition-all duration-200">
+    <!-- JOB NO. -->
+    <td class="px-4 py-4 text-center align-middle">
+      <span class="inline-flex items-center justify-center px-2.5 py-1 rounded-lg bg-cyan-50 border border-cyan-200 text-cyan-700 font-mono font-black text-[10px] whitespace-nowrap shadow-sm">
+        ${item.jobNo || '-'}
+      </span>
+    </td>
 
-  <!-- JOB -->
-  <td class="px-4 py-3 text-center align-middle">
-    <span class="font-mono font-bold text-cyan-600 whitespace-nowrap">
-      ${item.jobNo || '-'}
-    </span>
-  </td>
+    <!-- PART NO. -->
+    <td class="px-4 py-4 text-center align-middle">
+      <span class="font-medium text-slate-700 text-[10px] whitespace-nowrap">
+        ${item.partNo || '-'}
+      </span>
+    </td>
 
-  <!-- PART -->
-  <td class="px-4 py-3 text-center align-middle">
-    <span class="text-slate-700 whitespace-nowrap">
-      ${item.partNo || '-'}
-    </span>
-  </td>
+    <!-- CUSTOMER -->
+    <td class="px-4 py-4 text-center align-middle">
+      <span class="inline-flex items-center justify-center px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-semibold whitespace-nowrap">
+        ${item.customer || '-'}
+      </span>
+    </td>
 
-  <!-- CUSTOMER -->
-  <td class="px-4 py-3 text-center align-middle">
-    <span class="text-slate-500 whitespace-nowrap">
-      ${item.customer || '-'}
-    </span>
-  </td>
+    <!-- TOPIC -->
+    <td class="px-4 py-4 text-center align-middle">
+      <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-[9px] font-bold whitespace-nowrap shadow-sm">
+        ${topicNames[item.topic] || item.topic || '-'}
+      </span>
+    </td>
 
-  <!-- TOPIC -->
-  <td class="px-4 py-3 text-center align-middle">
-    <span class="text-[9px] font-semibold text-slate-500 whitespace-nowrap">
-      ${topicNames[item.topic] || item.topic || '-'}
-    </span>
-  </td>
+    <!-- DATE -->
+    <td class="px-4 py-4 text-center align-middle">
+      <span class="font-mono text-[10px] font-semibold text-slate-500 whitespace-nowrap">
+        ${displayDate}
+      </span>
+    </td>
 
-  <!-- DATE -->
-  <td class="px-4 py-3 text-center align-middle">
-    <span class="font-mono text-[10px] text-slate-500 whitespace-nowrap">
-      ${displayDate}
-    </span>
-  </td>
+    <!-- RESULT -->
+    <td class="px-4 py-4 text-center align-middle">
+      ${resultHTML}
+    </td>
 
-  <!-- RESULT -->
-  <td class="px-4 py-3 text-center align-middle">
-    ${resultHTML}
-  </td>
+    <!-- ACTION -->
+    <td class="px-4 py-4 text-center align-middle">
+      <button
+        type="button"
+        onclick="openInspectionModal('${item.topic}', '${item.recordId}')"
+        class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white text-[9px] font-bold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+      >
+        <i class="fa-solid fa-eye"></i>
+        VIEW
+      </button>
+    </td>
 
-  <!-- ACTION -->
-  <td class="px-4 py-3 text-center align-middle">
-    <button
-      type="button"
-      onclick="openInspectionModal('${item.topic}', '${item.recordId}')"
-      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-200 hover:bg-cyan-500/20 hover:border-cyan-300 text-cyan-600 text-[9px] font-semibold transition"
-    >
-      <i class="fa-solid fa-eye"></i>
-      VIEW
-    </button>
-  </td>
-
-</tr>
-        `;
-
+  </tr>
+`;
       }).join('');
 
     }
