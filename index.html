@@ -4671,9 +4671,13 @@ const btn = document.getElementById('btnSubmitForm');
       records[res.record.topicKey] = [];
     }
 
-    records[res.record.topicKey].unshift(res.record);
+    records[res.record.topicKey].unshift({
+  ...res.record,
+  mainQty: data.mainQty,
+  extraQty: data.extraQty
+});
 
-    applyFilters();
+applyFilters();
   }
 
 } else {
