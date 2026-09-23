@@ -2010,8 +2010,39 @@ body, button, input, select, textarea, table {
 
           </div>
 
-        </div>
+        <!-- RESULT OVERVIEW -->
 
+<div class="mt-6 pt-5 border-t border-cyan-100">
+
+  <div class="flex items-center gap-2 mb-1">
+
+    <div class="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center">
+      <i class="fa-solid fa-chart-pie text-emerald-500 text-xs"></i>
+    </div>
+
+    <h2 class="text-sm font-bold text-slate-700">
+      Result Overview
+    </h2>
+
+  </div>
+
+  <p class="text-[10px] text-slate-500 ml-9">
+    สัดส่วนผลการตรวจสอบ
+  </p>
+
+  <div
+    id="overviewResult"
+    class="space-y-4 mt-5"
+  >
+
+    <div class="text-center py-6 text-xs text-slate-500">
+      No data
+    </div>
+
+  </div>
+
+</div>
+</div>
 
         <!-- PRODUCTION QUANTITY -->
 
@@ -3241,7 +3272,12 @@ function getQty(value) {
 }
 
 const firstShotQty = filtered
-  .filter(item => item.topic === 'FIRST_SHOT_FA')
+  .filter(item =>
+    item.topic === 'FIRST_SHOT_FA' &&
+    ['OK', 'PASS'].includes(
+      String(item.result || '').trim().toUpperCase()
+    )
+  )
   .reduce((sum, item) => {
     return sum
       + getQty(item.mainQty)
@@ -3249,7 +3285,12 @@ const firstShotQty = filtered
   }, 0);
 
 const faFgQty = filtered
-  .filter(item => item.topic === 'FA_FG')
+  .filter(item =>
+    item.topic === 'FA_FG' &&
+    ['OK', 'PASS'].includes(
+      String(item.result || '').trim().toUpperCase()
+    )
+  )
   .reduce((sum, item) => {
     return sum
       + getQty(item.mainQty)
