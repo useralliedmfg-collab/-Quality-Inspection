@@ -2101,15 +2101,22 @@ body, button, input, select, textarea, table {
           </div>
 
           <div
-            id="overviewQtyFirstShot"
-            class="text-2xl font-black text-cyan-600 mt-0.5"
-          >
-            0
-          </div>
+  id="overviewQtyFirstShotDetail"
+  class="text-xs font-bold text-slate-500 mt-1"
+>
+  0 + 0
+</div>
 
-          <div class="text-[10px] text-slate-400">
-            ชิ้น
-          </div>
+<div
+  id="overviewQtyFirstShot"
+  class="text-2xl font-black text-cyan-600 mt-0.5"
+>
+  0
+</div>
+
+<div class="text-[10px] text-slate-400">
+  ชิ้น
+</div>
 
         </div>
 
@@ -2137,15 +2144,22 @@ body, button, input, select, textarea, table {
           </div>
 
           <div
-            id="overviewQtyFaFg"
-            class="text-2xl font-black text-violet-600 mt-0.5"
-          >
-            0
-          </div>
+  id="overviewQtyFaFgDetail"
+  class="text-xs font-bold text-slate-500 mt-1"
+>
+  0 + 0
+</div>
 
-          <div class="text-[10px] text-slate-400">
-            ชิ้น
-          </div>
+<div
+  id="overviewQtyFaFg"
+  class="text-2xl font-black text-violet-600 mt-0.5"
+>
+  0
+</div>
+
+<div class="text-[10px] text-slate-400">
+  ชิ้น
+</div>
 
         </div>
 
@@ -3254,15 +3268,21 @@ function applyOverviewFilters() {
 
   }
 
-  // ==================================================
+// ==================================================
 // PRODUCTION QUANTITY
 // ==================================================
 
 const qtyFirstShot =
   document.getElementById('overviewQtyFirstShot');
 
+const qtyFirstShotDetail =
+  document.getElementById('overviewQtyFirstShotDetail');
+
 const qtyFaFg =
   document.getElementById('overviewQtyFaFg');
+
+const qtyFaFgDetail =
+  document.getElementById('overviewQtyFaFgDetail');
 
 const qtyProductionTotal =
   document.getElementById('overviewQtyProductionTotal');
@@ -3277,6 +3297,11 @@ function getQty(value) {
   return Number.isFinite(num) ? num : 0;
 }
 
+// ==================================================
+// MAIN QTY ONLY
+// Production Quantity = ยอดจำนวนหลักที่ User กรอก
+// ==================================================
+
 const firstShotQty = filtered
   .filter(item =>
     item.topic === 'FIRST_SHOT_FA' &&
@@ -3285,9 +3310,7 @@ const firstShotQty = filtered
     )
   )
   .reduce((sum, item) => {
-    return sum
-      + getQty(item.mainQty)
-      + getQty(item.extraQty);
+    return sum + getQty(item.mainQty);
   }, 0);
 
 const faFgQty = filtered
@@ -3298,13 +3321,16 @@ const faFgQty = filtered
     )
   )
   .reduce((sum, item) => {
-    return sum
-      + getQty(item.mainQty)
-      + getQty(item.extraQty);
+    return sum + getQty(item.mainQty);
   }, 0);
 
 const productionTotal =
   firstShotQty + faFgQty;
+
+
+// ==================================================
+// แสดง MAIN QTY
+// ==================================================
 
 if (qtyFirstShot) {
   qtyFirstShot.textContent =
