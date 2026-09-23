@@ -1469,228 +1469,639 @@ body, button, input, select, textarea, table {
   <!-- ADMIN ALL DASHBOARD -->
 <section
   id="adminOverviewPanel"
-  class="hidden absolute inset-0 z-20 overflow-y-auto bg-white"
+  class="hidden absolute inset-0 z-20 overflow-y-auto bg-slate-950 text-white"
 >
-  <div class="min-h-full p-6">
+  <div class="min-h-full p-4 md:p-6">
 
-    <!-- HEADER -->
-    <div class="max-w-[1600px] mx-auto">
+    <div class="max-w-[1700px] mx-auto space-y-4">
 
-      <div class="flex items-center justify-between mb-7">
+      <!-- ================================================== -->
+      <!-- HEADER -->
+      <!-- ================================================== -->
+      <div class="relative overflow-hidden rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950/40 p-5 shadow-2xl">
 
-        <div>
-          <div class="flex items-center gap-2 mb-1">
-            <span class="w-1.5 h-5 bg-cyan-500 rounded-full"></span>
-            <span class="text-xs font-semibold tracking-[0.2em] text-cyan-600 uppercase">
-              AMS Quality Control
-            </span>
-          </div>
+        <div class="absolute -right-20 -top-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -left-20 -bottom-20 w-56 h-56 bg-blue-500/10 rounded-full blur-3xl"></div>
 
-          <h1 class="text-2xl font-bold tracking-tight text-slate-900">
-            Quality Control Overview
-          </h1>
+        <div class="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
 
-          <p class="text-sm text-slate-500 mt-1">
-            ภาพรวมงานตรวจสอบคุณภาพทั้งหมด
-          </p>
-        </div>
+          <div>
+            <div class="flex items-center gap-2 mb-2">
 
-        <div class="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span class="text-xs font-semibold text-slate-500">
-            SYSTEM ONLINE
-          </span>
-        </div>
+              <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center">
+                <i class="fa-solid fa-shield-halved text-cyan-400 text-sm"></i>
+              </div>
 
-      </div>
+              <span class="text-[10px] font-bold tracking-[0.25em] text-cyan-400 uppercase">
+                AMS QUALITY CONTROL
+              </span>
 
-
-      <!-- KPI -->
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-
-        <div class="bg-white border border-slate-200 rounded-xl p-5">
-          <div class="text-xs font-semibold text-slate-400">
-            TOTAL JOBS
-          </div>
-          <div id="overviewTotal"
-               class="text-3xl font-bold text-slate-900 mt-2">
-            0
-          </div>
-        </div>
-
-        <div class="bg-white border border-slate-200 rounded-xl p-5">
-          <div class="text-xs font-semibold text-slate-400">
-            INSPECTED
-          </div>
-          <div id="overviewInspected"
-               class="text-3xl font-bold text-slate-900 mt-2">
-            0
-          </div>
-        </div>
-
-        <div class="bg-white border border-slate-200 rounded-xl p-5">
-          <div class="text-xs font-semibold text-slate-400">
-            PASS
-          </div>
-          <div id="overviewPass"
-               class="text-3xl font-bold text-slate-900 mt-2">
-            0
-          </div>
-        </div>
-
-        <div class="bg-white border border-slate-200 rounded-xl p-5">
-          <div class="text-xs font-semibold text-slate-400">
-            NG
-          </div>
-          <div id="overviewNg"
-               class="text-3xl font-bold text-slate-900 mt-2">
-            0
-          </div>
-        </div>
-
-        <div class="bg-white border border-slate-200 rounded-xl p-5">
-          <div class="text-xs font-semibold text-slate-400">
-            PENDING
-          </div>
-          <div id="overviewPending"
-               class="text-3xl font-bold text-slate-900 mt-2">
-            0
-          </div>
-        </div>
-
-      </div>
-
-
-      <!-- MAIN OVERVIEW -->
-      <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
-
-        <!-- INSPECTION ACTIVITY -->
-        <div class="xl:col-span-2 bg-white border border-slate-200 rounded-xl p-5">
-
-          <div class="flex items-center justify-between mb-5">
-            <div>
-              <h2 class="text-sm font-bold text-slate-900">
-                Inspection Activity
-              </h2>
-              <p class="text-xs text-slate-400 mt-1">
-                ภาพรวมการตรวจสอบล่าสุด
-              </p>
             </div>
-          </div>
 
-          <div id="overviewActivity">
-            <div class="text-center py-10 text-sm text-slate-400">
-              No data
-            </div>
-          </div>
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-white">
+              Quality Control Overview
+            </h1>
 
-        </div>
-
-
-        <!-- RESULT -->
-        <div class="bg-white border border-slate-200 rounded-xl p-5">
-
-          <div class="mb-5">
-            <h2 class="text-sm font-bold text-slate-900">
-              Result Overview
-            </h2>
-            <p class="text-xs text-slate-400 mt-1">
-              สรุปผลการตรวจสอบ
+            <p class="text-xs md:text-sm text-slate-400 mt-1">
+              ภาพรวมระบบตรวจสอบคุณภาพทั้งหมด
             </p>
           </div>
 
-          <div id="overviewResult" class="space-y-4">
-            <div class="text-center py-10 text-sm text-slate-400">
-              No data
+
+          <!-- SYSTEM STATUS -->
+
+          <div class="flex items-center gap-3 self-start lg:self-center">
+
+            <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-50"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+              </span>
+
+              <div>
+                <div class="text-[9px] font-bold tracking-wider text-emerald-400">
+                  SYSTEM STATUS
+                </div>
+                <div class="text-[11px] font-semibold text-emerald-300">
+                  ONLINE
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ================================================== -->
+      <!-- FILTER BAR -->
+      <!-- ================================================== -->
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/90 p-3 shadow-xl">
+
+        <div class="flex items-center gap-2 mb-3">
+
+          <div class="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+            <i class="fa-solid fa-sliders text-cyan-400 text-xs"></i>
+          </div>
+
+          <div>
+            <div class="text-xs font-bold text-white">
+              Dashboard Filters
+            </div>
+
+            <div class="text-[10px] text-slate-500">
+              ตัวกรองข้อมูลสำหรับ Dashboard นี้เท่านั้น
             </div>
           </div>
 
         </div>
 
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2">
+
+          <!-- TOPIC -->
+
+          <div>
+            <label class="block text-[9px] font-bold tracking-wider text-slate-500 mb-1">
+              TOPIC
+            </label>
+
+            <select
+              id="overviewFilterTopic"
+              onchange="applyOverviewFilters()"
+              class="w-full bg-slate-950 border border-slate-700 hover:border-cyan-500/50 rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+            >
+              <option value="ALL">ALL TOPICS</option>
+              <option value="DIECUT">DIECUT INSPECTION</option>
+              <option value="JIG_FA">JIG FA</option>
+              <option value="FIRST_SHOT_FA">FIRST SHOT FA</option>
+              <option value="FA_FG">FA FG</option>
+            </select>
+          </div>
+
+
+          <!-- CUSTOMER -->
+
+          <div>
+            <label class="block text-[9px] font-bold tracking-wider text-slate-500 mb-1">
+              CUSTOMER
+            </label>
+
+            <select
+              id="overviewFilterCustomer"
+              onchange="applyOverviewFilters()"
+              class="w-full bg-slate-950 border border-slate-700 hover:border-cyan-500/50 rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+            >
+              <option value="ALL">ALL CUSTOMERS</option>
+            </select>
+          </div>
+
+
+          <!-- RESULT -->
+
+          <div>
+            <label class="block text-[9px] font-bold tracking-wider text-slate-500 mb-1">
+              RESULT
+            </label>
+
+            <select
+              id="overviewFilterResult"
+              onchange="applyOverviewFilters()"
+              class="w-full bg-slate-950 border border-slate-700 hover:border-cyan-500/50 rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+            >
+              <option value="ALL">ALL RESULTS</option>
+              <option value="OK">PASS / OK</option>
+              <option value="NG">NG</option>
+              <option value="PENDING">PENDING</option>
+            </select>
+          </div>
+
+
+          <!-- DATE FROM -->
+
+          <div>
+            <label class="block text-[9px] font-bold tracking-wider text-slate-500 mb-1">
+              DATE FROM
+            </label>
+
+            <input
+              type="date"
+              id="overviewFilterDateFrom"
+              onchange="applyOverviewFilters()"
+              class="w-full bg-slate-950 border border-slate-700 hover:border-cyan-500/50 rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+            >
+          </div>
+
+
+          <!-- DATE TO -->
+
+          <div>
+            <label class="block text-[9px] font-bold tracking-wider text-slate-500 mb-1">
+              DATE TO
+            </label>
+
+            <input
+              type="date"
+              id="overviewFilterDateTo"
+              onchange="applyOverviewFilters()"
+              class="w-full bg-slate-950 border border-slate-700 hover:border-cyan-500/50 rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+            >
+          </div>
+
+
+          <!-- SEARCH -->
+
+          <div>
+            <label class="block text-[9px] font-bold tracking-wider text-slate-500 mb-1">
+              SEARCH
+            </label>
+
+            <div class="relative">
+
+              <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-[10px] text-slate-500"></i>
+
+              <input
+                type="text"
+                id="overviewFilterSearch"
+                oninput="applyOverviewFilters()"
+                placeholder="JOB NO. / PART NO."
+                class="w-full bg-slate-950 border border-slate-700 hover:border-cyan-500/50 rounded-lg pl-7 pr-2.5 py-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- RESET -->
+
+        <div class="flex justify-end mt-2">
+
+          <button
+            type="button"
+            onclick="resetOverviewFilters()"
+            class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-950 hover:bg-slate-800 hover:border-cyan-500/40 text-[10px] font-semibold text-slate-400 hover:text-cyan-300 transition"
+          >
+            <i class="fa-solid fa-rotate-left mr-1"></i>
+            RESET FILTERS
+          </button>
+
+        </div>
+
       </div>
 
 
-      <!-- WORKLOAD -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 mt-5">
+      <!-- ================================================== -->
+      <!-- KPI -->
+      <!-- ================================================== -->
 
-        <div class="mb-5">
-          <h2 class="text-sm font-bold text-slate-900">
-            Workload by Topic
-          </h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
 
-          <p class="text-xs text-slate-400 mt-1">
-            จำนวนงานแยกตามหัวข้อ
-          </p>
+
+        <!-- TOTAL -->
+
+        <div class="relative overflow-hidden rounded-2xl border border-slate-700 bg-gradient-to-br from-slate-900 to-slate-950 p-4 shadow-lg">
+
+          <div class="absolute right-3 top-3 opacity-10">
+            <i class="fa-solid fa-layer-group text-5xl text-white"></i>
+          </div>
+
+          <div class="flex items-center gap-2">
+
+            <div class="w-8 h-8 rounded-lg bg-slate-700/50 flex items-center justify-center">
+              <i class="fa-solid fa-layer-group text-slate-300 text-xs"></i>
+            </div>
+
+            <span class="text-[10px] font-bold tracking-wider text-slate-400">
+              TOTAL JOBS
+            </span>
+
+          </div>
+
+          <div
+            id="overviewTotal"
+            class="text-3xl font-black text-white mt-4"
+          >
+            0
+          </div>
+
+          <div class="text-[9px] text-slate-500 mt-1">
+            งานทั้งหมด
+          </div>
+
         </div>
+
+
+        <!-- INSPECTED -->
+
+        <div class="relative overflow-hidden rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-950/50 to-slate-950 p-4 shadow-lg">
+
+          <div class="absolute right-3 top-3 opacity-10">
+            <i class="fa-solid fa-clipboard-check text-5xl text-cyan-400"></i>
+          </div>
+
+          <div class="flex items-center gap-2">
+
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+              <i class="fa-solid fa-clipboard-check text-cyan-400 text-xs"></i>
+            </div>
+
+            <span class="text-[10px] font-bold tracking-wider text-cyan-400">
+              INSPECTED
+            </span>
+
+          </div>
+
+          <div
+            id="overviewInspected"
+            class="text-3xl font-black text-cyan-300 mt-4"
+          >
+            0
+          </div>
+
+          <div class="text-[9px] text-slate-500 mt-1">
+            ตรวจสอบแล้ว
+          </div>
+
+        </div>
+
+
+        <!-- PASS -->
+
+        <div class="relative overflow-hidden rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/50 to-slate-950 p-4 shadow-lg">
+
+          <div class="absolute right-3 top-3 opacity-10">
+            <i class="fa-solid fa-circle-check text-5xl text-emerald-400"></i>
+          </div>
+
+          <div class="flex items-center gap-2">
+
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+              <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
+            </div>
+
+            <span class="text-[10px] font-bold tracking-wider text-emerald-400">
+              PASS / OK
+            </span>
+
+          </div>
+
+          <div
+            id="overviewPass"
+            class="text-3xl font-black text-emerald-300 mt-4"
+          >
+            0
+          </div>
+
+          <div class="text-[9px] text-slate-500 mt-1">
+            ผ่านการตรวจ
+          </div>
+
+        </div>
+
+
+        <!-- NG -->
+
+        <div class="relative overflow-hidden rounded-2xl border border-rose-500/20 bg-gradient-to-br from-rose-950/50 to-slate-950 p-4 shadow-lg">
+
+          <div class="absolute right-3 top-3 opacity-10">
+            <i class="fa-solid fa-circle-xmark text-5xl text-rose-400"></i>
+          </div>
+
+          <div class="flex items-center gap-2">
+
+            <div class="w-8 h-8 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center">
+              <i class="fa-solid fa-circle-xmark text-rose-400 text-xs"></i>
+            </div>
+
+            <span class="text-[10px] font-bold tracking-wider text-rose-400">
+              NG
+            </span>
+
+          </div>
+
+          <div
+            id="overviewNg"
+            class="text-3xl font-black text-rose-300 mt-4"
+          >
+            0
+          </div>
+
+          <div class="text-[9px] text-slate-500 mt-1">
+            ไม่ผ่านการตรวจ
+          </div>
+
+        </div>
+
+
+        <!-- PENDING -->
+
+        <div class="relative overflow-hidden rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-950/50 to-slate-950 p-4 shadow-lg">
+
+          <div class="absolute right-3 top-3 opacity-10">
+            <i class="fa-solid fa-hourglass-half text-5xl text-amber-400"></i>
+          </div>
+
+          <div class="flex items-center gap-2">
+
+            <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+              <i class="fa-solid fa-hourglass-half text-amber-400 text-xs"></i>
+            </div>
+
+            <span class="text-[10px] font-bold tracking-wider text-amber-400">
+              PENDING
+            </span>
+
+          </div>
+
+          <div
+            id="overviewPending"
+            class="text-3xl font-black text-amber-300 mt-4"
+          >
+            0
+          </div>
+
+          <div class="text-[9px] text-slate-500 mt-1">
+            รอตรวจสอบ
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================================================== -->
+      <!-- ACTIVITY + RESULT -->
+      <!-- ================================================== -->
+
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+
+
+        <!-- INSPECTION ACTIVITY -->
+
+        <div class="xl:col-span-2 rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-xl">
+
+          <div class="flex items-center justify-between mb-5">
+
+            <div>
+
+              <div class="flex items-center gap-2">
+
+                <div class="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                  <i class="fa-solid fa-chart-line text-blue-400 text-xs"></i>
+                </div>
+
+                <h2 class="text-sm font-bold text-white">
+                  Inspection Activity
+                </h2>
+
+              </div>
+
+              <p class="text-[10px] text-slate-500 mt-1 ml-9">
+                จำนวนงานตรวจสอบแยกตามวันที่
+              </p>
+
+            </div>
+
+            <span class="text-[9px] px-2 py-1 rounded-md bg-slate-950 border border-slate-800 text-slate-500">
+              LAST 7 DAYS
+            </span>
+
+          </div>
+
+          <div
+            id="overviewActivity"
+            class="space-y-3"
+          >
+
+            <div class="text-center py-10 text-xs text-slate-500">
+              No data
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- RESULT OVERVIEW -->
+
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-xl">
+
+          <div class="flex items-center gap-2 mb-1">
+
+            <div class="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+              <i class="fa-solid fa-chart-pie text-emerald-400 text-xs"></i>
+            </div>
+
+            <h2 class="text-sm font-bold text-white">
+              Result Overview
+            </h2>
+
+          </div>
+
+          <p class="text-[10px] text-slate-500 ml-9">
+            สัดส่วนผลการตรวจสอบ
+          </p>
+
+
+          <div
+            id="overviewResult"
+            class="space-y-4 mt-6"
+          >
+
+            <div class="text-center py-10 text-xs text-slate-500">
+              No data
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================================================== -->
+      <!-- WORKLOAD -->
+      <!-- ================================================== -->
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-xl">
+
+        <div class="flex items-center justify-between mb-5">
+
+          <div>
+
+            <div class="flex items-center gap-2">
+
+              <div class="w-7 h-7 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                <i class="fa-solid fa-diagram-project text-purple-400 text-xs"></i>
+              </div>
+
+              <h2 class="text-sm font-bold text-white">
+                Workload by Topic
+              </h2>
+
+            </div>
+
+            <p class="text-[10px] text-slate-500 mt-1 ml-9">
+              จำนวนงานแยกตามกระบวนการตรวจสอบ
+            </p>
+
+          </div>
+
+          <span class="text-[9px] text-slate-600">
+            CLICK CARD TO FILTER
+          </span>
+
+        </div>
+
 
         <div
           id="overviewWorkload"
-          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4"
+          class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3"
         >
-          <div class="text-sm text-slate-400 text-center py-8 col-span-full">
+
+          <div class="text-xs text-slate-500 text-center py-8 col-span-full">
             No data
           </div>
+
         </div>
 
       </div>
 
 
+      <!-- ================================================== -->
       <!-- RECENT INSPECTIONS -->
-      <div class="bg-white border border-slate-200 rounded-xl overflow-hidden mt-5">
+      <!-- ================================================== -->
 
-        <div class="p-5 border-b border-slate-200">
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 shadow-xl overflow-hidden">
 
-          <h2 class="text-sm font-bold text-slate-900">
-            Recent Inspections
-          </h2>
+        <div class="p-5 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
 
-          <p class="text-xs text-slate-400 mt-1">
-            รายการตรวจสอบล่าสุด
-          </p>
+          <div>
+
+            <div class="flex items-center gap-2">
+
+              <div class="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                <i class="fa-solid fa-list-check text-cyan-400 text-xs"></i>
+              </div>
+
+              <h2 class="text-sm font-bold text-white">
+                Recent Inspections
+              </h2>
+
+            </div>
+
+            <p class="text-[10px] text-slate-500 mt-1 ml-9">
+              รายการงานตรวจสอบล่าสุด
+            </p>
+
+          </div>
+
+          <div class="text-[10px] text-slate-600">
+            QUALITY CONTROL LOG
+          </div>
 
         </div>
 
+
         <div class="overflow-x-auto">
 
-          <table class="w-full">
+          <table class="w-full min-w-[900px]">
 
-            <thead class="bg-slate-50 border-b border-slate-200">
+            <thead class="bg-slate-950 border-b border-slate-800">
 
               <tr>
 
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500">
+                <th class="px-4 py-3 text-left text-[9px] font-bold tracking-wider text-slate-500">
                   JOB NO.
                 </th>
 
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500">
+                <th class="px-4 py-3 text-left text-[9px] font-bold tracking-wider text-slate-500">
                   PART NO.
                 </th>
 
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500">
+                <th class="px-4 py-3 text-left text-[9px] font-bold tracking-wider text-slate-500">
                   CUSTOMER
                 </th>
 
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500">
+                <th class="px-4 py-3 text-left text-[9px] font-bold tracking-wider text-slate-500">
                   TOPIC
                 </th>
 
-                <th class="px-4 py-3 text-center text-xs font-semibold text-slate-500">
+                <th class="px-4 py-3 text-center text-[9px] font-bold tracking-wider text-slate-500">
+                  DATE
+                </th>
+
+                <th class="px-4 py-3 text-center text-[9px] font-bold tracking-wider text-slate-500">
                   RESULT
+                </th>
+
+                <th class="px-4 py-3 text-center text-[9px] font-bold tracking-wider text-slate-500">
+                  ACTION
                 </th>
 
               </tr>
 
             </thead>
 
-            <tbody id="overviewRecentBody">
+
+            <tbody id="overviewRecentBody" class="divide-y divide-slate-800">
 
               <tr>
+
                 <td
-                  colspan="5"
-                  class="px-4 py-10 text-center text-sm text-slate-400"
+                  colspan="7"
+                  class="px-4 py-10 text-center text-xs text-slate-500"
                 >
                   No data
                 </td>
+
               </tr>
 
             </tbody>
@@ -1700,6 +2111,7 @@ body, button, input, select, textarea, table {
         </div>
 
       </div>
+
 
     </div>
 
@@ -2150,11 +2562,11 @@ async function apiCall(action, payload = {}) {
 // ADMIN ALL DASHBOARD
 // ======================================================
 function showAdminOverview() {
+
   const panel = document.getElementById('adminOverviewPanel');
 
   if (!panel) return;
 
-  // แสดงเฉพาะ Dashboard ALL
   panel.classList.remove('hidden');
 
   // รวมข้อมูลทั้ง 4 หัวข้อ
@@ -2165,132 +2577,493 @@ function showAdminOverview() {
     ...(records.FA_FG || []).map(r => ({ ...r, topic: 'FA_FG' }))
   ];
 
-  // =========================
-  // KPI
-  // =========================
-  const total = allRecords.length;
+  // เก็บข้อมูลต้นฉบับไว้สำหรับ Filter ของ ALL
+  window.adminOverviewRecords = allRecords;
 
-  const inspected = allRecords.filter(r =>
-    r.inspectionDate ||
-    r.inspector ||
-    r.result
+  // ==================================================
+  // CUSTOMER FILTER
+  // ==================================================
+
+  const customerSelect = document.getElementById('overviewFilterCustomer');
+
+  if (customerSelect) {
+
+    const currentCustomer = customerSelect.value || 'ALL';
+
+    const customers = [...new Set(
+      allRecords
+        .map(r => String(r.customer || '').trim())
+        .filter(Boolean)
+    )].sort();
+
+    customerSelect.innerHTML = `
+      <option value="ALL">ALL CUSTOMERS</option>
+      ${customers.map(customer => `
+        <option value="${customer.replace(/"/g, '&quot;')}">
+          ${customer}
+        </option>
+      `).join('')}
+    `;
+
+    if (customers.includes(currentCustomer)) {
+      customerSelect.value = currentCustomer;
+    } else {
+      customerSelect.value = 'ALL';
+    }
+
+  }
+
+  // ==================================================
+  // RENDER FILTERED DATA
+  // ==================================================
+
+  applyOverviewFilters();
+}
+
+    // ======================================================
+// ADMIN ALL DASHBOARD FILTER
+// ======================================================
+function applyOverviewFilters() {
+
+  const allRecords = window.adminOverviewRecords || [];
+
+  const topic =
+    document.getElementById('overviewFilterTopic')?.value || 'ALL';
+
+  const customer =
+    document.getElementById('overviewFilterCustomer')?.value || 'ALL';
+
+  const result =
+    document.getElementById('overviewFilterResult')?.value || 'ALL';
+
+  const dateFrom =
+    document.getElementById('overviewFilterDateFrom')?.value || '';
+
+  const dateTo =
+    document.getElementById('overviewFilterDateTo')?.value || '';
+
+  const search =
+    (document.getElementById('overviewFilterSearch')?.value || '')
+      .trim()
+      .toLowerCase();
+
+
+  // ==================================================
+  // FILTER
+  // ==================================================
+
+  const filtered = allRecords.filter(item => {
+
+    // TOPIC
+    if (topic !== 'ALL' && item.topic !== topic) {
+      return false;
+    }
+
+
+    // CUSTOMER
+    if (
+      customer !== 'ALL' &&
+      String(item.customer || '').trim() !== customer
+    ) {
+      return false;
+    }
+
+
+    // RESULT
+    const itemResult =
+      String(item.result || '').trim().toUpperCase();
+
+    if (result === 'OK') {
+
+      if (itemResult !== 'OK' && itemResult !== 'PASS') {
+        return false;
+      }
+
+    } else if (result === 'NG') {
+
+      if (itemResult !== 'NG') {
+        return false;
+      }
+
+    } else if (result === 'PENDING') {
+
+      const inspected =
+        item.inspectionDate ||
+        item.inspector ||
+        item.result;
+
+      if (inspected) {
+        return false;
+      }
+
+    }
+
+
+    // DATE
+    const rawDate =
+      item.inspectionDate ||
+      item.userDate ||
+      '';
+
+    let itemDate = String(rawDate).trim();
+
+    if (itemDate.includes('T')) {
+      itemDate = itemDate.split('T')[0];
+    }
+
+    // รองรับ DD-MM-YYYY
+    if (/^\d{2}-\d{2}-\d{4}$/.test(itemDate)) {
+
+      const [day, month, year] = itemDate.split('-');
+
+      itemDate = `${year}-${month}-${day}`;
+
+    }
+
+    if (dateFrom && itemDate < dateFrom) {
+      return false;
+    }
+
+    if (dateTo && itemDate > dateTo) {
+      return false;
+    }
+
+
+    // SEARCH
+    if (search) {
+
+      const searchable = [
+        item.jobNo,
+        item.partNo,
+        item.customer,
+        item.recordId
+      ]
+        .map(value => String(value || '').toLowerCase())
+        .join(' ');
+
+      if (!searchable.includes(search)) {
+        return false;
+      }
+
+    }
+
+    return true;
+
+  });
+
+
+  // ==================================================
+  // KPI
+  // ==================================================
+
+  const total = filtered.length;
+
+  const inspected = filtered.filter(item =>
+    item.inspectionDate ||
+    item.inspector ||
+    item.result
   ).length;
 
-  const pass = allRecords.filter(r => {
-    const result = String(r.result || '').trim().toUpperCase();
-    return result === 'OK' || result === 'PASS';
+  const pass = filtered.filter(item => {
+
+    const value =
+      String(item.result || '').trim().toUpperCase();
+
+    return value === 'OK' || value === 'PASS';
+
   }).length;
 
-  const ng = allRecords.filter(r =>
-    String(r.result || '').trim().toUpperCase() === 'NG'
+  const ng = filtered.filter(item =>
+    String(item.result || '').trim().toUpperCase() === 'NG'
   ).length;
 
   const pending = Math.max(total - inspected, 0);
 
-  document.getElementById('overviewTotal').textContent = total;
-  document.getElementById('overviewInspected').textContent = inspected;
-  document.getElementById('overviewPass').textContent = pass;
-  document.getElementById('overviewNg').textContent = ng;
-  document.getElementById('overviewPending').textContent = pending;
+
+  // ==================================================
+  // UPDATE KPI
+  // ==================================================
+
+  const setText = (id, value) => {
+
+    const el = document.getElementById(id);
+
+    if (el) {
+      el.textContent = value;
+    }
+
+  };
+
+  setText('overviewTotal', total);
+  setText('overviewInspected', inspected);
+  setText('overviewPass', pass);
+  setText('overviewNg', ng);
+  setText('overviewPending', pending);
 
 
-  // =========================
+  // ==================================================
   // TOPIC NAME
-  // =========================
+  // ==================================================
+
   const topicNames = {
+
     DIECUT: 'DIECUT INSPECTION',
+
     JIG_FA: 'JIG FA',
+
     FIRST_SHOT_FA: 'FIRST SHOT FA',
+
     FA_FG: 'FA FG'
+
   };
 
 
-  // =========================
-  // WORKLOAD
-  // =========================
-  const workload = document.getElementById('overviewWorkload');
+  // ==================================================
+  // WORKLOAD BY TOPIC
+  // ==================================================
+
+  const workload =
+    document.getElementById('overviewWorkload');
 
   if (workload) {
-    workload.innerHTML = Object.keys(topicNames).map(topic => {
 
-      const count = allRecords.filter(r => r.topic === topic).length;
+    const topicStyles = {
 
-      const percent = total
-        ? Math.round((count / total) * 100)
-        : 0;
+      DIECUT: {
+        icon: 'fa-scissors',
+        color: 'cyan',
+        label: 'DIECUT INSPECTION'
+      },
 
-      return `
-        <div class="border border-slate-200 rounded-xl p-4">
+      JIG_FA: {
+        icon: 'fa-screwdriver-wrench',
+        color: 'blue',
+        label: 'JIG FA'
+      },
 
-          <div class="flex items-center justify-between gap-3">
+      FIRST_SHOT_FA: {
+        icon: 'fa-bullseye',
+        color: 'purple',
+        label: 'FIRST SHOT FA'
+      },
 
-            <div>
-              <div class="text-xs font-semibold text-slate-400">
-                TOPIC
+      FA_FG: {
+        icon: 'fa-box-check',
+        color: 'emerald',
+        label: 'FA FG'
+      }
+
+    };
+
+
+    workload.innerHTML =
+      Object.keys(topicNames).map(topic => {
+
+        const count =
+          filtered.filter(r => r.topic === topic).length;
+
+        const percent =
+          total
+            ? Math.round((count / total) * 100)
+            : 0;
+
+        const style =
+          topicStyles[topic];
+
+
+        return `
+
+          <button
+            type="button"
+            onclick="selectOverviewTopic('${topic}')"
+            class="group text-left rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-800/80 hover:border-${style.color}-500/40 p-4 transition-all duration-200"
+          >
+
+            <div class="flex items-center justify-between gap-3">
+
+              <div class="flex items-center gap-3">
+
+                <div class="w-9 h-9 rounded-lg bg-${style.color}-500/10 border border-${style.color}-500/20 flex items-center justify-center">
+
+                  <i class="fa-solid ${style.icon} text-${style.color}-400 text-xs"></i>
+
+                </div>
+
+                <div>
+
+                  <div class="text-[9px] font-bold tracking-wider text-slate-500">
+                    TOPIC
+                  </div>
+
+                  <div class="text-xs font-bold text-white mt-0.5">
+                    ${style.label}
+                  </div>
+
+                </div>
+
               </div>
 
-              <div class="text-sm font-semibold text-slate-800 mt-1">
-                ${topicNames[topic]}
+
+              <div class="text-2xl font-black text-white">
+                ${count}
               </div>
+
             </div>
 
-            <div class="text-2xl font-bold text-slate-900">
-              ${count}
+
+            <div class="mt-4">
+
+              <div class="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+
+                <div
+                  class="h-full bg-${style.color}-500 rounded-full transition-all"
+                  style="width:${percent}%"
+                ></div>
+
+              </div>
+
+              <div class="flex justify-between mt-1.5">
+
+                <span class="text-[9px] text-slate-600">
+                  WORKLOAD
+                </span>
+
+                <span class="text-[9px] font-semibold text-${style.color}-400">
+                  ${percent}%
+                </span>
+
+              </div>
+
             </div>
 
-          </div>
+          </button>
 
-          <div class="mt-4 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-            <div
-              class="h-full bg-cyan-500 rounded-full"
-              style="width:${percent}%"
-            ></div>
-          </div>
+        `;
 
-          <div class="text-right text-xs text-slate-400 mt-1">
-            ${percent}%
-          </div>
+      }).join('');
 
-        </div>
-      `;
-
-    }).join('');
   }
 
 
-  // =========================
-  // RESULT
-  // =========================
-  const resultBox = document.getElementById('overviewResult');
+  // ==================================================
+  // RESULT OVERVIEW
+  // ==================================================
+
+  const resultBox =
+    document.getElementById('overviewResult');
 
   if (resultBox) {
+
+    const passRate =
+      inspected
+        ? ((pass / inspected) * 100).toFixed(1)
+        : '0.0';
+
+    const ngRate =
+      inspected
+        ? ((ng / inspected) * 100).toFixed(1)
+        : '0.0';
+
+
     resultBox.innerHTML = `
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <span class="text-sm text-slate-600">PASS / OK</span>
-        <span class="font-bold text-slate-900">${pass}</span>
+
+      <!-- PASS RATE -->
+
+      <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+
+        <div class="flex items-center justify-between mb-2">
+
+          <span class="text-[10px] font-bold tracking-wider text-emerald-400">
+            PASS RATE
+          </span>
+
+          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+
+        </div>
+
+        <div class="text-3xl font-black text-emerald-300">
+          ${passRate}%
+        </div>
+
+        <div class="text-[9px] text-slate-500 mt-1">
+          ${pass} PASS / OK จาก ${inspected} งานที่ตรวจแล้ว
+        </div>
+
+        <div class="mt-3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+
+          <div
+            class="h-full bg-emerald-500 rounded-full"
+            style="width:${passRate}%"
+          ></div>
+
+        </div>
+
       </div>
 
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <span class="text-sm text-slate-600">NG</span>
-        <span class="font-bold text-slate-900">${ng}</span>
+
+      <!-- NG RATE -->
+
+      <div class="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4">
+
+        <div class="flex items-center justify-between mb-2">
+
+          <span class="text-[10px] font-bold tracking-wider text-rose-400">
+            NG RATE
+          </span>
+
+          <i class="fa-solid fa-circle-xmark text-rose-400"></i>
+
+        </div>
+
+        <div class="text-3xl font-black text-rose-300">
+          ${ngRate}%
+        </div>
+
+        <div class="text-[9px] text-slate-500 mt-1">
+          ${ng} NG จาก ${inspected} งานที่ตรวจแล้ว
+        </div>
+
+        <div class="mt-3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+
+          <div
+            class="h-full bg-rose-500 rounded-full"
+            style="width:${ngRate}%"
+          ></div>
+
+        </div>
+
       </div>
 
-      <div class="flex items-center justify-between">
-        <span class="text-sm text-slate-600">PENDING</span>
-        <span class="font-bold text-slate-900">${pending}</span>
+
+      <!-- PENDING -->
+
+      <div class="flex items-center justify-between px-1 pt-1">
+
+        <span class="text-xs text-slate-500">
+          Pending Inspection
+        </span>
+
+        <span class="text-sm font-bold text-amber-400">
+          ${pending}
+        </span>
+
       </div>
+
     `;
+
   }
 
 
-  // =========================
+  // ==================================================
   // RECENT INSPECTIONS
-  // =========================
-  const recentBody = document.getElementById('overviewRecentBody');
+  // ==================================================
+
+  const recentBody =
+    document.getElementById('overviewRecentBody');
 
   if (recentBody) {
 
-    const recent = [...allRecords]
+    const recent = [...filtered]
       .sort((a, b) => {
 
         const dateA = new Date(
@@ -2310,120 +3083,238 @@ function showAdminOverview() {
     if (!recent.length) {
 
       recentBody.innerHTML = `
+
         <tr>
-          <td colspan="5"
-              class="px-4 py-10 text-center text-sm text-slate-400">
-            No data
-          </td>
-        </tr>
-      `;
 
-    } else {
+          <td
+            colspan="7"
+            class="px-4 py-12 text-center"
+          >
 
-      recentBody.innerHTML = recent.map(item => `
+            <div class="flex flex-col items-center gap-2">
 
-        <tr class="border-b border-slate-100 hover:bg-slate-50">
+              <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center">
+                <i class="fa-solid fa-inbox text-slate-600"></i>
+              </div>
 
-          <td class="px-4 py-3 font-mono font-semibold text-slate-800 whitespace-nowrap">
-            ${item.jobNo || '-'}
-          </td>
+              <span class="text-xs text-slate-500">
+                No matching records
+              </span>
 
-          <td class="px-4 py-3 text-slate-700 whitespace-nowrap">
-            ${item.partNo || '-'}
-          </td>
+            </div>
 
-          <td class="px-4 py-3 text-slate-600 whitespace-nowrap">
-            ${item.customer || '-'}
-          </td>
-
-          <td class="px-4 py-3 text-slate-600 whitespace-nowrap">
-            ${topicNames[item.topic] || item.topic || '-'}
-          </td>
-
-          <td class="px-4 py-3 text-center font-semibold text-slate-700">
-            ${item.result || 'PENDING'}
           </td>
 
         </tr>
 
-      `).join('');
-
-    }
-  }
-
-
-  // =========================
-  // INSPECTION ACTIVITY
-  // =========================
-  const activityBox = document.getElementById('overviewActivity');
-
-  if (activityBox) {
-
-    const activity = {};
-
-    allRecords.forEach(item => {
-
-      const date = item.inspectionDate || item.userDate;
-
-      if (!date) return;
-
-      activity[date] = (activity[date] || 0) + 1;
-
-    });
-
-
-    const activityList = Object.entries(activity)
-      .sort((a, b) => String(b[0]).localeCompare(String(a[0])))
-      .slice(0, 7);
-
-
-    if (!activityList.length) {
-
-      activityBox.innerHTML = `
-        <div class="text-center py-10 text-sm text-slate-400">
-          No data
-        </div>
       `;
 
     } else {
 
-      const max = Math.max(
-        ...activityList.map(item => item[1])
-      );
+      recentBody.innerHTML = recent.map(item => {
 
-      activityBox.innerHTML = activityList.map(([date, count]) => `
+        const itemResult =
+          String(item.result || '').trim().toUpperCase();
 
-        <div>
+        let resultHTML = `
+          <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-slate-800 text-slate-400 text-[9px] font-bold">
+            <i class="fa-solid fa-clock"></i>
+            PENDING
+          </span>
+        `;
 
-          <div class="flex items-center justify-between mb-1">
 
-            <span class="text-xs text-slate-500">
-              ${date}
+        if (itemResult === 'OK' || itemResult === 'PASS') {
+
+          resultHTML = `
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[9px] font-bold">
+              <i class="fa-solid fa-circle-check"></i>
+              PASS
             </span>
+          `;
 
-            <span class="text-xs font-semibold text-slate-700">
-              ${count}
+        } else if (itemResult === 'NG') {
+
+          resultHTML = `
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-rose-500/10 border border-rose-500/20 text-rose-400 text-[9px] font-bold">
+              <i class="fa-solid fa-circle-xmark"></i>
+              NG
             </span>
+          `;
 
-          </div>
+        }
 
-          <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
 
-            <div
-              class="h-full bg-cyan-500 rounded-full"
-              style="width:${max ? (count / max) * 100 : 0}%"
-            ></div>
+        const dateValue =
+          item.inspectionDate ||
+          item.userDate ||
+          '-';
 
-          </div>
 
-        </div>
+        let displayDate =
+          String(dateValue).trim();
 
-      `).join('');
+        if (displayDate.includes('T')) {
+          displayDate = displayDate.split('T')[0];
+        }
+
+        if (/^\d{4}-\d{2}-\d{2}$/.test(displayDate)) {
+
+          const [year, month, day] =
+            displayDate.split('-');
+
+          displayDate =
+            `${day}-${month}-${year}`;
+
+        }
+
+
+        return `
+
+          <tr class="border-b border-slate-800/70 hover:bg-slate-800/40 transition">
+
+            <!-- JOB -->
+
+            <td class="px-4 py-3">
+
+              <span class="font-mono font-bold text-cyan-300 whitespace-nowrap">
+                ${item.jobNo || '-'}
+              </span>
+
+            </td>
+
+
+            <!-- PART -->
+
+            <td class="px-4 py-3">
+
+              <span class="text-slate-200 whitespace-nowrap">
+                ${item.partNo || '-'}
+              </span>
+
+            </td>
+
+
+            <!-- CUSTOMER -->
+
+            <td class="px-4 py-3">
+
+              <span class="text-slate-400 whitespace-nowrap">
+                ${item.customer || '-'}
+              </span>
+
+            </td>
+
+
+            <!-- TOPIC -->
+
+            <td class="px-4 py-3">
+
+              <span class="text-[9px] font-semibold text-slate-400 whitespace-nowrap">
+                ${topicNames[item.topic] || item.topic || '-'}
+              </span>
+
+            </td>
+
+
+            <!-- DATE -->
+
+            <td class="px-4 py-3 text-center">
+
+              <span class="font-mono text-[10px] text-slate-400 whitespace-nowrap">
+                ${displayDate}
+              </span>
+
+            </td>
+
+
+            <!-- RESULT -->
+
+            <td class="px-4 py-3 text-center">
+              ${resultHTML}
+            </td>
+
+
+            <!-- ACTION -->
+
+            <td class="px-4 py-3 text-center">
+
+              <button
+                type="button"
+                onclick="openInspectionModal('${item.topic}', '${item.recordId}')"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20 hover:bg-cyan-500/20 hover:border-cyan-400/40 text-cyan-300 text-[9px] font-semibold transition"
+              >
+
+                <i class="fa-solid fa-eye"></i>
+
+                VIEW
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }).join('');
 
     }
+
   }
+
 }
 
+    // ======================================================
+// SELECT TOPIC FROM WORKLOAD CARD
+// ======================================================
+function selectOverviewTopic(topicKey) {
+
+  const select =
+    document.getElementById('overviewFilterTopic');
+
+  if (!select) return;
+
+  select.value = topicKey;
+
+  applyOverviewFilters();
+}
+
+    // ======================================================
+// RESET ADMIN ALL FILTERS
+// ======================================================
+function resetOverviewFilters() {
+
+  const topic =
+    document.getElementById('overviewFilterTopic');
+
+  const customer =
+    document.getElementById('overviewFilterCustomer');
+
+  const result =
+    document.getElementById('overviewFilterResult');
+
+  const dateFrom =
+    document.getElementById('overviewFilterDateFrom');
+
+  const dateTo =
+    document.getElementById('overviewFilterDateTo');
+
+  const search =
+    document.getElementById('overviewFilterSearch');
+
+
+  if (topic) topic.value = 'ALL';
+  if (customer) customer.value = 'ALL';
+  if (result) result.value = 'ALL';
+  if (dateFrom) dateFrom.value = '';
+  if (dateTo) dateTo.value = '';
+  if (search) search.value = '';
+
+
+  applyOverviewFilters();
+}
+    
     // Module Switcher
     function switchTopic(topicKey) {
       activeTopic = topicKey;
@@ -2442,6 +3333,7 @@ if (topicKey === "ALL") {
       'text-cyan-400',
       'bg-slate-800/80'
     );
+
     btn.classList.add('text-slate-400');
   });
 
@@ -2455,10 +3347,11 @@ if (topicKey === "ALL") {
       'text-cyan-400',
       'bg-slate-800/80'
     );
+
     allTab.classList.remove('text-slate-400');
   }
 
-    showAdminOverview();
+  showAdminOverview();
   return;
 }
 
