@@ -1416,24 +1416,36 @@ body, button, input, select, textarea, table {
     AMS - FA Quality Inspection System
   </h1>
 </div>
-
     </div>
 
     <div class="flex items-center gap-4">
-      <!-- Live Clock -->
-      <div class="hidden sm:flex flex-col items-end text-xs text-slate-300">
-        <span id="liveDate" class="font-medium text-slate-400">---</span>
-        <span id="liveTime" class="font-mono text-cyan-400 font-semibold text-sm">--:--:--</span>
-      </div>
 
-      <!-- Admin Status / Login Button -->
-      <div id="adminBadgeContainer">
-        <button onclick="openAdminLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition">
-          <i class="fa-solid fa-user-shield text-slate-400"></i>
-          <span>Admin Login</span>
-        </button>
-      </div>
-    </div>
+  <!-- HOME Button -->
+  <a
+    href="https://script.google.com/macros/s/AKfycbwosmRcLiNfMqAM3XJ-4JdUVkIqwyUhOKqKE3yh8eBue41krkJCUTjYO6gulpzg5E9dRw/exec"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="bg-cyan-500 hover:bg-cyan-400 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition"
+  >
+    <i class="fa-solid fa-house"></i>
+    <span>HOME</span>
+  </a>
+
+  <!-- Live Clock -->
+  <div class="hidden sm:flex flex-col items-end text-xs text-slate-300">
+    <span id="liveDate" class="font-medium text-slate-400">---</span>
+    <span id="liveTime" class="font-mono text-cyan-400 font-semibold text-sm">--:--:--</span>
+  </div>
+
+  <!-- Admin Status / Login Button -->
+  <div id="adminBadgeContainer">
+    <button onclick="openAdminLoginModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition">
+      <i class="fa-solid fa-user-shield text-slate-400"></i>
+      <span>Admin Login</span>
+    </button>
+  </div>
+
+</div>
   </header>
 
   <!-- TOP MODULE TABS SELECTOR -->
