@@ -1807,7 +1807,8 @@ async function apiCall(action, payload = {}) {
   console.log("Action:", action);
   console.log("Time:", new Date().toLocaleTimeString());
 
-  const maxRetries = 2;
+  const isReadOnlyAction = action === "getInitialData";
+const maxRetries = isReadOnlyAction ? 2 : 1;
   let lastError = null;
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
