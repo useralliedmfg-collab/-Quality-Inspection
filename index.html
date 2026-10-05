@@ -1557,7 +1557,11 @@ body, button, input, select, textarea, table {
         <!-- Search Input -->
         <div class="relative flex-1 min-w-[160px]">
           <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-xs text-slate-400"></i>
-          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="ค้นหา Job, Part No, FA NO, Diecut..." class="w-full bg-slate-950 border border-slate-700 rounded-md pl-8 pr-2 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
+          <input type="text"
+       id="searchInput"
+       oninput="debouncedApplyFilters()"
+       placeholder="ค้นหา Job, Part No, FA NO, Diecut..."
+       class="w-full bg-slate-950 border border-slate-700 rounded-md pl-8 pr-2 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
         </div>
 
         <!-- Filter Status -->
@@ -1782,7 +1786,6 @@ body, button, input, select, textarea, table {
     document.addEventListener("DOMContentLoaded", () => {
       startClock();
       loadSystemData();
-      renderFormForTopic(activeTopic);
     });
 
     // Real-time Clock in Bangkok Timezone
@@ -1816,16 +1819,29 @@ const maxRetries = isReadOnlyAction ? 2 : 1;
     try {
       console.log(`กำลังส่ง Request... ครั้งที่ ${attempt}/${maxRetries}`);
 
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify({
-          action,
-          ...payload
-        })
-      });
+      const controller = new AbortController();
+
+const timeoutId = setTimeout(() => {
+  controller.abort();
+}, 15000); // 15 วินาที
+
+let response;
+
+try {
+  response = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify({
+      action,
+      ...payload
+    }),
+    signal: controller.signal
+  });
+} finally {
+  clearTimeout(timeoutId);
+}
 
       console.log("ได้รับ Response แล้ว");
       console.log("HTTP Status:", response.status);
@@ -1859,12 +1875,18 @@ const maxRetries = isReadOnlyAction ? 2 : 1;
 
     } catch (err) {
 
-      lastError = err;
+  lastError = err;
 
-      console.error(
-        `API ERROR ครั้งที่ ${attempt}:`,
-        err
-      );
+  if (err.name === "AbortError") {
+    console.error(
+      `API TIMEOUT ครั้งที่ ${attempt}: Server ใช้เวลานานเกิน 15 วินาที`
+    );
+  } else {
+    console.error(
+      `API ERROR ครั้งที่ ${attempt}:`,
+      err
+    );
+  }
 
       // ถ้ายังเหลือรอบให้ลองใหม่
       if (attempt < maxRetries) {
@@ -2916,6 +2938,19 @@ if (res.record && res.record.topicKey) {
   document.getElementById('filterCustomer').value = 'ALL';
 
   applyFilters();
+}
+
+    // ========================================
+// FILTER DEBOUNCE
+// ========================================
+let filterDebounceTimer = null;
+
+function debouncedApplyFilters() {
+  clearTimeout(filterDebounceTimer);
+
+  filterDebounceTimer = setTimeout(() => {
+    applyFilters();
+  }, 300);
 }
 
     // Filter Logic & Table Rendering
