@@ -1786,6 +1786,7 @@ body, button, input, select, textarea, table {
     document.addEventListener("DOMContentLoaded", () => {
       startClock();
       loadSystemData();
+      renderFormForTopic(activeTopic);
     });
 
     // Real-time Clock in Bangkok Timezone
@@ -1819,29 +1820,16 @@ const maxRetries = isReadOnlyAction ? 2 : 1;
     try {
       console.log(`กำลังส่ง Request... ครั้งที่ ${attempt}/${maxRetries}`);
 
-      const controller = new AbortController();
-
-const timeoutId = setTimeout(() => {
-  controller.abort();
-}, 15000); // 15 วินาที
-
-let response;
-
-try {
-  response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8"
-    },
-    body: JSON.stringify({
-      action,
-      ...payload
-    }),
-    signal: controller.signal
-  });
-} finally {
-  clearTimeout(timeoutId);
-}
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          action,
+          ...payload
+        })
+      });
 
       console.log("ได้รับ Response แล้ว");
       console.log("HTTP Status:", response.status);
@@ -1875,18 +1863,12 @@ try {
 
     } catch (err) {
 
-  lastError = err;
+      lastError = err;
 
-  if (err.name === "AbortError") {
-    console.error(
-      `API TIMEOUT ครั้งที่ ${attempt}: Server ใช้เวลานานเกิน 15 วินาที`
-    );
-  } else {
-    console.error(
-      `API ERROR ครั้งที่ ${attempt}:`,
-      err
-    );
-  }
+      console.error(
+        `API ERROR ครั้งที่ ${attempt}:`,
+        err
+      );
 
       // ถ้ายังเหลือรอบให้ลองใหม่
       if (attempt < maxRetries) {
