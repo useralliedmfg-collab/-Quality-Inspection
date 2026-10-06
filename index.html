@@ -1812,7 +1812,7 @@ async function apiCall(action, payload = {}) {
   console.log("Time:", new Date().toLocaleTimeString());
 
   const isReadOnlyAction = action === "getInitialData";
-const maxRetries = 1;
+const maxRetries = isReadOnlyAction ? 2 : 1;
   let lastError = null;
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -1902,137 +1902,29 @@ const maxRetries = 1;
   };
 }
 
- let records = [];
-let masterData = {};
-
-const CACHE_KEY = "AMS_FA_Quality_Inspection_Cache";
-const CACHE_MAX_AGE = 30 * 60 * 1000;
-
-function saveSystemCache() {
-    try {
-        const cache = {
-            timestamp: Date.now(),
-            records: records,
-            masterData: masterData
-        };
-
-        localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
-    } catch (error) {
-        console.warn("Cannot save system cache:", error);
-    }
-}
-
-function loadSystemCache() {
-    try {
-        const raw = localStorage.getItem(CACHE_KEY);
-
-        if (!raw) return false;
-
-        const cache = JSON.parse(raw);
-
-        if (!cache || !cache.timestamp) return false;
-
-        const age = Date.now() - cache.timestamp;
-
-        if (age > CACHE_MAX_AGE) {
-            localStorage.removeItem(CACHE_KEY);
-            return false;
-        }
-
-        if (Array.isArray(cache.records)) {
-            records = cache.records;
-        }
-
-        if (cache.masterData) {
-            masterData = cache.masterData;
-        }
-
-        return true;
-
-    } catch (error) {
-        console.warn("Cannot load system cache:", error);
-        return false;
-    }
-}
-
-
-// Load initial system data
-async function loadSystemData() {
-
-  // ================================
-  // STEP 1: Load cache first
-  // ================================
-  const hasCache = loadSystemCache();
-
-  if (hasCache) {
-
-    console.log("ใช้ข้อมูลจาก Cache ก่อน");
-
-    populateCustomerFilter();
-    populateInspectorDropdown();
-    renderFormForTopic(activeTopic);
-    applyFilters();
-
-  } else {
-
-    console.log("ไม่มี Cache ต้องโหลดจาก Server");
-  }
-
-
-  // ================================
-  // STEP 2: Load latest data from Server
-  // ================================
+    // Load initial system data
+    async function loadSystemData() {
   const res = await apiCall("getInitialData");
 
   console.log("GET INITIAL DATA:", res);
   console.log("RECORDS:", res.records);
 
-
-  // ================================
-  // STEP 3: Update with latest Server data
-  // ================================
   if (res.success) {
-
     masterData = res.master || masterData;
     records = res.records || records;
-
     populateCustomerFilter();
     populateInspectorDropdown();
     renderFormForTopic(activeTopic);
     applyFilters();
-
-    // Save latest data to Cache
-    saveSystemCache();
-
-    console.log("อัปเดตข้อมูลจาก Server และบันทึก Cache แล้ว");
-
   } else {
-
-    // ถ้ามี Cache อยู่แล้ว ไม่ต้องแจ้ง Error
-    // เพราะหน้าจอยังมีข้อมูลให้ใช้งาน
-    if (!hasCache) {
-
-      showToast(
-        "ข้อผิดพลาด",
-        res.message || "ไม่สามารถโหลดข้อมูลได้",
-        "danger"
-      );
-
-    } else {
-
-      console.warn(
-        "Server โหลดข้อมูลล่าสุดไม่ได้ แต่ยังใช้ข้อมูลจาก Cache"
-      );
-
-    }
+    showToast("ข้อผิดพลาด", res.message || "ไม่สามารถโหลดข้อมูลได้", "danger");
   }
 }
 
+    // Module Switcher
+    function switchTopic(topicKey) {
+      activeTopic = topicKey;
 
-// Module Switcher
-function switchTopic(topicKey) {
-  activeTopic = topicKey;
-  
       // Admin Global View
 if (topicKey === "ALL") {
   if (!isAdminLoggedIn) return;
