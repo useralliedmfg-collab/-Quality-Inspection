@@ -4117,7 +4117,7 @@ if (topicKey === "DIECUT") {
         ${infoBox('PART NO', item.partNo)}
 
         <!-- บรรทัด 4 -->
-        ${infoBox('REV.', item.rev)}
+        ${infoBox('REV.', String(item.rev).padStart(2, '0'))}
         ${infoBox('CAVITY', item.cavity)}
 
         <!-- บรรทัด 5 -->
@@ -4148,7 +4148,7 @@ if (topicKey === "DIECUT") {
         ${infoBox('PART NO.', item.partNo)}
 
         <!-- บรรทัด 3 -->
-        ${infoBox('REV.', item.rev)}
+        ${infoBox('REV.', String(item.rev).padStart(2, '0'))}
         ${infoBox('จำนวน JIG ที่ส่งตรวจ', item.jigQty)}
 
         <!-- บรรทัด 4 -->
@@ -4189,7 +4189,7 @@ if (topicKey === "DIECUT") {
 
         <!-- บรรทัด 3 -->
         ${infoBox('PART NO.', item.partNo)}
-        ${infoBox('REV.', item.rev)}
+        ${infoBox('REV.', String(item.rev).padStart(2, '0'))}
 
         <!-- บรรทัด 4 -->
         ${infoBox(
@@ -4242,7 +4242,7 @@ if (topicKey === "DIECUT") {
 
         <!-- บรรทัด 3 -->
         ${infoBox('PART NO.', item.partNo)}
-        ${infoBox('REV.', item.rev)}
+        ${infoBox('REV.', String(item.rev).padStart(2, '0'))}
 
         <!-- บรรทัด 4 -->
         ${infoBox('งานที่ส่ง', item.mainQty)}
