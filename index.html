@@ -4516,7 +4516,9 @@ if (topicKey === "DIECUT") {
           </div>
 
           <div class="text-sm font-semibold text-slate-100">
-            ${item.rev || '-'}
+            ${item.rev !== undefined && item.rev !== null && item.rev !== ''
+    ? String(item.rev).padStart(2, '0')
+    : '-'}
           </div>
         </div>
 
