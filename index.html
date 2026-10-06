@@ -4621,7 +4621,9 @@ else if (topicKey === "JIG_FA") {
             REV.
           </div>
           <div class="text-sm font-semibold text-slate-100">
-            ${item.rev || '-'}
+            ${item.rev !== undefined && item.rev !== null && item.rev !== ''
+    ? String(item.rev).padStart(2, '0')
+    : '-'}
           </div>
         </div>
 
@@ -4754,7 +4756,9 @@ else if (topicKey === "FIRST_SHOT_FA") {
             REV.
           </div>
           <div class="text-sm font-semibold text-slate-100">
-            ${item.rev || '-'}
+            ${item.rev !== undefined && item.rev !== null && item.rev !== ''
+    ? String(item.rev).padStart(2, '0')
+    : '-'}
           </div>
         </div>
 
@@ -4897,7 +4901,9 @@ else if (topicKey === "FA_FG") {
             REV.
           </div>
           <div class="text-sm font-semibold text-slate-100">
-            ${item.rev || '-'}
+            ${item.rev !== undefined && item.rev !== null && item.rev !== ''
+    ? String(item.rev).padStart(2, '0')
+    : '-'}
           </div>
         </div>
 
