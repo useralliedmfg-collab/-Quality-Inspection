@@ -1809,79 +1809,88 @@ async function apiCall(action, payload = {}) {
 
   console.log("========== API START ==========");
   console.log("Action:", action);
-  console.log("Time:", new Date().toLocaleTimeString());
+  console.log("Payload:", payload);
 
-  const isReadOnlyAction = action === "getInitialData";
-const maxRetries = isReadOnlyAction ? 2 : 1;
-  let lastError = null;
+  return new Promise((resolve) => {
 
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-
-    try {
-      console.log(`กำลังส่ง Request... ครั้งที่ ${attempt}/${maxRetries}`);
-
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify({
-          action,
-          ...payload
-        })
-      });
-
-      console.log("ได้รับ Response แล้ว");
-      console.log("HTTP Status:", response.status);
-
-      // ถ้า Server ตอบ 404 / 500 ฯลฯ
-      if (!response.ok) {
-
-        const errorText = await response.text();
-
-        console.error(
-          `API HTTP ERROR ครั้งที่ ${attempt}:`,
-          response.status
-        );
-
-        console.error("Server Response:", errorText);
-
-        throw new Error(`Server HTTP ${response.status}`);
-      }
-
-      console.log("กำลังอ่าน JSON...");
-
-      const result = await response.json();
-
-      console.log("อ่าน JSON สำเร็จ");
-      console.log("Result:", result);
+    const success = (result) => {
+      console.log("API RESULT:", result);
       console.log("========== API END ==========");
 
       hideLoadingToast();
+      resolve(result);
+    };
 
-      return result;
+    const failure = (error) => {
+      console.error("API ERROR:", error);
 
-    } catch (err) {
+      hideLoadingToast();
 
-      lastError = err;
-
-      console.error(
-        `API ERROR ครั้งที่ ${attempt}:`,
-        err
+      showToast(
+        "Error",
+        "ไม่สามารถเชื่อมต่อ Server ได้: " +
+        (error?.message || "Unknown error"),
+        "danger"
       );
 
-      // ถ้ายังเหลือรอบให้ลองใหม่
-      if (attempt < maxRetries) {
+      resolve({
+        success: false,
+        message: error?.message || "ไม่สามารถเชื่อมต่อ Server ได้"
+      });
+    };
 
-        console.log("กำลังลองเชื่อมต่อใหม่...");
+    switch (action) {
 
-        await new Promise(resolve =>
-          setTimeout(resolve, 1000)
-        );
+      case "getInitialData":
+        google.script.run
+          .withSuccessHandler(success)
+          .withFailureHandler(failure)
+          .handleGetInitialData();
+        break;
 
-      }
+      case "submitUserJob":
+        google.script.run
+          .withSuccessHandler(success)
+          .withFailureHandler(failure)
+          .handleSubmitUserJob(payload.data);
+        break;
+
+      case "adminLogin":
+        google.script.run
+          .withSuccessHandler(success)
+          .withFailureHandler(failure)
+          .handleAdminLogin(
+            payload.username,
+            payload.password
+          );
+        break;
+
+      case "submitInspection":
+        google.script.run
+          .withSuccessHandler(success)
+          .withFailureHandler(failure)
+          .handleSubmitInspection(
+            payload.token,
+            payload.data
+          );
+        break;
+
+      case "addCustomer":
+        google.script.run
+          .withSuccessHandler(success)
+          .withFailureHandler(failure)
+          .handleAddCustomer(
+            payload.customerName
+          );
+        break;
+
+      default:
+        failure({
+          message: "Invalid action: " + action
+        });
     }
-  }
+  });
+}
 
   // ลองครบแล้วแต่ยังไม่ได้
   console.error("API FAILED หลังจากลองครบทุกครั้ง");
